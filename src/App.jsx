@@ -2,8 +2,8 @@
 function App() {
 
   return (
-    <div className="text-2xl font-bold">
-      Hello Veenotes!
+    <div className="flex pb-8 h-lvh justify-center items-center text-2xl font-bold">
+        VEENOTES
     </div>
   )
 }
