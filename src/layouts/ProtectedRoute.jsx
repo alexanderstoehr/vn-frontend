@@ -2,7 +2,7 @@ import {Outlet, useNavigate} from "react-router-dom";
 
 export default function ProtectedRoute() {
     const loginPage = "/login";
-    const isLoggedIn = false
+    const isLoggedIn = true
 
     const navigate = useNavigate();
 
