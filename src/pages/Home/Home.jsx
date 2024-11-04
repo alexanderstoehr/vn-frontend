@@ -1,7 +1,9 @@
+import Hero from "./Hero.jsx";
+
 export default function Home() {
     return (
         <div>
-            Home
+            <Hero/>
         </div>
     )
 }
