@@ -16,17 +16,17 @@
     ],
     "features": [
       {
-        "icon": "/assets/icons/nerdface.svg",
+        "icon": "/assets/icons/eye.svg",
         "title": "Enhanced Focus",
         "description": "Focus on the key moments that matter, reducing distractions and improving learning efficiency."
       },
       {
-        "icon": "/assets/icons/nerdface.svg",
+        "icon": "/assets/icons/hourglass.svg",
         "title": "Time Saving",
         "description": "Quickly access important sections without rewatching entire videos, making your learning faster and more efficient."
       },
       {
-        "icon": "/assets/icons/nerdface.svg",
+        "icon": "/assets/icons/brain.svg",
         "title": "Improved Retention",
         "description": "Reinforce learning by revisiting key points with personalized notes, helping you retain important information longer."
       }
