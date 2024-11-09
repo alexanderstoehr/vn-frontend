@@ -1,0 +1,31 @@
+{
+  "faqSection": {
+    "title": "Frequently asked questions",
+    "questions": [
+      {
+        "question": "Can I organize my videos by topic?",
+        "answer": "Yes! With Veenote, you can create spaces to organize your videos into collections, categories, and tags, making it easy to find exactly what you need."
+      },
+      {
+        "question": "Is there a limit to the number of bookmarks I can add?",
+        "answer": "No, you can add as many bookmarks as you need in each video to capture every important moment."
+      },
+      {
+        "question": "Can I use Veenote offline?",
+        "answer": "Currently, Veenote requires an internet connection to access videos and bookmarks, but we’re exploring offline capabilities for future updates."
+      },
+      {
+        "question": "Is Veenote free to use?",
+        "answer": "Yes, Veenote is completely free! We believe learning should be accessible to everyone, which is why we’re committed to keeping it free."
+      },
+      {
+        "question": "Can I share my bookmarks with others?",
+        "answer": "Sharing features are in the works, so you’ll soon be able to share your bookmarks and collections with others!"
+      },
+      {
+        "question": "Why is Veenote free to use?",
+        "answer": "We believe learning is essential and should be accessible to everyone. That’s why Veenote is, and will continue to be, free."
+      }
+    ]
+  }
+}

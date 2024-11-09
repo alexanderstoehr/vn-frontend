@@ -1,0 +1,35 @@
+{
+  "heroSection": {
+    "title": "Stuck from Learning through Online Videos?",
+    "subtitle": "With Veenotes you will be able to learn from video content more effective and way faster.",
+    "image": "/src/assets/images/image-placeholder.svg",
+    "backgroundImage": "/src/assets/images/image-placeholder.svg",
+    "ctaButtons": [
+      {
+        "text": "Learn more",
+        "link": "/#benefits"
+      },
+      {
+        "text": "Check Demo",
+        "link": "/#demo"
+      }
+    ],
+    "features": [
+      {
+        "icon": "/src/assets/icons/nerdface.svg",
+        "title": "Enhanced Focus",
+        "description": "Focus on the key moments that matter, reducing distractions and improving learning efficiency."
+      },
+      {
+        "icon": "/src/assets/icons/nerdface.svg",
+        "title": "Time Saving",
+        "description": "Quickly access important sections without rewatching entire videos, making your learning faster and more efficient."
+      },
+      {
+        "icon": "/src/assets/icons/nerdface.svg",
+        "title": "Improved Retention",
+        "description": "Reinforce learning by revisiting key points with personalized notes, helping you retain important information longer."
+      }
+    ]
+  }
+}
