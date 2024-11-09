@@ -1,0 +1,29 @@
+{
+  "title": "Veenote is free for individuals",
+  "subtitle": "Effective Learning has to be accessible for everyone.",
+  "features": [
+    {
+      "icon": "/assets/icons/video.svg",
+      "title": "Unlimited Videos",
+      "description": "Add as many YouTube videos as you want. (More Hosts coming)"
+    },
+    {
+      "icon": "/assets/icons/bookmark.svg",
+      "title": "Unlimited Notes",
+      "description": "Add as many notes to your videos as you want."
+    },
+    {
+      "icon": "/assets/icons/folder.svg",
+      "title": "Unlimited Spaces",
+      "description": "Create as many spaces as you want to organize your videos."
+    },
+    {
+      "icon": "/assets/icons/happy.svg",
+      "title": "Forever Free",
+      "description": "Veenotes will always be free for individuals."
+    }
+  ],
+  "pricingIndividual": 0,
+  "billingCycle": "per month",
+  "cta": "Start Now"
+}
