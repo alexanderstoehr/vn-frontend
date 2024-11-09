@@ -3,34 +3,42 @@
   "subtitle": "Veenotes helps you learn faster and more effectively from online videos.",
   "benefits": [
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Quick Bookmarking",
       "description": "Easily save key moments while watching, creating instant reference points for faster reviews and enhanced focus on important content."
     },
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Organized Collections",
       "description": "Group videos by topics or courses, keeping all your resources neatly organized for easy access and a streamlined learning experience."
     },
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Timestamped Notes",
       "description": "Capture detailed insights by adding notes at exact timestamps, helping you retain information tied directly to specific video moments."
     },
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Instant Access Points",
       "description": "Quickly jump to saved sections without endless scrolling, making reviews faster and focusing your learning on what truly matters."
     },
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Memory Boost",
       "description": "Reinforce key ideas by summarizing them in notes, creating a stronger connection and better long-term retention of crucial concepts."
     },
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Personalized Learning",
       "description": "Learn at your pace with customized bookmarks, so you can revisit difficult concepts and keep track of your progress easily."
     },
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Effortless Search",
       "description": "Find saved bookmarks and notes instantly with smart search, so you never waste time looking for important content."
     },
     {
+      "icon": "/src/assets/icons/nerdface.svg",
       "title": "Enhanced Focus",
       "description": "Avoid unnecessary distractions by isolating important moments, allowing you to focus on meaningful content and stay engaged."
     }
