@@ -14,19 +14,17 @@ export default function () {
 
 					<Accordion collapseAll>
 						{
-							faqData.faqSection.questions.map((question, index) => {
-								return (
-									<Accordion.Panel key={index}>
-										<Accordion.Title>{question.question}</Accordion.Title>
-										<Accordion.Content>
-											<p className="mb-2 text-gray-500 dark:text-gray-400">
-												{question.answer}
-											</p>
-										</Accordion.Content>
-									</Accordion.Panel>
+							faqData.faqSection.questions.map((question, index) => (
+								<Accordion.Panel key={index}>
+									<Accordion.Title>{question.question}</Accordion.Title>
+									<Accordion.Content>
+										<p className="mb-2 text-gray-500 dark:text-gray-400">
+											{question.answer}
+										</p>
+									</Accordion.Content>
+								</Accordion.Panel>
 
-								)
-							})}
+							))}
 					</Accordion>
 
 

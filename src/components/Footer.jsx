@@ -22,8 +22,7 @@ export default function Footer() {
 						   className="mr-4 hover:underline md:mr-6">Github</a>
 					</li>
 				</ul>
-				<span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2021-2022 <a href="#"
-																										 className="hover:underline">Flowbite™</a>. All Rights Reserved.</span>
+				<span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">🥳</span>
 			</div>
 		</footer>
 	)
