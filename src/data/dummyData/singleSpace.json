@@ -6,7 +6,9 @@
     {
       "id": 1,
       "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
-      "title": "React Beginner Tutorial Mosh",
+      "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
+      "created": "2021-09-01",
+      "title": "React Beginner 1 Tutorial Mosh",
       "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
       "category": "Programming",
       "tags": [
@@ -49,7 +51,9 @@
     {
       "id": 2,
       "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
-      "title": "React Beginner Tutorial Mosh",
+      "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
+      "created": "2021-09-01",
+      "title": "React Beginner 2 Tutorial Mosh",
       "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
       "category": "Programming",
       "tags": [
@@ -92,7 +96,9 @@
     {
       "id": 3,
       "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
-      "title": "React Beginner Tutorial Mosh",
+      "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
+      "created": "2021-09-01",
+      "title": "React Beginner 3 Tutorial Mosh",
       "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
       "category": "Programming",
       "tags": [
@@ -135,7 +141,9 @@
     {
       "id": 4,
       "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
-      "title": "React Beginner Tutorial Mosh",
+      "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
+      "created": "2021-09-01",
+      "title": "React Beginner 4 Tutorial Mosh",
       "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
       "category": "Programming",
       "tags": [
