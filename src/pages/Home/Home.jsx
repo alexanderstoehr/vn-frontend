@@ -13,7 +13,6 @@ export default function Home() {
 			<Benefits/>
 			<Pricing/>
 			<FAQ/>
-			<Footer/>
 		</div>
 	)
 }

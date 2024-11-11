@@ -1,5 +1,7 @@
 {
+  "id": 1,
   "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
+  "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
   "title": "React Beginner Tutorial Mosh",
   "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
   "category": "Programming",

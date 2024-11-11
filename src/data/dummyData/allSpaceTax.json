@@ -1,0 +1,42 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Programming & Tech"
+    },
+    {
+      "id": 2,
+      "name": "Architecture"
+    },
+    {
+      "id": 3,
+      "name": "Music"
+    },
+    {
+      "id": 4,
+      "name": "Accounting"
+    },
+    {
+      "id": 29,
+      "name": "Business & Entrepreneurship\n"
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "React"
+    },
+    {
+      "id": 2,
+      "name": "Project Setup"
+    },
+    {
+      "id": 3,
+      "name": "Vite"
+    },
+    {
+      "id": 5,
+      "name": "Im a Tag Yo"
+    }
+  ]
+}
