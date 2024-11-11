@@ -78,7 +78,7 @@ export default function SingleSpace() {
 			<div className="flex flex-col w-full  gap-8 pt-2">
 				<div className="max-w-xl ">
 					<div className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{singleSpace.name}</div>
-					<div className="text-lg font-normal text-gray-600 dark:text-gray-400">{singleSpace.description}</div>
+					<div className="text-lg font-normal text-gray-500 dark:text-gray-400">{singleSpace.description}</div>
 				</div>
 				{singleSpace.videos.map((video, index) => (
 					<div key={index}
