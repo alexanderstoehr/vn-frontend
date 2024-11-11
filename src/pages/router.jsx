@@ -4,7 +4,7 @@ import PageNotFound from "./PageNotFound.jsx";
 import Home from "./Home/Home.jsx";
 import ProtectedRoute from "../layouts/ProtectedRoute.jsx";
 import Spaces from "./Spaces/AllSpaces/Spaces.jsx";
-import SingleSpace from "./Spaces/SingleSpace/SIngleSpace.jsx";
+import SingleSpace from "./Spaces/SingleSpace/SingleSpace.jsx";
 
 export default function Router() {
 	return (
