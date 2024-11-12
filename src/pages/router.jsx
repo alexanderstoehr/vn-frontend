@@ -3,7 +3,7 @@ import DefaultLayout from "../layouts/DefaultLayout.jsx";
 import PageNotFound from "./PageNotFound.jsx";
 import Home from "./Home/Home.jsx";
 import ProtectedRoute from "../layouts/ProtectedRoute.jsx";
-import Spaces from "./Spaces/AllSpaces/Spaces.jsx";
+import AllSpaces from "./Spaces/AllSpaces/AllSpaces.jsx";
 import SingleSpace from "./Spaces/SingleSpace/SingleSpace.jsx";
 
 export default function Router() {
@@ -15,9 +15,10 @@ export default function Router() {
 					<Route path="*" element={<PageNotFound/>}/>
 				</Route>
 				<Route element={<ProtectedRoute/>}>
-					<Route path="/account" element={<h1>Protected</h1>}/>
-					<Route path="/spaces" element={<Spaces/>}/>
+					<Route path="/account" element={<h1>Account</h1>}/>
+					<Route path="/spaces" element={<AllSpaces/>}/>
 					<Route path="/space" element={<SingleSpace/>}/>
+					<Route path="/video" element={<h1>Video</h1>}/>
 				</Route>
 
 			</Routes>

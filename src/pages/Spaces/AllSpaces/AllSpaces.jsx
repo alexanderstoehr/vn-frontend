@@ -1,0 +1,26 @@
+import SpacesSidebar from "../SpacesSidebar.jsx";
+import allSpaces from "../../../data/dummyData/allSpaces.json";
+import SpaceListingSingle from "./SpaceListingSingle.jsx";
+
+
+export default function AllSpaces() {
+	return (
+		<div className="flex flex-row mx-auto max-w-screen-xl gap-8 pt-8">
+			<SpacesSidebar/>
+			<div className="flex flex-col w-3/4  gap-8 pt-2">
+				<div className="">
+					<div className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">All Spaces</div>
+					<div className="text-lg font-normal text-gray-500 dark:text-gray-400 ">All your nice learning spaces in one place.
+						Keep
+						it up!
+					</div>
+					{allSpaces.spaces.map((space, index) => (
+						<div key={index}>
+							<SpaceListingSingle space={space}/>
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	)
+}
