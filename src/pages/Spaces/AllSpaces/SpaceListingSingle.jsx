@@ -9,8 +9,8 @@ export default function SpaceListingSingle({space}) {
 	return (
 		<div className="flex flex-col mx-auto max-w-screen-xl gap-2 pt-8">
 			<div className="flex">
-				<div className="flex flex-col w-1/2">
-					<div className="text-gray-900 text-xl font-semibold">{space.name}</div>
+				<div className="flex flex-col w-1/2 mb-8">
+					<div className="text-gray-900 text-2xl font-semibold">{space.name}</div>
 					<div className="text-gray-500">{space.description}</div>
 				</div>
 				<div className="flex">
@@ -35,6 +35,7 @@ export default function SpaceListingSingle({space}) {
 					<SpaceListingSingleVideo key={index} video={video}/>
 				))}
 			</div>
+			<div className="border border-b-1 border-gray-300 mt-8 mb-4"></div>
 		</div>
 	)
 }
