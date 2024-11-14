@@ -1,10 +1,18 @@
 import SpaceListingSingleVideo from "./SpaceListingSingleVideo.jsx";
 import allSpaceTax from "../../../data/dummyData/allSpaceTax.json";
 import Tag from "../../../components/primitives/Tag.jsx";
+import {useEffect, useRef} from "react";
 
 export default function SpaceListingSingle({space}) {
 
-	console.log(allSpaceTax.tags)
+	let scrollContainerRef = useRef(null)
+	useEffect(() => {
+		const scrolly = scrollContainerRef.current;
+		if (scrolly) {
+			console.log(scrolly.scrollWidth)
+		}
+	}, []);
+
 
 	return (
 		<div className="flex flex-col mx-auto max-w-screen-xl gap-2 pt-8">
@@ -30,7 +38,7 @@ export default function SpaceListingSingle({space}) {
 					Button
 				</a>
 			</div>
-			<div className="flex gap-8 overflow-x-scroll no-scrollbar">
+			<div ref={scrollContainerRef} className="flex gap-8 overflow-x-scroll no-scrollbar">
 				{space.videos.map((video, index) => (
 					<SpaceListingSingleVideo key={index} video={video}/>
 				))}
