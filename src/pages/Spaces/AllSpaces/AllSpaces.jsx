@@ -14,11 +14,13 @@ export default function AllSpaces() {
 						Keep
 						it up!
 					</div>
-					{allSpaces.spaces.map((space, index) => (
-						<div key={index}>
-							<SpaceListingSingle space={space}/>
-						</div>
-					))}
+					<div className="px-2">
+						{allSpaces.spaces.map((space, index) => (
+							<div key={index}>
+								<SpaceListingSingle space={space}/>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>
