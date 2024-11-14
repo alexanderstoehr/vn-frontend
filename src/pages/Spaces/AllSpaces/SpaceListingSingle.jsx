@@ -1,49 +1,76 @@
+import {useEffect, useRef, useState} from "react";
 import SpaceListingSingleVideo from "./SpaceListingSingleVideo.jsx";
-import allSpaceTax from "../../../data/dummyData/allSpaceTax.json";
-import Tag from "../../../components/primitives/Tag.jsx";
-import {useEffect, useRef} from "react";
+import Button from "../../../components/primitives/Button.jsx";
+import {HiArrowRight} from "react-icons/hi";
+import classNames from "classnames";
 
 export default function SpaceListingSingle({space}) {
+	const [scrollStatus, setScrollStatus] = useState("right");
+	let scrollContainerRef = useRef(null);
 
-	let scrollContainerRef = useRef(null)
 	useEffect(() => {
-		const scrolly = scrollContainerRef.current;
-		if (scrolly) {
-			console.log(scrolly.scrollWidth)
+		const scrollContainer = scrollContainerRef.current;
+		const maxScrollableWidth = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+
+		const handleScroll = () => {
+			if (scrollContainer.scrollLeft > 0 && scrollContainer.scrollLeft < (maxScrollableWidth - 10)) {
+				setScrollStatus("both");
+			} else if (scrollContainer.scrollLeft === 0) {
+				setScrollStatus("right");
+			} else if (scrollContainer.scrollLeft >= (maxScrollableWidth - 10)) {
+				setScrollStatus("left");
+			}
+		};
+
+		if (scrollContainer) {
+			scrollContainer.addEventListener("scroll", handleScroll);
 		}
+
+		return () => {
+			if (scrollContainer) {
+				scrollContainer.removeEventListener("scroll", handleScroll);
+			}
+		};
 	}, []);
 
-
 	return (
-		<div className="flex flex-col mx-auto max-w-screen-xl gap-2 pt-8">
-			<div className="flex">
-				<div className="flex flex-col w-1/2 mb-8">
-					<div className="text-gray-900 text-2xl font-semibold">{space.name}</div>
+		<div className="flex flex-col mx-auto max-w-screen-xl gap-2 pt-8 z-10">
+			<div className="flex justify-between">
+				<div className="flex flex-col w-1/2 mb-2">
+					<div className="text-gray-800 text-2xl font-semibold">{space.name}</div>
 					<div className="text-gray-500">{space.description}</div>
 				</div>
-				<div className="flex">
-					{allSpaceTax.tags.map((tag, index) => (
-						<div key={index}>
-							<Tag text={tag.name} close=""/>
-						</div>
+
+				<Button
+					className="ml-auto"
+					type="secondary"
+					text="View Space"
+					iconEnd={<HiArrowRight/>}
+				/>
+			</div>
+			<div className="relative">
+				<div
+					ref={scrollContainerRef}
+					className="flex p-4 gap-8 overflow-x-scroll no-scrollbar"
+				>
+					{space.videos.map((video, index) => (
+						<SpaceListingSingleVideo key={index} video={video}/>
 					))}
 				</div>
-				<a href="#"
-				   className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-primary-400  hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-					<svg className="mr-2 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-						 xmlns="http://www.w3.org/2000/svg">
-						<path
-							d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
-					</svg>
-					Button
-				</a>
-			</div>
-			<div ref={scrollContainerRef} className="flex gap-8 overflow-x-scroll no-scrollbar">
-				{space.videos.map((video, index) => (
-					<SpaceListingSingleVideo key={index} video={video}/>
-				))}
+				<div
+					className={classNames(
+						"absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white to-transparent pointer-events-none z-10",
+						{hidden: scrollStatus !== "left" && scrollStatus !== "both"}
+					)}
+				/>
+				<div
+					className={classNames(
+						"absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none z-10",
+						{hidden: scrollStatus !== "right" && scrollStatus !== "both"}
+					)}
+				/>
 			</div>
 			<div className="border border-b-1 border-gray-300 mt-8 mb-4"></div>
 		</div>
-	)
+	);
 }
