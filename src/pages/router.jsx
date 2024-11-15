@@ -5,6 +5,7 @@ import Home from "./Home/Home.jsx";
 import ProtectedRoute from "../layouts/ProtectedRoute.jsx";
 import AllSpaces from "./Spaces/AllSpaces/AllSpaces.jsx";
 import SingleSpace from "./Spaces/SingleSpace/SingleSpace.jsx";
+import Video from "./Video/Video.jsx";
 
 export default function Router() {
 	return (
@@ -18,7 +19,7 @@ export default function Router() {
 					<Route path="/account" element={<h1>Account</h1>}/>
 					<Route path="/spaces" element={<AllSpaces/>}/>
 					<Route path="/space" element={<SingleSpace/>}/>
-					<Route path="/video" element={<h1>Video</h1>}/>
+					<Route path="/video" element={<Video/>}/>
 				</Route>
 
 			</Routes>
