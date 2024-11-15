@@ -1,9 +1,36 @@
+import video from '../../data/dummyData/demoVideo.json';
+import {HiOutlineBookmark, HiOutlineCalendar, HiOutlineLightBulb} from "react-icons/hi";
+import Button from "../../components/primitives/Button.jsx";
+
+
 export default function Video() {
+
+	console.log(video)
+
 	return (
 		<div>
-			<div className="flex flex-col mx-auto max-w-screen-xl gap-8 pt-8">
-				<div className="text-lg font-normal text-gray-500 dark:text-gray-400 ">
-					Top Row
+			<div className="flex flex-col mx-auto max-w-screen-xl gap-4 pt-8">
+				<div className="flex justify-between text-2xl leading-tight font-semibold text-gray-900 dark:text-gray-400 ">
+					<div className="">
+						<div className="">{video.title}</div>
+						<div className="flex flex-row gap-4">
+							<div
+								className="flex flex-row items-center text-xs font-semibold text-gray-500 dark:text-gray-400 gap-1">
+								<HiOutlineCalendar className=" text-gray-500 w-4 h-4"/>
+								{video.created}
+							</div>
+							<div className="flex flex-row items-center text-sm text-gray-500 dark:text-gray-400 gap-1">
+								<HiOutlineBookmark className="text-gray-500 w-4 h-4"/>
+								{video.notes.length} Notes
+							</div>
+						</div>
+					</div>
+					<div className="">
+						<Button
+							iconStart={<HiOutlineLightBulb/>}
+							text="Shortkeys"
+							type="secondary"/>
+					</div>
 				</div>
 				<div className="flex gap-8">
 					<div className="flex flex-col gap-8 w-2/3">
