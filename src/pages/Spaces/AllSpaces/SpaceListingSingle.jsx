@@ -68,9 +68,12 @@ export default function SpaceListingSingle({space}) {
 		<div className="flex flex-col mx-auto max-w-screen-xl gap-2 pt-8 z-10">
 			<div className="flex justify-between">
 				<div className="flex flex-col w-1/2 mb-2">
-					<div className="text-gray-800 text-2xl font-semibold">{space.name}</div>
+					<div className="flex items-center gap-2">
+						<div className="text-gray-800 text-2xl font-semibold">{space.name}</div>
+						<div className="flex mt-1 items-center gap-1 text-gray-400">{<HiPlay/>} {space.videos.length} Videos</div>
+					</div>
 					<div className="text-gray-500">{space.description}</div>
-					<div className="flex items-center gap-1 text-gray-500">{<HiPlay/>} {space.videos.length} Videos</div>
+
 				</div>
 
 				<Button
