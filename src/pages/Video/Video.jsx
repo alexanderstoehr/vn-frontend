@@ -1,6 +1,7 @@
 import video from '../../data/dummyData/demoVideo.json';
-import {HiOutlineBookmark, HiOutlineCalendar, HiOutlineLightBulb} from "react-icons/hi";
+import {HiOutlineBookmark, HiOutlineCalendar, HiOutlineFolder, HiOutlineLightBulb, HiOutlineTag, HiPlus} from "react-icons/hi";
 import Button from "../../components/primitives/Button.jsx";
+import HelpLabel from "../../components/primitives/HelpLabel.jsx";
 
 
 export default function Video() {
@@ -22,6 +23,14 @@ export default function Video() {
 							<div className="flex flex-row items-center text-sm text-gray-500 dark:text-gray-400 gap-1">
 								<HiOutlineBookmark className="text-gray-500 w-4 h-4"/>
 								{video.notes.length} Notes
+							</div>
+							<div className="flex flex-row items-center text-sm text-gray-500 dark:text-gray-400 gap-1">
+								<HiOutlineFolder className="text-gray-500 w-4 h-4"/>
+								{video.category}
+							</div>
+							<div className="flex flex-row items-center text-sm text-gray-500 dark:text-gray-400 gap-1">
+								<HiOutlineTag className="text-gray-500 w-4 h-4"/>
+								{video.tags.map(tag => tag.name).join(', ')}
 							</div>
 						</div>
 					</div>
@@ -53,8 +62,17 @@ export default function Video() {
 					</div>
 					<div className="flex flex-col gap-8 w-1/3">
 						<div>
-							<div className="">Add Note</div>
-							<div className="">Notes</div>
+							<div className="flex items-center">
+								<Button
+									iconStart={<HiPlus/>}
+									text="Add Note"
+									type="primary"
+									className="mt-2"
+								/>
+								<HelpLabel text="Add a note at the current time"/>
+
+							</div>
+							<div className=""></div>
 						</div>
 						<div>
 							<div className="">Tax Header</div>
