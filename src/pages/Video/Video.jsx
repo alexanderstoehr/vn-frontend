@@ -68,8 +68,15 @@ export default function Video() {
 							</iframe>
 						</div>
 						<div>
-							<div className="">Description Header</div>
-							<div className="">Description Area</div>
+							<div className="">
+								<div className="flex flex-col">
+									<HelpLabel text="Your current Note:"/>
+									<div className="text-lg font-semibold mb-4">Creating the Meta Table (Placeholder)</div>
+								</div>
+								<div className="">
+									<textarea className="w-full min-h-96" value="https://www.npmjs.com/package/suneditor"></textarea>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div className="flex flex-col gap-8 w-1/3">
@@ -79,18 +86,23 @@ export default function Video() {
 									iconStart={<HiPlus/>}
 									text="Add Note"
 									type="primary"
-									className="mt-2"
+									className="mt-2 mr-4"
 								/>
 								<HelpLabel text="Add a note at the current time"/>
-
 							</div>
-							<div className=""></div>
+							<div className="">
+								<div className="text-lg font-semibold mr-4">Your Notes</div>
+								<div className="border rounded-xl border-gray-500 p-4">
+									notes<br/>
+									notes<br/>
+								</div>
+							</div>
 						</div>
 						<div>
 							<div className="flex flex-col gap-8">
 								<div className="flex flex-col">
 									<div className="flex">
-										<div className="text-lg font-semibold">Video Tags</div>
+										<div className="text-lg font-semibold mr-4">Video Tags</div>
 										<HelpLabel text="Add up to 3 tags to help categorize your videos"/>
 									</div>
 									<InputTextLine
@@ -98,18 +110,18 @@ export default function Video() {
 										placeholder="Add Tag"
 									/>
 									<div className="flex flex-wrap mt-4"> {video.tags.map(tag => (
-										<Tag text={tag.name} key={tag.id}/>
+										<Tag text={tag.name} key={tag.id} close="true"/>
 									))}
 									</div>
 								</div>
 								<div className="flex flex-col">
 									<div className="flex">
-										<div className="text-lg font-semibold">Video Category</div>
+										<div className="text-lg font-semibold mr-4">Video Category</div>
 										<HelpLabel text="Add a category to help categorize your videos"/>
 									</div>
 									<InputSelect
 										options={videoCategories.categories}
-										selectText="Select a Category"
+										selectedValueID="3"
 									/>
 								</div>
 							</div>
