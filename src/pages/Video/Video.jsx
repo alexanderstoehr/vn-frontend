@@ -14,6 +14,7 @@ import InputTextLine from "../../components/primitives/InputTextLine.jsx";
 import InputSelect from "../../components/primitives/InputSelect.jsx";
 import videoCategories from "../../data/dummyData/videoCategories.json";
 import Tag from "../../components/primitives/Tag.jsx";
+import Note from "./Note.jsx";
 
 
 export default function Video() {
@@ -74,14 +75,15 @@ export default function Video() {
 									<div className="text-lg font-semibold mb-4">Creating the Meta Table (Placeholder)</div>
 								</div>
 								<div className="">
-									<textarea className="w-full min-h-96" value="https://www.npmjs.com/package/suneditor"></textarea>
+									<textarea id="noteDesciption" className="w-full min-h-96"
+											  value="https://www.npmjs.com/package/suneditor"></textarea>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className="flex flex-col gap-8 w-1/3">
 						<div>
-							<div className="flex items-center">
+							<div className="flex items-center mb-4">
 								<Button
 									iconStart={<HiPlus/>}
 									text="Add Note"
@@ -92,9 +94,11 @@ export default function Video() {
 							</div>
 							<div className="">
 								<div className="text-lg font-semibold mr-4">Your Notes</div>
-								<div className="border rounded-xl border-gray-500 p-4">
-									notes<br/>
-									notes<br/>
+								<div className="border rounded-xl border-gray-300">
+									{video.notes.map(note => (
+											<Note note={note.note} key={note.id} active={note.active} time={note.time}/>
+										)
+									)}
 								</div>
 							</div>
 						</div>

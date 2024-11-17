@@ -29,13 +29,14 @@
     },
     {
       "id": 2,
-      "time": "00:21:04 B",
+      "time": "00:21:04",
       "note": "Building Components",
       "description": "Creating a new component and rendering it in the App component. Also, passing data to the component using props. We can do this by passing the data as an attribute to the component."
     },
     {
       "id": 3,
-      "time": "00:54:42 ",
+      "active": true,
+      "time": "00:54:42",
       "note": "Passing Functions Via Props",
       "description": "Passing functions to child components and calling them from the child component. For this we use the onClick event and pass the function as a prop."
     },
