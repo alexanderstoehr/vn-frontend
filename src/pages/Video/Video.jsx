@@ -1,7 +1,19 @@
 import video from '../../data/dummyData/demoVideo.json';
-import {HiOutlineBookmark, HiOutlineCalendar, HiOutlineFolder, HiOutlineLightBulb, HiOutlineTag, HiPlus} from "react-icons/hi";
+import {
+	HiArrowRight,
+	HiOutlineBookmark,
+	HiOutlineCalendar,
+	HiOutlineFolder,
+	HiOutlineLightBulb,
+	HiOutlineTag,
+	HiPlus
+} from "react-icons/hi";
 import Button from "../../components/primitives/Button.jsx";
 import HelpLabel from "../../components/primitives/HelpLabel.jsx";
+import InputTextLine from "../../components/primitives/InputTextLine.jsx";
+import InputSelect from "../../components/primitives/InputSelect.jsx";
+import videoCategories from "../../data/dummyData/videoCategories.json";
+import Tag from "../../components/primitives/Tag.jsx";
 
 
 export default function Video() {
@@ -75,10 +87,31 @@ export default function Video() {
 							<div className=""></div>
 						</div>
 						<div>
-							<div className="">Tax Header</div>
-							<div className="">
-								<div className="">Tags</div>
-								<div className="">Category</div>
+							<div className="flex flex-col gap-8">
+								<div className="flex flex-col">
+									<div className="flex">
+										<div className="text-lg font-semibold">Video Tags</div>
+										<HelpLabel text="Add up to 3 tags to help categorize your videos"/>
+									</div>
+									<InputTextLine
+										value=""
+										placeholder="Add Tag"
+									/>
+									<div className="flex flex-wrap mt-4"> {video.tags.map(tag => (
+										<Tag text={tag.name} key={tag.id}/>
+									))}
+									</div>
+								</div>
+								<div className="flex flex-col">
+									<div className="flex">
+										<div className="text-lg font-semibold">Video Category</div>
+										<HelpLabel text="Add a category to help categorize your videos"/>
+									</div>
+									<InputSelect
+										options={videoCategories.categories}
+										selectText="Select a Category"
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
