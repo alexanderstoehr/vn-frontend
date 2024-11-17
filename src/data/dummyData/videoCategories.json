@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "label": "Music",
+      "value": "music"
+    },
+    {
+      "id": 2,
+      "label": "Sports",
+      "value": "sports"
+    },
+    {
+      "id": 3,
+      "label": "Gaming",
+      "value": "gaming"
+    }
+  ]
+}
