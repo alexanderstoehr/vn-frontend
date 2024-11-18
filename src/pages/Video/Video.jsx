@@ -109,8 +109,16 @@ export default function Video() {
 							<div className="">
 								<div className="text-lg font-semibold mr-4">Your Notes</div>
 								<div className="border rounded-xl border-gray-300">
-									{video.notes.map(note => (
-										<Note note={note.note} key={note.id} active={note.active} time={note.time}/>
+									{video.notes.map((note, index) => (
+										<Note
+											note={note.note}
+											key={note.id}
+											active={note.active}
+											time={note.time}
+											isFirst={index === 0}
+											isLast={index === video.notes.length - 1}
+										/>
+
 									))}
 								</div>
 							</div>
