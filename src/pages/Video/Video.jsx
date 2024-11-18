@@ -81,7 +81,9 @@ export default function Video() {
 							<div className="">
 								<div className="flex flex-col">
 									<HelpLabel text="Your current Note:"/>
-									<div className="text-lg font-semibold mb-4">Creating the Meta Table (Placeholder)</div>
+									<div className="text-lg font-semibold mb-4">
+										Passing Functions Via Props (Placeholder)
+									</div>
 								</div>
 								<div className="">
                   <textarea

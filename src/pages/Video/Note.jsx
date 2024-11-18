@@ -6,7 +6,7 @@ export default function Note({note, active, time}) {
 		<div className="p-2 border border-b-gray-300 rounded-xl hover:bg-primary-200 group">
 			<div className="flex justify-between items-center">
 				<div className={classNames("flex items-center gap-2", {"font-bold": active})}>
-					{active ? <HiPlay/> : <HiOutlinePlay/>} {note}
+					{active ? <HiPlay className="text-primary-800"/> : <HiOutlinePlay/>} {note}
 				</div>
 				<div className="flex">
 					<span className="text-sm text-gray-500 group-hover:hidden"> ({time})</span>
