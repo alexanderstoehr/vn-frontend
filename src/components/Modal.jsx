@@ -11,12 +11,13 @@ export default function Modal({
 
 		<div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
 			<div className="bg-white rounded-lg p-4 w-96">
-				<div className="flex justify-between items-center">
+				<div className="flex justify-between pb-2 mb-2 border-b border-b-gray-300 items-center">
 					<div className="text-xl font-semibold">{modalHeader}</div>
 					<div className="cursor-pointer">
 						<HiX className="w-6 h-6"/>
 					</div>
 				</div>
+
 				<div className="flex flex-col gap-4">
 					<div className="text-gray-500">{modalContent}</div>
 
