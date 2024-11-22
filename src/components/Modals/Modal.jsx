@@ -1,33 +1,37 @@
-import {HiX} from "react-icons/hi";
-import Button from "../primitives/Button.jsx";
+import { HiX } from "react-icons/hi"
+import Button from "../primitives/Button.jsx"
 
 export default function Modal({
-								  modalHeader = "ModalHead",
-								  modalContent = "ModalContent",
-								  primaryButtonText = "Save",
-								  secondaryButtonText = "Cancel"
-							  }) {
-	return (
+    modalHeader = "ModalHead",
+    modalContent = "ModalContent",
+    primaryButtonText = "Save",
+    secondaryButtonText = "Cancel",
+}) {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="w-96 rounded-lg bg-white p-4">
+                <div className="mb-2 flex items-center justify-between border-b border-b-gray-300 pb-2">
+                    <div className="text-xl font-semibold">{modalHeader}</div>
+                    <div className="cursor-pointer">
+                        <HiX className="h-6 w-6" />
+                    </div>
+                </div>
 
-		<div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
-			<div className="bg-white rounded-lg p-4 w-96">
-				<div className="flex justify-between pb-2 mb-2 border-b border-b-gray-300 items-center">
-					<div className="text-xl font-semibold">{modalHeader}</div>
-					<div className="cursor-pointer">
-						<HiX className="w-6 h-6"/>
-					</div>
-				</div>
+                <div className="flex flex-col gap-4">
+                    <div className="text-gray-500">{modalContent}</div>
 
-				<div className="flex flex-col gap-4">
-					<div className="text-gray-500">{modalContent}</div>
-
-					<div className="flex justify-end items-center gap-2">
-						<Button type="" text={secondaryButtonText}/>
-						<Button type="primary" text={primaryButtonText}/>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	)
+                    <div className="flex items-center justify-end gap-2">
+                        <Button
+                            type=""
+                            text={secondaryButtonText}
+                        />
+                        <Button
+                            type="primary"
+                            text={primaryButtonText}
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
