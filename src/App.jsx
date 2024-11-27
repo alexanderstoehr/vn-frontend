@@ -1,6 +1,5 @@
-import Router from "./pages/router.jsx";
+import Router from "./pages/router.jsx"
 
 export default function App() {
-    return <Router/>
+    return <Router />
 }
-
