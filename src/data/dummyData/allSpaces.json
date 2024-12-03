@@ -10,7 +10,7 @@
           "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
           "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
           "created": "2021-09-01",
-          "title": "React Beginner Tutorial Mosh",
+          "title": "React Beginner 1 Tutorial Mosh React Beginner 1 Tutorial Mosh",
           "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
           "category": "Programming",
           "tags": [
@@ -55,13 +55,13 @@
           "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
           "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
           "created": "2021-09-01",
-          "title": "React Beginner Tutorial Mosh",
+          "title": "React Beginner 2 Tutorial Mosh",
           "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
           "category": "Programming",
           "tags": [
             {
               "id": 1,
-              "name": "React"
+              "name": "React Very Long tag"
             },
             {
               "id": 2,
@@ -100,7 +100,7 @@
           "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
           "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
           "created": "2021-09-01",
-          "title": "React Beginner Tutorial Mosh",
+          "title": "React Beginner 3 Tutorial Mosh",
           "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
           "category": "Programming",
           "tags": [
@@ -145,7 +145,52 @@
           "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
           "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
           "created": "2021-09-01",
-          "title": "React Beginner Tutorial Mosh",
+          "title": "React Beginner 4 Tutorial Mosh",
+          "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
+          "category": "Programming",
+          "tags": [
+            {
+              "id": 1,
+              "name": "React"
+            },
+            {
+              "id": 2,
+              "name": "Project Setup"
+            },
+            {
+              "id": 3,
+              "name": "Vite"
+            }
+          ],
+          "notes": [
+            {
+              "id": 1,
+              "time": "00:04:57",
+              "note": "Setting Up the Development Environment",
+              "description": "Creating a new project using create-react-app and running the project. We need to have Node.js installed on our machine to run the project."
+            },
+            {
+              "id": 2,
+              "time": "00:21:04 B",
+              "note": "Building Components",
+              "description": "Creating a new component and rendering it in the App component. Also, passing data to the component using props. We can do this by passing the data as an attribute to the component."
+            },
+            {
+              "id": 3,
+              "time": "00:54:42 ",
+              "note": "Passing Functions Via Props",
+              "description": "Passing functions to child components and calling them from the child component. For this we use the onClick event and pass the function as a prop."
+            },
+            {
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
+          "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
+          "created": "2021-09-01",
+          "title": "React Beginner 4 Tutorial Mosh",
           "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
           "category": "Programming",
           "tags": [

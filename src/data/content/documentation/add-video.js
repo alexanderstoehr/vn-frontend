@@ -18,7 +18,7 @@ const addVideoDocumentation = {
         
         Maecenas nostra dapibus faucibus natoque aenean hendrerit ornare arcu, euismod accumsan class 
         dignissim aliquam sapien tortor quisque, magnis diam pellentesque sagittis 
-    `
-};
+    `,
+}
 
-export default addVideoDocumentation;
+export default addVideoDocumentation

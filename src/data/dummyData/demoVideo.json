@@ -1,6 +1,7 @@
 {
   "id": 1,
   "videoUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk",
+  "created": "2021-09-01",
   "thumbnail": "https://img.youtube.com/vi/SqcY0GlETPk/maxresdefault.jpg",
   "title": "React Beginner Tutorial Mosh",
   "description": "Building a simple React application from scratch. This tutorial is for beginners who want to learn React.",
@@ -28,17 +29,64 @@
     },
     {
       "id": 2,
-      "time": "00:21:04 B",
+      "time": "00:21:04",
       "note": "Building Components",
       "description": "Creating a new component and rendering it in the App component. Also, passing data to the component using props. We can do this by passing the data as an attribute to the component."
     },
     {
       "id": 3,
-      "time": "00:54:42 ",
+      "active": true,
+      "time": "00:54:42",
       "note": "Passing Functions Via Props",
       "description": "Passing functions to child components and calling them from the child component. For this we use the onClick event and pass the function as a prop."
     },
     {
+      "id": 4,
+      "time": "01:12:00",
+      "note": "Lifting the State Up",
+      "description": "Moving the state from the child component to the parent component. This is useful when we need to share the state between multiple components."
+    },
+    {
+      "id": 5,
+      "time": "01:34:00",
+      "note": "Functional Components",
+      "description": "Creating functional components using arrow functions. We can also use the useState hook to manage the state in functional components."
+    },
+    {
+      "id": 6,
+      "time": "01:45:00",
+      "note": "Fetching Data from the Server",
+      "description": "Fetching data from a server using the fetch API. We can use the useEffect hook to fetch data when the component is mounted."
+    },
+    {
+      "id": 7,
+      "time": "02:00:00",
+      "note": "Handling Errors",
+      "description": "Handling errors when fetching data from the server. We can use the catch method to catch any errors that occur during the fetch operation."
+    },
+    {
+      "id": 8,
+      "time": "02:15:00",
+      "note": "Styling Components",
+      "description": "Styling components using CSS. We can create a separate CSS file for each component and import it into the component file."
+    },
+    {
+      "id": 9,
+      "time": "02:30:00",
+      "note": "Building a Simple React Application",
+      "description": "Building a simple React application that displays a list of items fetched from a server. We can also add a form to add new items to the list."
+    },
+    {
+      "id": 10,
+      "time": "02:45:00",
+      "note": "Deploying the Application",
+      "description": "Deploying the application to a hosting service like Netlify or Vercel. We can use the build command to create a production build of the application."
+    },
+    {
+      "id": 11,
+      "time": "03:00:00",
+      "note": "Conclusion",
+      "description": "Wrapping up the tutorial and discussing the next steps for learning React. We can explore more advanced topics like state management and routing in React."
     }
   ]
 }
