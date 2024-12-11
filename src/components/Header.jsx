@@ -1,6 +1,19 @@
+import { useState } from "react"
+import LoginModal from "./modals/LoginModal.jsx"
+import RegisterModal from "./modals/RegisterModal.jsx"
+
 export default function Header() {
+    const [showLoginModal, setShowLoginModal] = useState(false)
+    const [showRegisterModal, setShowRegisterModal] = useState(false)
+
     return (
         <header>
+            {showLoginModal && (
+                <LoginModal setShowLoginModal={setShowLoginModal} />
+            )}
+            {showRegisterModal && (
+                <RegisterModal setShowRegisterModal={setShowRegisterModal} />
+            )}
             <nav className="border-gray-200 bg-white px-4 py-2.5 dark:bg-gray-800 lg:px-6">
                 <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
                     <a
@@ -14,13 +27,15 @@ export default function Header() {
                     </a>
                     <div className="flex items-center lg:order-2">
                         <a
-                            href="#"
-                            className="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5">
+                            onClick={() => setShowLoginModal(!showLoginModal)}
+                            className="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5">
                             Log in
                         </a>
                         <a
-                            href="#"
-                            className="mr-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 lg:px-5 lg:py-2.5">
+                            onClick={() =>
+                                setShowRegisterModal(!showRegisterModal)
+                            }
+                            className="mr-2 cursor-pointer rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 lg:px-5 lg:py-2.5">
                             Get started
                         </a>
                         <button

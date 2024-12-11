@@ -3,7 +3,7 @@ import Demo from "./Demo.jsx"
 import Benefits from "./Benefits.jsx"
 import FAQ from "./FAQ.jsx"
 import Pricing from "./Pricing.jsx"
-import Modal from "../../components/Modals/Modal.jsx"
+import Modal from "../../components/modals/Modal.jsx"
 
 export default function Home() {
     return (
