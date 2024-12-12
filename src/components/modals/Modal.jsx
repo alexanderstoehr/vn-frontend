@@ -19,7 +19,7 @@ export default function Modal({
     }, [onClose])
 
     return (
-        <div className="fixed inset-0 z-40 flex items-start justify-center bg-black bg-opacity-70 pt-20 backdrop-blur">
+        <div className="fixed inset-0 z-40 flex items-start justify-center bg-gray-950 bg-opacity-85 pt-20">
             <div className="z-50 w-96 rounded-lg bg-white p-4">
                 <div className="mb-2 flex items-center justify-between border-b border-b-gray-300 pb-2">
                     <div className="text-xl font-semibold">{modalHeader}</div>
