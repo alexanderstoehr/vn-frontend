@@ -1,3 +1,9 @@
+//
+//
+// ToDo: Login form validations (form fields, request status notification)
+//
+//
+
 import { useState } from "react"
 import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
@@ -5,9 +11,12 @@ import { useMutation } from "@tanstack/react-query"
 import { apiVeenotes } from "../../api/axios.js"
 import { postTokenEndpoint } from "../../api/endpoints.js"
 import { useUser } from "../../context/UserContext.jsx"
+import { useNavigate } from "react-router-dom"
 
 export default function LoginForm({ onClose }) {
-    const { user, login } = useUser()
+    const { login } = useUser()
+
+    const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -18,7 +27,13 @@ export default function LoginForm({ onClose }) {
             return apiVeenotes.post(postTokenEndpoint, credentials)
         },
         onSuccess: (data) => {
-            console.log("Login successful:", data.data)
+            console.log(
+                data.data.user.id,
+                data.data.user.username,
+                data.data.access
+            )
+            login(data.data.user.id, data.data.user.username, data.data.access)
+            navigate("/spaces")
         },
         onError: (error) => {
             console.error("Login failed:", error)

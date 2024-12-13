@@ -20,7 +20,9 @@ export const UserProvider = ({ children }) => {
 
     const login = (userId, userName, accessToken) => {
         setUser({ userId, userName, accessToken })
-        console.log("context login")
+        console.log("User state updated:", user)
+
+        sessionStorage.setItem("vud", [userId, accessToken])
     }
     const logout = () => {
         setUser({ userId: null, userName: null, accessToken: null })
