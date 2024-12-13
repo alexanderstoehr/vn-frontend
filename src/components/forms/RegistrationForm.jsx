@@ -1,6 +1,12 @@
 import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
 import { useState } from "react"
+import { useMutation } from "@tanstack/react-query"
+import {
+    patchRegistrationVerifyEndpoint,
+    postRegistrationEndpoint,
+} from "../../api/endpoints.js"
+import { apiVeenotes } from "../../api/axios.js"
 
 export default function RegistrationForm({ onClose }) {
     let buttonText, introText
@@ -12,27 +18,89 @@ export default function RegistrationForm({ onClose }) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
+    const handleClose = () => {
+        onClose()
+    }
+
+    const forwardStepStateArray = () => {
+        const index = stateArray.indexOf(formState)
+        if (index < stateArray.length - 1) {
+            setFormState(stateArray[index + 1])
+        }
+    }
+
+    const getRegCode = useMutation({
+        mutationKey: "getRegCode",
+        mutationFn: (email) => {
+            console.log("Sending request to:", postRegistrationEndpoint)
+            return apiVeenotes.post(postRegistrationEndpoint, email)
+        },
+        onSuccess: (data) => {
+            console.log("Registration request successful:", data.data)
+        },
+        onError: (error) => {
+            console.error("Registration request failed:", error)
+        },
+    })
+
+    const postRegistration = useMutation({
+        mutationKey: "postRegistration",
+        mutationFn: ({ email, verificationCode, username, password }) => {
+            console.log("Sending request to:", patchRegistrationVerifyEndpoint)
+            return apiVeenotes.patch(patchRegistrationVerifyEndpoint, {
+                email,
+                code: verificationCode,
+                username,
+                password,
+                password_repeat: password,
+                first_name: "-",
+                last_name: "-",
+            })
+        },
+        onSuccess: (data) => {
+            console.log("Registration request successful:", data.data)
+        },
+        onError: (error) => {
+            console.error("Registration request failed:", error)
+        },
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(formState)
+        if (formState === stateArray[0]) {
+            getRegCode.mutate(
+                { email },
+                {
+                    onSuccess: () => {
+                        forwardStepStateArray()
+                    },
+                    onError: () => {
+                        console.log("Error")
+                    },
+                }
+            )
+        } else if (formState === stateArray[1]) {
+            postRegistration.mutate({
+                email,
+                verificationCode,
+                username,
+                password,
+            })
+        }
+    }
+
     if (formState === stateArray[0]) {
         buttonText = "Get Code"
         introText =
             "Please enter your email and receive your registration code."
     } else if (formState === stateArray[1]) {
         buttonText = "Create Account"
-        introText = "Please enter your registration code."
+        introText =
+            "Please check your email for the registration code and enter it along with your profile information."
     } else if (formState === stateArray[2]) {
         buttonText = "Go to your Space"
         introText = "Registration successful!"
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log("submit: ", verificationCode)
-        console.log("event: ", e)
-        setFormState(stateArray[1])
-    }
-
-    const handleClose = () => {
-        onClose()
     }
 
     return (
@@ -96,6 +164,33 @@ export default function RegistrationForm({ onClose }) {
                         onClick={handleSubmit}
                     />
                 </div>
+
+                {formState === stateArray[0] && (
+                    <>
+                        {getRegCode.isLoading && <div>Loading...</div>}
+                        {getRegCode.isError && getRegCode.error && (
+                            <div className="text-red-400">
+                                Error: {getRegCode.error.message}
+                            </div>
+                        )}
+                        {getRegCode.data && (
+                            <div className="text-green-400">Code sent</div>
+                        )}
+                    </>
+                )}
+                {formState === stateArray[1] && (
+                    <>
+                        {postRegistration.isLoading && <div>Loading...</div>}
+                        {postRegistration.isError && postRegistration.error && (
+                            <div className="text-red-400">
+                                Error: {postRegistration.error.message}
+                            </div>
+                        )}
+                        {postRegistration.data && (
+                            <div className="text-green-400">Code sent</div>
+                        )}
+                    </>
+                )}
             </form>
         </div>
     )
