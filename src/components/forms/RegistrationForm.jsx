@@ -1,3 +1,9 @@
+//
+//
+// ToDo: Registration form validations (form fields, request status notification)
+//
+//
+
 import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
 import { useState } from "react"
@@ -5,11 +11,19 @@ import { useMutation } from "@tanstack/react-query"
 import {
     patchRegistrationVerifyEndpoint,
     postRegistrationEndpoint,
+    postTokenEndpoint,
 } from "../../api/endpoints.js"
 import { apiVeenotes } from "../../api/axios.js"
+import { useUser } from "../../context/UserContext.jsx"
+import { useNavigate } from "react-router-dom"
 
 export default function RegistrationForm({ onClose }) {
+    const { setSessionUser, setRefreshToken } = useUser()
+
     let buttonText, introText
+
+    const navigate = useNavigate()
+
     const stateArray = ["getCode", "createUser", "registrationSuccessful"]
     const [formState, setFormState] = useState(stateArray[0])
 
@@ -29,6 +43,24 @@ export default function RegistrationForm({ onClose }) {
         }
     }
 
+    //Get the token and userdata:
+    // save user to global state,
+    // save access to sessionStorage,
+    // save token to localStorage
+    const getToken = useMutation({
+        mutationFn: (credentials) => {
+            console.log("Sending request to:", postTokenEndpoint)
+            return apiVeenotes.post(postTokenEndpoint, credentials)
+        },
+        onSuccess: () => {
+            console.log("Login successful")
+        },
+        onError: (error) => {
+            console.error("Login failed:", error)
+        },
+    })
+
+    //Get the registration code
     const getRegCode = useMutation({
         mutationKey: "getRegCode",
         mutationFn: (email) => {
@@ -42,7 +74,7 @@ export default function RegistrationForm({ onClose }) {
             console.error("Registration request failed:", error)
         },
     })
-
+    //Post the registration with registration code
     const postRegistration = useMutation({
         mutationKey: "postRegistration",
         mutationFn: ({ email, verificationCode, username, password }) => {
@@ -57,8 +89,22 @@ export default function RegistrationForm({ onClose }) {
                 last_name: "-",
             })
         },
+        // onSuccess log in with the new user, get tokens and user
         onSuccess: (data) => {
             console.log("Registration request successful:", data.data)
+            getToken.mutate(
+                { email, password },
+                {
+                    onSuccess: (data) => {
+                        setSessionUser(
+                            data.data.user.id,
+                            data.data.user.username,
+                            data.data.access
+                        )
+                        setRefreshToken(data.data.refresh)
+                    },
+                }
+            )
         },
         onError: (error) => {
             console.error("Registration request failed:", error)
@@ -76,17 +122,29 @@ export default function RegistrationForm({ onClose }) {
                         forwardStepStateArray()
                     },
                     onError: () => {
-                        console.log("Error")
+                        console.log("Code Error")
                     },
                 }
             )
         } else if (formState === stateArray[1]) {
-            postRegistration.mutate({
-                email,
-                verificationCode,
-                username,
-                password,
-            })
+            postRegistration.mutate(
+                {
+                    email,
+                    verificationCode,
+                    username,
+                    password,
+                },
+                {
+                    onSuccess: () => {
+                        forwardStepStateArray()
+                    },
+                    onError: () => {
+                        console.log("Reg Error")
+                    },
+                }
+            )
+        } else if (formState === stateArray[2]) {
+            navigate("/spaces")
         }
     }
 
@@ -99,7 +157,7 @@ export default function RegistrationForm({ onClose }) {
         introText =
             "Please check your email for the registration code and enter it along with your profile information."
     } else if (formState === stateArray[2]) {
-        buttonText = "Go to your Space"
+        buttonText = "Visit your Spaces Overview"
         introText = "Registration successful!"
     }
 
@@ -170,7 +228,7 @@ export default function RegistrationForm({ onClose }) {
                         {getRegCode.isLoading && <div>Loading...</div>}
                         {getRegCode.isError && getRegCode.error && (
                             <div className="text-red-400">
-                                Error: {getRegCode.error.message}
+                                Code Error: {getRegCode.error.message}
                             </div>
                         )}
                         {getRegCode.data && (
@@ -183,7 +241,7 @@ export default function RegistrationForm({ onClose }) {
                         {postRegistration.isLoading && <div>Loading...</div>}
                         {postRegistration.isError && postRegistration.error && (
                             <div className="text-red-400">
-                                Error: {postRegistration.error.message}
+                                Reg Error: {postRegistration.error.message}
                             </div>
                         )}
                         {postRegistration.data && (

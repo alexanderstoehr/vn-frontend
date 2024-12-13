@@ -18,18 +18,23 @@ export const UserProvider = ({ children }) => {
         accessToken: null,
     })
 
-    const login = (userId, userName, accessToken) => {
+    const setSessionUser = (userId, userName, accessToken) => {
         setUser({ userId, userName, accessToken })
         console.log("User state updated:", user)
 
         sessionStorage.setItem("vud", [userId, accessToken])
+    }
+
+    const setRefreshToken = (refreshToken) => {
+        localStorage.setItem("vrt", refreshToken)
     }
     const logout = () => {
         setUser({ userId: null, userName: null, accessToken: null })
     }
 
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider
+            value={{ user, setSessionUser, setRefreshToken, logout }}>
             {children}
         </UserContext.Provider>
     )

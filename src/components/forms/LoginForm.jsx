@@ -14,7 +14,7 @@ import { useUser } from "../../context/UserContext.jsx"
 import { useNavigate } from "react-router-dom"
 
 export default function LoginForm({ onClose }) {
-    const { login } = useUser()
+    const { setSessionUser } = useUser()
 
     const navigate = useNavigate()
 
@@ -32,7 +32,11 @@ export default function LoginForm({ onClose }) {
                 data.data.user.username,
                 data.data.access
             )
-            login(data.data.user.id, data.data.user.username, data.data.access)
+            setSessionUser(
+                data.data.user.id,
+                data.data.user.username,
+                data.data.access
+            )
             navigate("/spaces")
         },
         onError: (error) => {
