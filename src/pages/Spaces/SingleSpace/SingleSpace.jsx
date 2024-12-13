@@ -1,17 +1,13 @@
-import { Checkbox, Label, Sidebar } from "flowbite-react"
-import {
-    HiOutlineFolder,
-    HiOutlineTag,
-    HiOutlineBookmark,
-    HiOutlineCalendar,
-} from "react-icons/hi"
+import { HiOutlineBookmark, HiOutlineCalendar } from "react-icons/hi"
 import singleSpace from "../../../data/dummyData/singleSpace.json"
-import spaceTax from "../../../data/dummyData/allSpaceTax.json"
-import { useState } from "react"
 import Tag from "../../../components/primitives/Tag.jsx"
 import SpacesSidebar from "../SpacesSidebar.jsx"
+import { useUser } from "../../../context/UserContext.jsx"
 
 export default function SingleSpace() {
+    const { user } = useUser()
+    console.log("User in spaces:", user)
+
     return (
         <div className="mx-auto flex max-w-screen-xl flex-row gap-8 pt-8">
             <SpacesSidebar />

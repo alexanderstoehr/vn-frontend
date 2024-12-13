@@ -1,8 +1,12 @@
 import SpacesSidebar from "../SpacesSidebar.jsx"
 import allSpaces from "../../../data/dummyData/allSpaces.json"
 import SpaceListingSingle from "./SpaceListingSingle.jsx"
+import { useUser } from "../../../context/UserContext.jsx"
 
 export default function AllSpaces() {
+    const { user } = useUser()
+    console.log("User in spaces:", user)
+
     return (
         <div className="mx-auto flex max-w-screen-xl flex-row gap-8 pt-8">
             <SpacesSidebar />
