@@ -4,12 +4,15 @@ import Button from "../primitives/Button.jsx"
 import { useMutation } from "@tanstack/react-query"
 import { apiVeenotes } from "../../api/axios.js"
 import { postTokenEndpoint } from "../../api/endpoints.js"
+import { useUser } from "../../context/UserContext.jsx"
 
 export default function LoginForm({ onClose }) {
+    const { user, login } = useUser()
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const mutation = useMutation({
+    const getToken = useMutation({
         mutationFn: (credentials) => {
             console.log("Sending request to:", postTokenEndpoint)
             return apiVeenotes.post(postTokenEndpoint, credentials)
@@ -24,7 +27,7 @@ export default function LoginForm({ onClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        mutation.mutate({ email, password })
+        getToken.mutate({ email, password })
     }
 
     const handleClose = () => {
@@ -64,13 +67,13 @@ export default function LoginForm({ onClose }) {
                     />
                 </div>
             </form>
-            {mutation.isLoading && <div>Loading...</div>}
-            {mutation.isError && (
+            {getToken.isLoading && <div>Loading...</div>}
+            {getToken.isError && (
                 <div className="text-red-400">
-                    Error: {mutation.error.message}
+                    Error: {getToken.error.message}
                 </div>
             )}
-            {mutation.data && <div className="text-green-400">Logged in</div>}
+            {getToken.data && <div className="text-green-400">Logged in</div>}
         </div>
     )
 }
