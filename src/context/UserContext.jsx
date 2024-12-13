@@ -1,3 +1,10 @@
+// Context is way easier and lighter as Redux or Zustand - but it's not as powerful as Redux or Zustand
+// It is suiting for smaller stores and global states that are not too complex
+
+// 1. Create the context file (this file) where you define variables and methods for the context
+// 2. Wrap the app with the context provider in App.jsx
+// 3. Use the context in any component with the custom hook (here it is useUser)
+
 import { createContext, useContext, useState } from "react"
 
 // Create a context object and assign it to a variable
