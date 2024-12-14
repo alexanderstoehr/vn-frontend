@@ -27,16 +27,8 @@ export default function LoginForm({ onClose }) {
             return apiVeenotes.post(postTokenEndpoint, credentials)
         },
         onSuccess: (data) => {
-            console.log(
-                data.data.user.id,
-                data.data.user.username,
-                data.data.access
-            )
-            setSessionUser(
-                data.data.user.id,
-                data.data.user.username,
-                data.data.access
-            )
+            console.log(data.data.user.id, data.data.access)
+            setSessionUser(data.data.user.id, data.data.access)
             navigate("/spaces")
         },
         onError: (error) => {

@@ -9,27 +9,28 @@ import { createContext, useContext, useState } from "react"
 
 // Create a context object and assign it to a variable
 const UserContext = createContext()
+const expiresAt = new Date().getTime() + 10 * 1000 // 3600000 // 1 hour
 
 // Create the context provider with its state and methods
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({
         userId: null,
-        userName: null,
         accessToken: null,
+        expiresAt: null,
     })
 
-    const setSessionUser = (userId, userName, accessToken) => {
-        setUser({ userId, userName, accessToken })
+    const setSessionUser = (userId, accessToken) => {
+        setUser({ userId, accessToken, expiresAt })
         console.log("User state updated:", user)
 
-        sessionStorage.setItem("vud", [userId, accessToken])
+        sessionStorage.setItem("vud", [userId, accessToken, expiresAt])
     }
 
     const setRefreshToken = (refreshToken) => {
         localStorage.setItem("vrt", refreshToken)
     }
     const logout = () => {
-        setUser({ userId: null, userName: null, accessToken: null })
+        setUser({ userId: null, accessToken: null, expiresAt: null })
     }
 
     return (
