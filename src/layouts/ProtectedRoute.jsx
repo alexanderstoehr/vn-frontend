@@ -26,6 +26,7 @@ export default function ProtectedRoute() {
         })
         .catch(async (error) => {
             console.error("Validation failed", error)
+            sessionStorage.removeItem("vud")
             try {
                 console.log("Refreshing accToken")
                 const newToken = await refreshTokenMutation(refToken)
@@ -39,6 +40,7 @@ export default function ProtectedRoute() {
                 setIsloggedIn(retryValidation)
             } catch (refreshError) {
                 console.error("Refresh failed", refreshError)
+                localStorage.removeItem("vrt")
                 navigate("/")
             }
             console.log("failed yo")
