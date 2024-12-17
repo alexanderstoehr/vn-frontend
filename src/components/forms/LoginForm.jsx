@@ -7,38 +7,18 @@
 import { useState } from "react"
 import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
-import { useMutation } from "@tanstack/react-query"
-import { apiVeenotes } from "../../api/axios.js"
-import { postTokenEndpoint } from "../../api/endpoints.js"
-import { useUser } from "../../context/UserContext.jsx"
-import { useNavigate } from "react-router-dom"
+import { useLoginMutation } from "../../hooks/useLoginMutation.jsx"
 
 export default function LoginForm({ onClose }) {
-    const { setSessionUser } = useUser()
-
-    const navigate = useNavigate()
-
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const getToken = useMutation({
-        mutationFn: (credentials) => {
-            console.log("Sending request to:", postTokenEndpoint)
-            return apiVeenotes.post(postTokenEndpoint, credentials)
-        },
-        onSuccess: (data) => {
-            console.log(data.data.user.id, data.data.access)
-            setSessionUser(data.data.user.id, data.data.access)
-            navigate("/spaces")
-        },
-        onError: (error) => {
-            console.error("Login failed:", error)
-        },
-    })
+    const redirectToSpaces = "/spaces"
+    const loginGetToken = useLoginMutation(redirectToSpaces)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        getToken.mutate({ email, password })
+        loginGetToken.mutate({ email, password })
     }
 
     const handleClose = () => {
@@ -78,13 +58,15 @@ export default function LoginForm({ onClose }) {
                     />
                 </div>
             </form>
-            {getToken.isLoading && <div>Loading...</div>}
-            {getToken.isError && (
+            {loginGetToken.isLoading && <div>Loading...</div>}
+            {loginGetToken.isError && (
                 <div className="text-red-400">
-                    Error: {getToken.error.message}
+                    Error: {loginGetToken.error.message}
                 </div>
             )}
-            {getToken.data && <div className="text-green-400">Logged in</div>}
+            {loginGetToken.data && (
+                <div className="text-green-400">Logged in</div>
+            )}
         </div>
     )
 }

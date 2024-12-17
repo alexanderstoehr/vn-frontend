@@ -14,11 +14,11 @@ import {
     postTokenEndpoint,
 } from "../../api/endpoints.js"
 import { apiVeenotes } from "../../api/axios.js"
-import { useUser } from "../../context/UserContext.jsx"
 import { useNavigate } from "react-router-dom"
+import { useLoginMutation } from "../../hooks/useLoginMutation.jsx"
 
 export default function RegistrationForm({ onClose }) {
-    const { setSessionUser, setRefreshToken } = useUser()
+    const loginGetToken = useLoginMutation()
 
     let buttonText, introText
 
@@ -47,18 +47,6 @@ export default function RegistrationForm({ onClose }) {
     // save user to global state,
     // save access to sessionStorage,
     // save token to localStorage
-    const getToken = useMutation({
-        mutationFn: (credentials) => {
-            console.log("Sending request to:", postTokenEndpoint)
-            return apiVeenotes.post(postTokenEndpoint, credentials)
-        },
-        onSuccess: () => {
-            console.log("Login successful")
-        },
-        onError: (error) => {
-            console.error("Login failed:", error)
-        },
-    })
 
     //Get the registration code
     const getRegCode = useMutation({
@@ -92,19 +80,7 @@ export default function RegistrationForm({ onClose }) {
         // onSuccess log in with the new user, get tokens and user
         onSuccess: (data) => {
             console.log("Registration request successful:", data.data)
-            getToken.mutate(
-                { email, password },
-                {
-                    onSuccess: (data) => {
-                        setSessionUser(
-                            data.data.user.id,
-                            data.data.user.username,
-                            data.data.access
-                        )
-                        setRefreshToken(data.data.refresh)
-                    },
-                }
-            )
+            loginGetToken.mutate({ email, password })
         },
         onError: (error) => {
             console.error("Registration request failed:", error)
@@ -158,7 +134,8 @@ export default function RegistrationForm({ onClose }) {
             "Please check your email for the registration code and enter it along with your profile information."
     } else if (formState === stateArray[2]) {
         buttonText = "Visit your Spaces Overview"
-        introText = "Registration successful!"
+        introText =
+            "Registration successful. You can now visit your Spaces Overview and add your first video. 🥳"
     }
 
     return (
@@ -206,7 +183,7 @@ export default function RegistrationForm({ onClose }) {
                         />
                     </>
                 )}
-                {formState === stateArray[2] && <div>Yeah, ready!</div>}
+                {formState === stateArray[2] && <div></div>}
                 <div className="flex items-center justify-end gap-2">
                     {formState !== stateArray[2] && (
                         <Button
