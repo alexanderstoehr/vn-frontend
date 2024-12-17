@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from "axios"
 
-const baseUrl = ""
+const baseUrl = "https://api.veenotes.com"
 
 export const apiVeenotes = axios.create({
-    baseURL: baseUrl
-});
+    baseURL: baseUrl,
+})
