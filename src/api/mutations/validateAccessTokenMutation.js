@@ -7,7 +7,7 @@ export const validateAccessTokenMutation = async (token) => {
         await apiVeenotes.post(postVerifyTokenEndpoint, {
             token: token,
         })
-        console.log("posting to endpoint")
+        //console.log("posting to endpoint")
         return true
     } catch (e) {
         throw new Error(e)
