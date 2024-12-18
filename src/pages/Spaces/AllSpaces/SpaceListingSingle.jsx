@@ -80,13 +80,15 @@ export default function SpaceListingSingle({ space }) {
                 <div className="mb-2 flex w-1/2 flex-col">
                     <div className="flex items-center gap-2">
                         <div className="text-2xl font-semibold text-gray-800">
-                            {space.name}
+                            {space.space_name}
                         </div>
                         <div className="mt-1 flex items-center gap-1 text-gray-400">
                             {<HiPlay />} {space.videos.length} Videos
                         </div>
                     </div>
-                    <div className="text-gray-500">{space.description}</div>
+                    <div className="text-gray-500">
+                        {space.space_description}
+                    </div>
                 </div>
 
                 <Button
@@ -99,7 +101,7 @@ export default function SpaceListingSingle({ space }) {
             <div className="relative">
                 <div
                     ref={scrollContainerRef}
-                    className="no-scrollbar flex cursor-grab gap-8 overflow-x-scroll p-4 active:cursor-grabbing">
+                    className="no-scrollbar grid cursor-grab grid-cols-3 gap-8 overflow-x-scroll p-4 active:cursor-grabbing">
                     {space.videos.map((video, index) => (
                         <SpaceListingSingleVideo
                             key={index}

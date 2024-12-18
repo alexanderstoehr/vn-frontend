@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom"
 import AccountHeader from "../components/AccountHeader.jsx"
 import { Footer } from "flowbite-react"
 import { validateAccessTokenMutation } from "../api/mutations/validateAccessTokenMutation.js"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { refreshTokenMutation } from "../api/mutations/refreshTokenMutation.js"
 import { useUser } from "../context/UserContext.jsx"
 
@@ -15,36 +15,37 @@ export default function ProtectedRoute() {
     const accToken = sessionStorageObj.at
     const refToken = localStorageObj.rt
 
-    const validated = async () => {
-        return await validateAccessTokenMutation(accToken)
-    }
-
-    validated()
-        .then((result) => {
-            console.log("Is validated: ", result)
-            setIsloggedIn(result)
-        })
-        .catch(async (error) => {
-            console.error("Validation failed", error)
-            sessionStorage.removeItem("vud")
+    useEffect(() => {
+        const validateToken = async () => {
             try {
-                console.log("Refreshing accToken")
-                const newToken = await refreshTokenMutation(refToken)
-                console.log("new token: ", newToken)
-                setSessionStorage(newToken.access)
+                const result = await validateAccessTokenMutation(accToken)
+                console.log("Is validated: ", result)
+                setIsloggedIn(result)
+            } catch (error) {
+                console.error("Validation failed", error)
+                sessionStorage.removeItem("vud")
+                try {
+                    console.log("Refreshing accToken")
+                    const newToken = await refreshTokenMutation(refToken)
+                    console.log("new token: ", newToken)
+                    setSessionStorage(newToken.access)
 
-                const retryValidation = await validateAccessTokenMutation(
-                    newToken.access
-                )
-                console.log("Retry validation: ", retryValidation)
-                setIsloggedIn(retryValidation)
-            } catch (refreshError) {
-                console.error("Refresh failed", refreshError)
-                localStorage.removeItem("vrt")
-                navigate("/")
+                    const retryValidation = await validateAccessTokenMutation(
+                        newToken.access
+                    )
+                    console.log("Retry validation: ", retryValidation)
+                    setIsloggedIn(retryValidation)
+                } catch (refreshError) {
+                    console.error("Refresh failed", refreshError)
+                    localStorage.removeItem("vrt")
+                    navigate("/")
+                }
+                console.log("failed yo")
             }
-            console.log("failed yo")
-        })
+        }
+
+        validateToken()
+    }, [accToken, refToken, navigate, setSessionStorage])
 
     if (!isLoggedIn) {
         return null
