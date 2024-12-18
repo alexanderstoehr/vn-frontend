@@ -5,6 +5,7 @@ export default function Button({
     iconEnd,
     iconStart,
     disabled,
+    className = "",
 }) {
     const styling =
         type === "primary"
@@ -20,7 +21,7 @@ export default function Button({
     return (
         <button
             onClick={onClick}
-            className={styling}
+            className={`${styling} ${className}`}
             type={type}
             disabled={disabled}
             style={{ height: "auto", alignSelf: "flex-start" }}>

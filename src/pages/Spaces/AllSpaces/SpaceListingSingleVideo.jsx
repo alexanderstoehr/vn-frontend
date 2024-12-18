@@ -2,10 +2,18 @@ import { HiOutlineBookmark, HiOutlineCalendar } from "react-icons/hi"
 import allSpaceTax from "../../../data/dummyData/allSpaceTax.json"
 import Tag from "../../../components/primitives/Tag.jsx"
 import { formatDate } from "../../../utils/formatting.js"
+import { useNavigate } from "react-router-dom"
 
 export default function SpaceListingSingleVideo({ video }) {
+    const navigate = useNavigate()
+
+    const handleVideoClick = () => {
+        navigate(`/video/${video.id}`)
+    }
     return (
-        <div className="z-10 min-w-80 cursor-pointer rounded-xl border-2 p-6 duration-200 ease-in-out hover:scale-[1.01]">
+        <div
+            onClick={handleVideoClick}
+            className="z-10 min-w-80 cursor-pointer rounded-xl border-2 p-6 duration-200 ease-in-out hover:scale-[1.01]">
             <img
                 className="mb-4"
                 src={video.video_host_thumbnail_url}></img>
