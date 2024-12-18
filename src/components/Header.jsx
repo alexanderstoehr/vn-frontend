@@ -2,6 +2,8 @@ import { useState } from "react"
 import LoginModal from "./modals/LoginModal.jsx"
 import RegisterModal from "./modals/RegisterModal.jsx"
 import { useNavigate } from "react-router-dom"
+import HeaderInfo from "./HeaderInfo.jsx"
+import { showHeaderInfo } from "../utils/options.js"
 
 export default function Header() {
     const [showLoginModal, setShowLoginModal] = useState(false)
@@ -46,15 +48,18 @@ export default function Header() {
             )}
             <nav className="border-gray-200 bg-white px-4 py-2.5 dark:bg-gray-800 lg:px-6">
                 <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
-                    <a
-                        href="/"
-                        className="flex items-center">
-                        <img
-                            src="/assets/logos/veenotes-logo-lightmode.svg"
-                            className="mr-3 h-6 sm:h-9"
-                            alt="Veenotes Logo"
-                        />
-                    </a>
+                    <div className="flex">
+                        <a
+                            href="/"
+                            className="flex items-center">
+                            <img
+                                src="/assets/logos/veenotes-logo-lightmode.svg"
+                                className="mr-3 h-6 sm:h-9"
+                                alt="Veenotes Logo"
+                            />
+                        </a>
+                        {showHeaderInfo && <HeaderInfo />}
+                    </div>
                     <div className="flex items-center lg:order-2">
                         {sessionStorageObj ? loggedInButtons : loggedOutButtons}
                         <button
