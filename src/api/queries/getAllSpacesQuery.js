@@ -1,15 +1,14 @@
 import { getUsersSpacesEndpoint } from "../endpoints.js"
 import { apiVeenotes } from "../axios.js"
+import { getAccessToken } from "../../utils/helpers.js"
 
 export const getAllSpacesQuery = async () => {
-    const sessionStorageObj = JSON.parse(sessionStorage.getItem("vud"))
-    const token = sessionStorageObj.at
     //console.log("token used: ", token)
 
     try {
         const res = await apiVeenotes.get(getUsersSpacesEndpoint, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${getAccessToken}`,
             },
         })
         return res.data

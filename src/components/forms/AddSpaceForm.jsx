@@ -1,12 +1,34 @@
 import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
 import InputTextArea from "../primitives/InputTextArea.jsx"
+import { useState } from "react"
+import { useAddSpaceMutation } from "../../hooks/useAddSpaceMutation.jsx"
+import { useQueryClient } from "@tanstack/react-query"
 
 export default function AddSpaceForm({ onClose }) {
+    const addSpace = useAddSpaceMutation()
+    const queryClient = useQueryClient()
+
+    const [spaceName, setSpaceName] = useState()
+    const [spaceDescription, setSpaceDescription] = useState()
+
+    console.log("name: ", spaceName, "description", spaceDescription)
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Add your logic here
-        onClose()
+        addSpace.mutate(
+            {
+                space_name: spaceName,
+                space_description: spaceDescription,
+            },
+            {
+                onSuccess: () => {
+                    queryClient.invalidateQueries("allSpaces")
+                    onClose()
+                },
+            }
+        )
+
         console.log("submitted")
     }
 
@@ -23,10 +45,12 @@ export default function AddSpaceForm({ onClose }) {
                 <InputTextLine
                     placeholder="Space Name"
                     type="text"
+                    onChange={(e) => setSpaceName(e.target.value)}
                 />
                 <InputTextArea
-                    placeholder="Space Name"
+                    placeholder="Describe the content of this space, what it's about, and what you can find here."
                     type="text"
+                    onChange={(e) => setSpaceDescription(e.target.value)}
                     rows="4"
                 />
                 <div className="flex items-center justify-end">

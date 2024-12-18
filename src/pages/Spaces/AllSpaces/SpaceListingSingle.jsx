@@ -101,7 +101,7 @@ export default function SpaceListingSingle({ space }) {
             <div className="relative">
                 <div
                     ref={scrollContainerRef}
-                    className="no-scrollbar flex cursor-grab gap-8 overflow-x-scroll p-4 active:cursor-grabbing">
+                    className="no-scrollbar grid cursor-grab grid-cols-3 gap-8 overflow-x-scroll p-4 active:cursor-grabbing">
                     {space.videos.map((video, index) => (
                         <SpaceListingSingleVideo
                             key={index}

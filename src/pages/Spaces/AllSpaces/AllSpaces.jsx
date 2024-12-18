@@ -1,7 +1,5 @@
 import SpacesSidebar from "../SpacesSidebar.jsx"
-import allSpaces from "../../../data/dummyData/allSpaces.json"
 import SpaceListingSingle from "./SpaceListingSingle.jsx"
-import { useUser } from "../../../context/UserContext.jsx"
 import { useQuery } from "@tanstack/react-query"
 import { getAllSpacesQuery } from "../../../api/queries/getAllSpacesQuery.js"
 import { useEffect, useState } from "react"
@@ -17,17 +15,17 @@ export default function AllSpaces() {
         queryFn: getAllSpacesQuery,
     })
     if (isSuccess) {
-        console.log("Query was successful:", data)
+        //console.log("Query was successful:", data)
     }
 
     // Handling error
     if (isError) {
-        console.error("An error occurred:", error)
+        console.error("An error occurred while fetching Spaces: ", error)
     }
 
     useEffect(() => {
         if (isSuccess) {
-            console.log("Query was successful:", data)
+            //console.log("Query was successful:", data)
             setSpaces(data)
         }
     }, [isSuccess, data])
