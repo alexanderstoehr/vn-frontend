@@ -7,11 +7,14 @@ import { useEffect, useState } from "react"
 import { getSingleSpaceQuery } from "../../../api/queries/getSingleSpaceQuery.js"
 import Button from "../../../components/primitives/Button.jsx"
 import DeleteSpaceModal from "../../../components/modals/DeleteSpaceModal.jsx"
+import { formatDate } from "../../../utils/formatting.js"
+import AddVideoModal from "../../../components/modals/AddVideoModal.jsx"
 
 export default function SingleSpace() {
     const { spaceId } = useParams()
     const [space, setSpace] = useState()
     const [showDeleteSpaceModal, setShowDeleteSpaceModal] = useState(false)
+    const [showAddVideoModal, setShowAddVideoModal] = useState(false)
 
     const { data, isSuccess, isLoading, isError, error } = useQuery({
         queryKey: ["singleSpace", spaceId],
@@ -20,14 +23,14 @@ export default function SingleSpace() {
 
     useEffect(() => {
         if (isSuccess) {
-            console.log("Query was successful UE:", data)
+            // console.log("Query was successful UE:", data)
             setSpace(data)
-            console.log("space", space)
+            // console.log("space", space)
         }
     }, [isSuccess, data])
 
     if (isSuccess) {
-        console.log("Query was successful:", data)
+        // console.log("Query was successful:", data)
     }
     if (isLoading) {
         return <div>Loading...</div> // Show loading indicator
@@ -46,11 +49,19 @@ export default function SingleSpace() {
     // console.log("in SingleSpace: ", spaceId)
 
     const handleDeleteSpace = () => {
-        console.log("delete space pls")
+        console.log("Pls delete this Space")
         setShowDeleteSpaceModal(!showDeleteSpaceModal)
     }
+    const handleAddVideo = () => {
+        console.log("Add a Video")
+        setShowAddVideoModal(!showAddVideoModal)
+    }
+
     return (
         <>
+            {showAddVideoModal && (
+                <AddVideoModal setShowAddVideoModal={setShowAddVideoModal} />
+            )}
             {showDeleteSpaceModal && (
                 <DeleteSpaceModal
                     setShowDeleteSpaceModal={setShowDeleteSpaceModal}
@@ -70,9 +81,9 @@ export default function SingleSpace() {
                                 </div>
                             </div>
                             <Button
-                                type="button"
-                                text="Delete Space"
-                                onClick={handleDeleteSpace}
+                                type="primary"
+                                text="Add Video"
+                                onClick={handleAddVideo}
                             />
                         </div>
                     </div>
@@ -98,7 +109,7 @@ export default function SingleSpace() {
                                     <div className="flex flex-row gap-4">
                                         <div className="flex flex-row items-center gap-1 text-xs font-semibold text-gray-700 dark:text-gray-400">
                                             <HiOutlineCalendar className="h-4 w-4 text-primary-800" />
-                                            {video.created_at}
+                                            {formatDate(video.created_at)}
                                         </div>
                                         <div className="flex flex-row items-center gap-1 text-sm text-gray-700 dark:text-gray-400">
                                             <HiOutlineBookmark className="h-4 w-4 text-primary-800" />
@@ -115,6 +126,13 @@ export default function SingleSpace() {
                             </div>
                         </div>
                     ))}
+                    <div className="mt-4 flex justify-end">
+                        <Button
+                            type="danger-secondary"
+                            text="Delete Space"
+                            onClick={handleDeleteSpace}
+                        />
+                    </div>
                 </div>
             </div>
         </>
