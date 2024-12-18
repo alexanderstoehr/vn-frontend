@@ -19,7 +19,7 @@ export default function ProtectedRoute() {
         const validateToken = async () => {
             try {
                 const result = await validateAccessTokenMutation(accToken)
-                console.log("Is validated: ", result)
+                // console.log("Is validated: ", result)
                 setIsloggedIn(result)
             } catch (error) {
                 console.error("Validation failed", error)
@@ -40,7 +40,7 @@ export default function ProtectedRoute() {
                     localStorage.removeItem("vrt")
                     navigate("/")
                 }
-                console.log("failed yo")
+                console.log("Failed auth in ProtectedRoute")
             }
         }
 

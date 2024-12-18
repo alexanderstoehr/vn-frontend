@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { initializeEditor } from "../../utils/editor"
 import video from "../../data/dummyData/demoVideo.json"
 import {
-    HiArrowRight,
     HiOutlineBookmark,
     HiOutlineCalendar,
     HiOutlineFolder,

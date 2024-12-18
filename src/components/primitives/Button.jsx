@@ -13,7 +13,9 @@ export default function Button({
               ? "flex items-center gap-1 text-gray-900 bg-white border-2 border-primary-800 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
               : type === "danger"
                 ? "flex items-center gap-1 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-                : "flex items-center gap-1 text-gray-600 bg-white font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white "
+                : type === "danger-secondary"
+                  ? "flex items-center gap-1 text-red-700 bg-white border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                  : "flex items-center gap-1 text-gray-600 bg-white font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white "
 
     return (
         <button
