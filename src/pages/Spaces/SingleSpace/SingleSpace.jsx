@@ -2,15 +2,46 @@ import { HiOutlineBookmark, HiOutlineCalendar } from "react-icons/hi"
 import singleSpace from "../../../data/dummyData/singleSpace.json"
 import Tag from "../../../components/primitives/Tag.jsx"
 import SpacesSidebar from "../SpacesSidebar.jsx"
-import { useUser } from "../../../context/UserContext.jsx"
 import { useParams } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
+import { useEffect, useState } from "react"
+import { getSingleSpaceQuery } from "../../../api/queries/getSingleSpaceQuery.js"
 
 export default function SingleSpace() {
-    const { user } = useUser()
-    console.log("User in spaces:", user)
+    const { spaceId } = useParams() // Corrected from spaceID to spaceId
 
-    let { spaceId } = useParams() // Corrected from spaceID to spaceId
+    const [space, setSpace] = useState()
 
+    const { data, isSuccess, isLoading, isError, error } = useQuery({
+        queryKey: ["singleSpace", spaceId],
+        queryFn: () => getSingleSpaceQuery(spaceId),
+    })
+
+    useEffect(() => {
+        if (isSuccess) {
+            console.log("Query was successful UE:", data)
+            setSpace(data)
+            console.log("space", space)
+        }
+    }, [isSuccess, data])
+
+    if (isSuccess) {
+        console.log("Query was successful:", data)
+    }
+    if (isLoading) {
+        return <div>Loading...</div> // Show loading indicator
+    }
+
+    // Handling error
+    if (isError) {
+        console.error("An error occurred while fetching Spaces: ", error)
+    }
+
+    if (!space || !space.videos) {
+        return <div>No space data available</div>
+    }
+
+    // console.log("User in spaces:", user)
     console.log("in SingleSpace: ", spaceId)
 
     return (
@@ -25,12 +56,12 @@ export default function SingleSpace() {
                         {singleSpace.description}
                     </div>
                 </div>
-                {singleSpace.videos.map((video, index) => (
+                {space.videos.map((video, index) => (
                     <div
                         key={index}
                         className="flex cursor-pointer gap-8 rounded-md border border-gray-300 bg-gray-100 p-8 transition-transform duration-300 hover:scale-[1.01] hover:ease-in-out">
                         <img
-                            src={video.thumbnail}
+                            src={video.video_host_thumbnail_url}
                             className="h-56 w-96 rounded-xl object-cover"
                         />
                         <div>
@@ -47,19 +78,19 @@ export default function SingleSpace() {
                                 <div className="flex flex-row gap-4">
                                     <div className="flex flex-row items-center gap-1 text-xs font-semibold text-gray-700 dark:text-gray-400">
                                         <HiOutlineCalendar className="h-4 w-4 text-primary-800" />
-                                        {video.created}
+                                        {video.created_at}
                                     </div>
                                     <div className="flex flex-row items-center gap-1 text-sm text-gray-700 dark:text-gray-400">
                                         <HiOutlineBookmark className="h-4 w-4 text-primary-800" />
-                                        {video.notes.length} Notes
+                                        {video.notes_count} Notes
                                     </div>
                                 </div>
                             </div>
                             <div className="mb-2 text-lg font-semibold leading-tight text-gray-900 dark:text-white">
-                                {video.title}
+                                {video.video_title}
                             </div>
                             <p className="font-normal text-gray-500 dark:text-gray-400">
-                                {video.description}
+                                {video.video_description}
                             </p>
                         </div>
                     </div>
