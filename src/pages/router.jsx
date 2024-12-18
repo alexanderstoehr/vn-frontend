@@ -31,7 +31,7 @@ export default function Router() {
                         element={<AllSpaces />}
                     />
                     <Route
-                        path="/space"
+                        path="/space/:spaceId"
                         element={<SingleSpace />}
                     />
                     <Route

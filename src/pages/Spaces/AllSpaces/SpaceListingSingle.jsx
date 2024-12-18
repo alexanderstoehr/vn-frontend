@@ -3,6 +3,7 @@ import SpaceListingSingleVideo from "./SpaceListingSingleVideo.jsx"
 import Button from "../../../components/primitives/Button.jsx"
 import { HiArrowRight, HiPlay } from "react-icons/hi"
 import classNames from "classnames"
+import { useNavigate } from "react-router-dom"
 
 export default function SpaceListingSingle({ space }) {
     const [scrollStatus, setScrollStatus] = useState("right")
@@ -10,6 +11,8 @@ export default function SpaceListingSingle({ space }) {
     const [startX, setStartX] = useState(0)
     const [scrollLeft, setScrollLeft] = useState(0)
     const scrollContainerRef = useRef(null)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const scrollContainer = scrollContainerRef.current
@@ -74,6 +77,10 @@ export default function SpaceListingSingle({ space }) {
         }
     }, [isDragging, startX, scrollLeft])
 
+    const goToSpaceHandler = () => {
+        navigate(`/space/${space.id}`)
+    }
+
     return (
         <div className="z-10 mx-auto flex max-w-screen-xl flex-col gap-2 pt-8">
             <div className="flex justify-between">
@@ -94,8 +101,10 @@ export default function SpaceListingSingle({ space }) {
                 <Button
                     className="ml-auto"
                     type="secondary"
+                    // href={`/spaces/${space.id}`}
                     text="View Space"
                     iconEnd={<HiArrowRight />}
+                    onClick={goToSpaceHandler}
                 />
             </div>
             <div className="relative">
