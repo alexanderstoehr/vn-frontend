@@ -35,7 +35,7 @@ export default function Router() {
                         element={<SingleSpace />}
                     />
                     <Route
-                        path="/video"
+                        path="/video/:videoId"
                         element={<Video />}
                     />
                 </Route>
