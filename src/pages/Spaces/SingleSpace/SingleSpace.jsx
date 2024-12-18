@@ -1,7 +1,7 @@
 import { HiOutlineBookmark, HiOutlineCalendar } from "react-icons/hi"
 import Tag from "../../../components/primitives/Tag.jsx"
 import SpacesSidebar from "../SpacesSidebar.jsx"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import { getSingleSpaceQuery } from "../../../api/queries/getSingleSpaceQuery.js"
@@ -12,6 +12,7 @@ import AddVideoModal from "../../../components/modals/AddVideoModal.jsx"
 
 export default function SingleSpace() {
     const { spaceId } = useParams()
+    const navigate = useNavigate()
     const [space, setSpace] = useState()
     const [showDeleteSpaceModal, setShowDeleteSpaceModal] = useState(false)
     const [showAddVideoModal, setShowAddVideoModal] = useState(false)
@@ -57,6 +58,10 @@ export default function SingleSpace() {
         setShowAddVideoModal(!showAddVideoModal)
     }
 
+    const handleVideoClick = (videoId) => {
+        navigate(`/video/${videoId}`)
+    }
+
     return (
         <>
             {showAddVideoModal && (
@@ -90,6 +95,7 @@ export default function SingleSpace() {
                     {space.videos.map((video, index) => (
                         <div
                             key={index}
+                            onClick={() => handleVideoClick(video.id)}
                             className="flex cursor-pointer gap-8 rounded-md border border-gray-300 bg-gray-100 p-8 transition-transform duration-300 hover:scale-[1.01] hover:ease-in-out">
                             <img
                                 src={video.video_host_thumbnail_url}
