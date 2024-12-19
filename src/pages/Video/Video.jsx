@@ -36,6 +36,7 @@ export default function Video() {
     const [activeVideoNote, setActiveVideoNote] = useState("")
     const [activeVideoNoteTitle, setActiveVideoNoteTitle] = useState("")
     const [activeNoteDescription, setActiveNoteDescription] = useState("")
+    const [activeNoteTimestamp, setActiveNoteTimestamp] = useState()
 
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
@@ -51,7 +52,11 @@ export default function Video() {
             setNoteCount(data.notes_count)
             setVideoCategory(data.category.category_name)
             setVideoTags(data.tags)
-            setVideoNotes(data.notes)
+            const sortedNotes = data.notes.sort(
+                (a, b) => a.note_timestamp - b.note_timestamp
+            )
+            setVideoNotes(sortedNotes)
+
             // console.log("inside effect: ", data.notes)
         }
     }, [data])
@@ -70,11 +75,18 @@ export default function Video() {
         console.log(e)
     }
 
-    const handleNoteClick = (e) => {
-        console.log("note clicked: ", e)
-        setActiveVideoNote(videoNotes.find((note) => note.id === e))
-        console.log("activeNote time: ", activeVideoNote.note_timestamp)
+    const handleNoteClick = (note) => {
+        setActiveVideoNote(note)
+        setActiveNoteDescription(note.note_description)
+        setActiveVideoNoteTitle(note.note_title)
+        setActiveNoteTimestamp(note.note_timestamp)
     }
+
+    useEffect(() => {
+        console.log("activeNote: ", activeVideoNote)
+        console.log("-----activeNoteDescription: ", activeNoteDescription)
+        startVideoAtTime(activeNoteTimestamp)
+    }, [activeVideoNote])
 
     const handleDescriptionChange = (e) => {
         console.log("value: ", e.target.value)
@@ -83,6 +95,11 @@ export default function Video() {
 
     if (isLoading) {
         return <div>Loading...</div>
+    }
+
+    //Video Handlings
+    const startVideoAtTime = (time) => {
+        console.log("Starting video at time: ", time)
     }
 
     if (isSuccess) {
@@ -153,6 +170,7 @@ export default function Video() {
                                             placeholder="Add a note..."
                                             className="min-h-96 w-full"
                                             onChange={handleDescriptionChange}
+                                            value={activeNoteDescription}
                                         />
                                     </div>
                                 </div>

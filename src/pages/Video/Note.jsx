@@ -11,7 +11,7 @@ export default function Note({ note, active, time, isFirst, isLast, onClick }) {
                     "rounded-b-xl": isLast,
                 }
             )}
-            onClick={() => onClick(note.id)}>
+            onClick={() => onClick(note)}>
             <div className="flex items-center justify-between">
                 <div
                     className={classNames("flex items-center gap-2", {
