@@ -4,6 +4,7 @@ import RegisterModal from "./modals/RegisterModal.jsx"
 import { useNavigate } from "react-router-dom"
 import HeaderInfo from "./HeaderInfo.jsx"
 import { showHeaderInfo } from "../utils/options.js"
+import { getAccessToken } from "../utils/helpers.js"
 
 export default function Header() {
     const [showLoginModal, setShowLoginModal] = useState(false)
@@ -11,7 +12,7 @@ export default function Header() {
 
     const navigate = useNavigate()
 
-    const sessionStorageObj = JSON.parse(sessionStorage.getItem("vud"))
+    const sessionStorageObj = getAccessToken
 
     console.log("sessionStorageObj: ", sessionStorageObj)
 
@@ -61,7 +62,10 @@ export default function Header() {
                         {showHeaderInfo && <HeaderInfo />}
                     </div>
                     <div className="flex items-center lg:order-2">
-                        {sessionStorageObj ? loggedInButtons : loggedOutButtons}
+                        {sessionStorageObj &&
+                        sessionStorageObj !== "defaultAccessToken"
+                            ? loggedInButtons
+                            : loggedOutButtons}
                         <button
                             data-collapse-toggle="mobile-menu-2"
                             type="button"

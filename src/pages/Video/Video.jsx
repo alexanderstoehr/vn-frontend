@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import { initializeEditor } from "../../utils/editor"
 import video from "../../data/dummyData/demoVideo.json"
 import {
     HiOutlineBookmark,
@@ -18,12 +17,13 @@ import Tag from "../../components/primitives/Tag.jsx"
 import Note from "./Note.jsx"
 import { useParams } from "react-router-dom"
 import { useGetSingleVideo } from "../../hooks/useGetSingleVideo.jsx"
-import { formatDate } from "../../utils/formatting.js"
+import { formatDate, secondsToTime } from "../../utils/formatting.js"
 
 export default function Video() {
     const noteDescriptionRef = useRef(null)
     const { videoId } = useParams()
 
+    //Video Variables
     const [videoTitle, setVideoTitle] = useState()
     const [videoDescription, setVideoDescription] = useState()
     const [videoHostId, setVideoHostId] = useState()
@@ -31,44 +31,75 @@ export default function Video() {
     const [noteCount, setNoteCount] = useState()
     const [videoCategory, setVideoCategory] = useState()
     const [videoTags, setVideoTags] = useState([])
-
+    //Note Variables
     const [videoNotes, setVideoNotes] = useState([])
-    const [activeVideoNote, setActiveVideoNote] = useState()
+    const [activeVideoNote, setActiveVideoNote] = useState("")
+    const [activeVideoNoteTitle, setActiveVideoNoteTitle] = useState("")
+    const [activeNoteDescription, setActiveNoteDescription] = useState("")
+    const [activeNoteTimestamp, setActiveNoteTimestamp] = useState()
 
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
 
-    console.log(data)
+    // console.log("outside effect: ", data)
 
     useEffect(() => {
-        setVideoTitle(data.video_title)
-        setVideoDescription(data.video_description)
-        setVideoHostId(data.video_host_id)
-        setCreatedAt(formatDate(data.created_at))
-        setNoteCount(data.notes_count)
-        setVideoCategory(data.category.category_name)
-        setVideoTags(data.tags)
-        setVideoNotes(data.notes)
-        console.log(videoTitle)
+        if (data) {
+            setVideoTitle(data.video_title)
+            setVideoDescription(data.video_description)
+            setVideoHostId(data.video_host_id)
+            setCreatedAt(formatDate(data.created_at))
+            setNoteCount(data.notes_count)
+            setVideoCategory(data.category.category_name)
+            setVideoTags(data.tags)
+            const sortedNotes = data.notes.sort(
+                (a, b) => a.note_timestamp - b.note_timestamp
+            )
+            setVideoNotes(sortedNotes)
+
+            // console.log("inside effect: ", data.notes)
+        }
     }, [data])
 
     useEffect(() => {
-        if (noteDescriptionRef.current) {
-            const editor = initializeEditor(noteDescriptionRef.current)
-
-            return () => {
-                editor.destroy()
-            }
+        if (videoNotes.length > 0) {
+            setActiveVideoNote(videoNotes[0])
+            setActiveVideoNoteTitle(videoNotes[0].note_title)
+            setActiveNoteDescription(videoNotes[0].note_description)
+            console.log("active note: ", videoNotes[0])
+            console.log("active note title: ", videoNotes[0].note_title)
         }
-    }, [])
+    }, [videoNotes])
 
     const onChange = (e) => {
         console.log(e)
     }
-    console.log(videoTags)
+
+    const handleNoteClick = (note) => {
+        setActiveVideoNote(note)
+        setActiveNoteDescription(note.note_description)
+        setActiveVideoNoteTitle(note.note_title)
+        setActiveNoteTimestamp(note.note_timestamp)
+    }
+
+    useEffect(() => {
+        console.log("activeNote: ", activeVideoNote)
+        console.log("-----activeNoteDescription: ", activeNoteDescription)
+        startVideoAtTime(activeNoteTimestamp)
+    }, [activeVideoNote])
+
+    const handleDescriptionChange = (e) => {
+        console.log("value: ", e.target.value)
+        setActiveNoteDescription(e.target.id)
+    }
 
     if (isLoading) {
         return <div>Loading...</div>
+    }
+
+    //Video Handlings
+    const startVideoAtTime = (time) => {
+        console.log("Starting video at time: ", time)
     }
 
     if (isSuccess) {
@@ -112,6 +143,7 @@ export default function Video() {
                         </div>
                     </div>
                     <div className="flex gap-8">
+                        {/*Left Column Main Content*/}
                         <div className="flex w-2/3 flex-col gap-8">
                             <div className="relative h-0 w-full pb-[56.25%]">
                                 <iframe
@@ -128,19 +160,23 @@ export default function Video() {
                                     <div className="flex flex-col">
                                         <HelpLabel text="Your current Note:" />
                                         <div className="mb-4 text-lg font-semibold">
-                                            Passing Functions Via Props
-                                            (Placeholder)
+                                            {activeVideoNoteTitle}
                                         </div>
                                     </div>
                                     <div className="">
                                         <textarea
                                             id="noteDescription"
                                             ref={noteDescriptionRef}
-                                            className="min-h-96 w-full"></textarea>
+                                            placeholder="Add a note..."
+                                            className="min-h-96 w-full"
+                                            onChange={handleDescriptionChange}
+                                            value={activeNoteDescription}
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {/*Right Column Main Content*/}
                         <div className="flex w-1/3 flex-col gap-8">
                             <div>
                                 <div className="mb-4 flex items-center">
@@ -157,12 +193,18 @@ export default function Video() {
                                         Your Notes
                                     </div>
                                     <div className="rounded-xl border border-gray-300">
-                                        {video.notes.map((note, index) => (
+                                        {videoNotes.map((note, index) => (
                                             <Note
-                                                note={note.note}
+                                                note={note}
                                                 key={note.id}
-                                                active={note.active}
-                                                time={note.time}
+                                                active={
+                                                    note.id ===
+                                                    activeVideoNote.id
+                                                }
+                                                time={secondsToTime(
+                                                    note.note_timestamp
+                                                )}
+                                                onClick={handleNoteClick}
                                                 isFirst={index === 0}
                                                 isLast={
                                                     index ===
