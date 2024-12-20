@@ -1,7 +1,7 @@
 import { HiOutlinePlay, HiPencil, HiPlay } from "react-icons/hi"
 import classNames from "classnames"
 
-export default function Note({ note, active, time, isFirst, isLast }) {
+export default function Note({ note, active, time, isFirst, isLast, onClick }) {
     return (
         <div
             className={classNames(
@@ -10,7 +10,8 @@ export default function Note({ note, active, time, isFirst, isLast }) {
                     "rounded-t-xl": isFirst,
                     "rounded-b-xl": isLast,
                 }
-            )}>
+            )}
+            onClick={() => onClick(note)}>
             <div className="flex items-center justify-between">
                 <div
                     className={classNames("flex items-center gap-2", {
@@ -21,7 +22,7 @@ export default function Note({ note, active, time, isFirst, isLast }) {
                     ) : (
                         <HiOutlinePlay />
                     )}{" "}
-                    {note}
+                    {note.note_title}
                 </div>
                 <div className="flex">
                     <span className="text-sm text-gray-500 group-hover:hidden">
