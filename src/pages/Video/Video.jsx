@@ -18,10 +18,16 @@ import Note from "./Note.jsx"
 import { useParams } from "react-router-dom"
 import { useGetSingleVideo } from "../../hooks/useGetSingleVideo.jsx"
 import { formatDate, secondsToTime } from "../../utils/formatting.js"
+import AddNoteModal from "../../components/modals/AddNoteModal.jsx"
 
 export default function Video() {
     const noteDescriptionRef = useRef(null)
     const { videoId } = useParams()
+
+    // when current data differs from server data = false --- check on video or note state changes
+    const [saved, setSaved] = useState(true)
+
+    const [showAddNoteModal, setShowAddNoteModal] = useState()
 
     //Video Variables
     const [videoTitle, setVideoTitle] = useState()
@@ -31,8 +37,22 @@ export default function Video() {
     const [noteCount, setNoteCount] = useState()
     const [videoCategory, setVideoCategory] = useState()
     const [videoTags, setVideoTags] = useState([])
+
+    //Test Note patching
+    let currentTimeStamp = Math.round(Math.random() * 500)
+    console.log("current timestamp", currentTimeStamp)
+    let notePayload = {
+        note_title: `Test Note ${currentTimeStamp}`,
+        note_description: "This is a test note",
+        note_timestamp: currentTimeStamp,
+        video: 1,
+    }
+
     //Note Variables
     const [videoNotes, setVideoNotes] = useState([])
+    const propObject = notePayload
+
+    //Active Note Variables
     const [activeVideoNote, setActiveVideoNote] = useState("")
     const [activeVideoNoteTitle, setActiveVideoNoteTitle] = useState("")
     const [activeNoteDescription, setActiveNoteDescription] = useState("")
@@ -85,7 +105,9 @@ export default function Video() {
     useEffect(() => {
         console.log("activeNote: ", activeVideoNote)
         console.log("-----activeNoteDescription: ", activeNoteDescription)
-        startVideoAtTime(activeNoteTimestamp)
+        if (activeNoteTimestamp) {
+            startVideoAtTime(secondsToTime(activeNoteTimestamp))
+        }
     }, [activeVideoNote])
 
     const handleDescriptionChange = (e) => {
@@ -102,9 +124,25 @@ export default function Video() {
         console.log("Starting video at time: ", time)
     }
 
+    //Note Handlings
+    const editNoteTitle = () => {
+        console.log("Editing note title")
+    }
+
+    const handleAddNote = () => {
+        console.log("Adding note")
+        setShowAddNoteModal(true)
+    }
+
     if (isSuccess) {
         return (
             <div>
+                {showAddNoteModal && (
+                    <AddNoteModal
+                        propObject={propObject}
+                        setShowAddNoteModal={setShowAddNoteModal}
+                    />
+                )}
                 <div className="mx-auto flex max-w-screen-xl flex-col gap-4 pt-8">
                     <div className="flex justify-between text-2xl font-semibold leading-tight text-gray-900 dark:text-gray-400">
                         <div className="">
@@ -185,6 +223,7 @@ export default function Video() {
                                         text="Add Note"
                                         type="primary"
                                         className="mr-4"
+                                        onClick={handleAddNote}
                                     />
                                     <HelpLabel text="Add a note at the current time" />
                                 </div>
@@ -210,6 +249,7 @@ export default function Video() {
                                                     index ===
                                                     video.notes.length - 1
                                                 }
+                                                editNoteTitle={editNoteTitle}
                                             />
                                         ))}
                                     </div>
