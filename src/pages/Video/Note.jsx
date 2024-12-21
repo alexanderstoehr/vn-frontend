@@ -1,7 +1,15 @@
 import { HiOutlinePlay, HiPencil, HiPlay } from "react-icons/hi"
 import classNames from "classnames"
 
-export default function Note({ note, active, time, isFirst, isLast, onClick }) {
+export default function Note({
+    note,
+    active,
+    time,
+    isFirst,
+    isLast,
+    onClick,
+    editNoteTitle,
+}) {
     return (
         <div
             className={classNames(
@@ -31,7 +39,7 @@ export default function Note({ note, active, time, isFirst, isLast, onClick }) {
                     </span>
                     <span className="hidden group-hover:block">
                         {" "}
-                        <HiPencil />
+                        <HiPencil onClick={editNoteTitle} />
                     </span>
                 </div>
             </div>
