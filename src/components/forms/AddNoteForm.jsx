@@ -2,15 +2,19 @@ import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
 import { useEffect, useState } from "react"
 import { useAddNoteMutation } from "../../hooks/useAddNoteMutation.jsx"
-import { useQueryClient } from "@tanstack/react-query"
 
 export default function AddNoteForm({ onClose, propObject }) {
     const addNote = useAddNoteMutation()
-    const queryClient = useQueryClient()
 
     const [noteTitle, setNoteTitle] = useState()
-    let videoID
-    let timeStamp
+    const notePayload = {
+        note_title: noteTitle,
+        project_id: propObject.project_id,
+        video_id: propObject.video_id,
+        video: propObject.video_id,
+        note_timestamp: propObject.note_timestamp,
+        note_description: propObject.note_description,
+    }
 
     console.log("Probject: ", propObject)
 
@@ -18,9 +22,8 @@ export default function AddNoteForm({ onClose, propObject }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        addNote.mutate(propObject, {
+        addNote.mutate(notePayload, {
             onSuccess: () => {
-                queryClient.invalidateQueries("singleVideo")
                 onClose()
             },
         })
@@ -35,7 +38,7 @@ export default function AddNoteForm({ onClose, propObject }) {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (event.key === "Enter") {
+            if (e.key === "Enter") {
                 handleSubmit(e)
             }
         }

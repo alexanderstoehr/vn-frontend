@@ -3,7 +3,7 @@ import { getSingleVideoQuery } from "../api/queries/getSingleVideoQuery.js"
 
 export const useGetSingleVideo = (videoId) => {
     const queryResult = useQuery({
-        queryKey: ["singleVideo"],
+        queryKey: ["singleVideo", videoId],
         queryFn: () => {
             return getSingleVideoQuery(videoId)
         },

@@ -40,12 +40,12 @@ export default function Video() {
 
     //Test Note patching
     let currentTimeStamp = Math.round(Math.random() * 500)
-    console.log("current timestamp", currentTimeStamp)
-    let notePayload = {
-        note_title: `Test Note ${currentTimeStamp}`,
-        note_description: "This is a test note",
+    const notePayload = {
+        note_title: "",
+        note_description: "Add your note description here...",
         note_timestamp: currentTimeStamp,
-        video: 1,
+        video: videoId,
+        video_id: videoId,
     }
 
     //Note Variables
