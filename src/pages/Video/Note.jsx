@@ -8,8 +8,12 @@ export default function Note({
     isFirst,
     isLast,
     onClick,
-    editNoteTitle,
+    setShowEditNoteModal,
 }) {
+    const handleEditClick = () => {
+        console.log("Edit Note Click")
+        setShowEditNoteModal(true)
+    }
     return (
         <div
             className={classNames(
@@ -39,7 +43,10 @@ export default function Note({
                     </span>
                     <span className="hidden group-hover:block">
                         {" "}
-                        <HiPencil onClick={editNoteTitle} />
+                        <HiPencil
+                            className="hover:scale-125"
+                            onClick={handleEditClick}
+                        />
                     </span>
                 </div>
             </div>

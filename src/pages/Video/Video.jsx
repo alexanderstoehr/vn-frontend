@@ -19,6 +19,7 @@ import { useParams } from "react-router-dom"
 import { useGetSingleVideo } from "../../hooks/useGetSingleVideo.jsx"
 import { formatDate, secondsToTime } from "../../utils/formatting.js"
 import AddNoteModal from "../../components/modals/AddNoteModal.jsx"
+import EditNoteModal from "../../components/modals/EditNoteModal.jsx"
 
 export default function Video() {
     const noteDescriptionRef = useRef(null)
@@ -28,6 +29,7 @@ export default function Video() {
     const [saved, setSaved] = useState(true)
 
     const [showAddNoteModal, setShowAddNoteModal] = useState()
+    const [showEditNoteModal, setShowEditNoteModal] = useState()
 
     //Video Variables
     const [videoTitle, setVideoTitle] = useState()
@@ -143,6 +145,13 @@ export default function Video() {
                         setShowAddNoteModal={setShowAddNoteModal}
                     />
                 )}
+                {showEditNoteModal && (
+                    <EditNoteModal
+                        setShowEditNoteModal={setShowEditNoteModal}
+                        activeVideoNote={activeVideoNote}
+                    />
+                )}
+
                 <div className="mx-auto flex max-w-screen-xl flex-col gap-4 pt-8">
                     <div className="flex justify-between text-2xl font-semibold leading-tight text-gray-900 dark:text-gray-400">
                         <div className="">
@@ -250,6 +259,9 @@ export default function Video() {
                                                     video.notes.length - 1
                                                 }
                                                 editNoteTitle={editNoteTitle}
+                                                setShowEditNoteModal={
+                                                    setShowEditNoteModal
+                                                }
                                             />
                                         ))}
                                     </div>
