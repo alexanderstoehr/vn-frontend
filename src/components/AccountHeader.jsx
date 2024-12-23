@@ -20,7 +20,7 @@ export default function AccountHeader() {
                     </div>
                     <div className="flex items-center lg:order-2">
                         <div className="">
-                            <img src="/public/assets/images/avatar.png" />
+                            <img src="/assets/images/avatar.png" />
                         </div>
                         <button
                             data-collapse-toggle="mobile-menu-2"

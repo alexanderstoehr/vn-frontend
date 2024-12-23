@@ -38,6 +38,7 @@ export default function LoginForm({ onClose }) {
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    autoFocus
                 />
                 <InputTextLine
                     placeholder="Password"

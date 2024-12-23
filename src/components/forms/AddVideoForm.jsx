@@ -90,6 +90,7 @@ export default function AddVideoForm({ onClose }) {
                     placeholder="Video Title"
                     type="text"
                     onChange={(e) => setVideoTitle(e.target.value)}
+                    autoFocus
                 />
                 <InputSelect
                     selectText={

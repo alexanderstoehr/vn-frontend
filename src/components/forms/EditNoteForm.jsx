@@ -50,6 +50,7 @@ export default function EditNoteForm({ onClose, activeVideoNote }) {
                     type="text"
                     onChange={(e) => setNoteTitle(e.target.value)}
                     autoFocus
+                    value={activeVideoNote.note_title}
                 />
                 <div className="flex items-center justify-end">
                     <Button
