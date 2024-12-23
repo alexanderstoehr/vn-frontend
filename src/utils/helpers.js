@@ -2,10 +2,22 @@ import addVideoDocumentation from "../data/content/documentation/add-video.js"
 
 export const documentationObject = [addVideoDocumentation]
 
-// Session and Local Storage Token Functions
+// --- Session and Local Storage Token Functions
+
 // ToDo: Replace token calls with helper vars:
 export const getAccessToken =
     JSON.parse(sessionStorage.getItem("vud"))?.at || "defaultAccessToken"
+
+// Using a function to get the fresh access token - using a var will not update the token after initial load
+export const getAccessTokenFunction = () => {
+    const vud = sessionStorage.getItem("vud")
+    if (vud) {
+        const parsedVud = JSON.parse(vud)
+        return parsedVud.at || false
+    }
+    return false
+}
+
 export const getRefreshToken =
     JSON.parse(localStorage.getItem("vrt"))?.rt || "defaultRefreshToken"
 
