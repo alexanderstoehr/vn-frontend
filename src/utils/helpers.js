@@ -5,7 +5,7 @@ export const documentationObject = [addVideoDocumentation]
 // --- Session and Local Storage Token Functions
 
 // ToDo: Replace token calls with helper vars:
-export const getAccessToken =
+export let getAccessToken =
     JSON.parse(sessionStorage.getItem("vud"))?.at || "defaultAccessToken"
 
 // Using a function to get the fresh access token - using a var will not update the token after initial load
