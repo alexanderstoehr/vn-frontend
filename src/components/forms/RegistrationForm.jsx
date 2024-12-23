@@ -150,6 +150,7 @@ export default function RegistrationForm({ onClose }) {
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
+                        autoFocus
                     />
                 )}
                 {formState === stateArray[1] && (

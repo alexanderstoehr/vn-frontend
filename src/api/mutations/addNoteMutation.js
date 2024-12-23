@@ -1,12 +1,13 @@
 import { postNoteEndpoint } from "../endpoints.js"
 import { apiVeenotes } from "../axios.js"
-import { getAccessToken } from "../../utils/helpers.js"
+import { getAccessTokenFunction } from "../../utils/helpers.js"
 
 export const addNoteMutation = async (noteData) => {
+    const token = getAccessTokenFunction()
     try {
         const res = await apiVeenotes.post(postNoteEndpoint, noteData, {
             headers: {
-                Authorization: `Bearer ${getAccessToken}`,
+                Authorization: `Bearer ${token}`,
             },
         })
         return res.data

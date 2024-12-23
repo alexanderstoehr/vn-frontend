@@ -46,6 +46,7 @@ export default function AddSpaceForm({ onClose }) {
                     placeholder="Space Name"
                     type="text"
                     onChange={(e) => setSpaceName(e.target.value)}
+                    autoFocus
                 />
                 <InputTextArea
                     placeholder="Describe the content of this space, what it's about, and what you can find here."
