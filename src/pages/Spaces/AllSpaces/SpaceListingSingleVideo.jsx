@@ -10,12 +10,13 @@ export default function SpaceListingSingleVideo({ video }) {
     const handleVideoClick = () => {
         navigate(`/video/${video.id}`)
     }
+
     return (
         <div
             onClick={handleVideoClick}
-            className="z-10 min-w-80 cursor-pointer rounded-xl border-2 p-6 duration-200 ease-in-out hover:scale-[1.01]">
+            className="z-10 min-w-80 max-w-60 cursor-pointer rounded-xl border-2 p-6 duration-200 ease-in-out hover:scale-[1.01]">
             <img
-                className="mb-4"
+                className="mb-4 h-40 w-64 rounded-l bg-gray-300 object-cover"
                 src={video.video_host_thumbnail_url}></img>
             <div className="mb-2 flex flex-row gap-4">
                 <div className="flex flex-row items-center gap-1 text-xs font-semibold text-gray-700 dark:text-gray-400">
