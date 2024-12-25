@@ -462,3 +462,5 @@ static-files*
 
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,django,python,pycharm,windows
+# Sentry Config File
+.env.sentry-build-plugin
