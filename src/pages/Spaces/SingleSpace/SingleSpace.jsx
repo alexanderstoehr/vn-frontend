@@ -97,10 +97,13 @@ export default function SingleSpace() {
                             key={index}
                             onClick={() => handleVideoClick(video.id)}
                             className="flex cursor-pointer gap-8 rounded-md border border-gray-300 bg-gray-100 p-8 transition-transform duration-300 hover:scale-[1.01] hover:ease-in-out">
-                            <img
-                                src={video.video_host_thumbnail_url}
-                                className="h-56 w-96 rounded-xl object-cover"
-                            />
+                            <div className="h-44 min-w-72 rounded-xl object-cover">
+                                <img
+                                    src={video.video_host_thumbnail_url}
+                                    className="h-full w-full rounded-xl object-cover"
+                                />
+                            </div>
+
                             <div>
                                 <div>
                                     <div className="mb-2">
