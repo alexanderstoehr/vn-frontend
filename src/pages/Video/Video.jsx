@@ -21,6 +21,7 @@ import { formatDate, secondsToTime } from "../../utils/formatting.js"
 import AddNoteModal from "../../components/modals/AddNoteModal.jsx"
 import EditNoteModal from "../../components/modals/EditNoteModal.jsx"
 import DeleteVideoModal from "../../components/modals/DeleteVideoModal.jsx"
+import DeleteNoteModal from "../../components/modals/DeleteNoteModal.jsx"
 
 export default function Video() {
     const noteDescriptionRef = useRef(null)
@@ -32,6 +33,7 @@ export default function Video() {
     const [showAddNoteModal, setShowAddNoteModal] = useState()
     const [showEditNoteModal, setShowEditNoteModal] = useState()
     const [showDeleteVideoModal, setShowDeleteVideoModal] = useState()
+    const [showDeleteNoteModal, setShowDeleteNoteModal] = useState()
 
     //Video Variables
     const [videoTitle, setVideoTitle] = useState()
@@ -163,6 +165,12 @@ export default function Video() {
                         setShowDeleteVideoModal={setShowDeleteVideoModal}
                     />
                 )}
+                {showDeleteNoteModal && (
+                    <DeleteNoteModal
+                        setShowDeleteNoteModal={setShowDeleteNoteModal}
+                        activeVideoNote={activeVideoNote}
+                    />
+                )}
 
                 <div className="mx-auto flex max-w-screen-xl flex-col gap-4 pt-8">
                     <div className="flex justify-between text-2xl font-semibold leading-tight text-gray-900 dark:text-gray-400">
@@ -273,6 +281,9 @@ export default function Video() {
                                                 editNoteTitle={editNoteTitle}
                                                 setShowEditNoteModal={
                                                     setShowEditNoteModal
+                                                }
+                                                setShowDeleteNoteModal={
+                                                    setShowDeleteNoteModal
                                                 }
                                             />
                                         ))}
