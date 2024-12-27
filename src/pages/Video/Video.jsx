@@ -20,6 +20,7 @@ import { useGetSingleVideo } from "../../hooks/useGetSingleVideo.jsx"
 import { formatDate, secondsToTime } from "../../utils/formatting.js"
 import AddNoteModal from "../../components/modals/AddNoteModal.jsx"
 import EditNoteModal from "../../components/modals/EditNoteModal.jsx"
+import DeleteVideoModal from "../../components/modals/DeleteVideoModal.jsx"
 
 export default function Video() {
     const noteDescriptionRef = useRef(null)
@@ -30,6 +31,7 @@ export default function Video() {
 
     const [showAddNoteModal, setShowAddNoteModal] = useState()
     const [showEditNoteModal, setShowEditNoteModal] = useState()
+    const [showDeleteVideoModal, setShowDeleteVideoModal] = useState()
 
     //Video Variables
     const [videoTitle, setVideoTitle] = useState()
@@ -136,6 +138,11 @@ export default function Video() {
         setShowAddNoteModal(true)
     }
 
+    const handleDeleteVideo = () => {
+        console.log("Delete video")
+        setShowDeleteVideoModal(!showDeleteVideoModal)
+    }
+
     if (isSuccess) {
         return (
             <div>
@@ -149,6 +156,11 @@ export default function Video() {
                     <EditNoteModal
                         setShowEditNoteModal={setShowEditNoteModal}
                         activeVideoNote={activeVideoNote}
+                    />
+                )}
+                {showDeleteVideoModal && (
+                    <DeleteVideoModal
+                        setShowDeleteVideoModal={setShowDeleteVideoModal}
                     />
                 )}
 
@@ -305,6 +317,13 @@ export default function Video() {
                                         />
                                     </div>
                                 </div>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                                <Button
+                                    type="danger-secondary"
+                                    text="Delete Video"
+                                    onClick={handleDeleteVideo}
+                                />
                             </div>
                         </div>
                     </div>
