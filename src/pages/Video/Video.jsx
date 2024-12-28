@@ -20,6 +20,8 @@ import { useGetSingleVideo } from "../../hooks/useGetSingleVideo.jsx"
 import { formatDate, secondsToTime } from "../../utils/formatting.js"
 import AddNoteModal from "../../components/modals/AddNoteModal.jsx"
 import EditNoteModal from "../../components/modals/EditNoteModal.jsx"
+import DeleteVideoModal from "../../components/modals/DeleteVideoModal.jsx"
+import DeleteNoteModal from "../../components/modals/DeleteNoteModal.jsx"
 
 export default function Video() {
     const noteDescriptionRef = useRef(null)
@@ -30,6 +32,8 @@ export default function Video() {
 
     const [showAddNoteModal, setShowAddNoteModal] = useState()
     const [showEditNoteModal, setShowEditNoteModal] = useState()
+    const [showDeleteVideoModal, setShowDeleteVideoModal] = useState()
+    const [showDeleteNoteModal, setShowDeleteNoteModal] = useState()
 
     //Video Variables
     const [videoTitle, setVideoTitle] = useState()
@@ -136,6 +140,11 @@ export default function Video() {
         setShowAddNoteModal(true)
     }
 
+    const handleDeleteVideo = () => {
+        console.log("Delete video")
+        setShowDeleteVideoModal(!showDeleteVideoModal)
+    }
+
     if (isSuccess) {
         return (
             <div>
@@ -148,6 +157,17 @@ export default function Video() {
                 {showEditNoteModal && (
                     <EditNoteModal
                         setShowEditNoteModal={setShowEditNoteModal}
+                        activeVideoNote={activeVideoNote}
+                    />
+                )}
+                {showDeleteVideoModal && (
+                    <DeleteVideoModal
+                        setShowDeleteVideoModal={setShowDeleteVideoModal}
+                    />
+                )}
+                {showDeleteNoteModal && (
+                    <DeleteNoteModal
+                        setShowDeleteNoteModal={setShowDeleteNoteModal}
                         activeVideoNote={activeVideoNote}
                     />
                 )}
@@ -262,6 +282,9 @@ export default function Video() {
                                                 setShowEditNoteModal={
                                                     setShowEditNoteModal
                                                 }
+                                                setShowDeleteNoteModal={
+                                                    setShowDeleteNoteModal
+                                                }
                                             />
                                         ))}
                                     </div>
@@ -305,6 +328,13 @@ export default function Video() {
                                         />
                                     </div>
                                 </div>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                                <Button
+                                    type="danger-secondary"
+                                    text="Delete Video"
+                                    onClick={handleDeleteVideo}
+                                />
                             </div>
                         </div>
                     </div>
