@@ -6,7 +6,7 @@ import { useEditNoteMutation } from "../../hooks/useEditNoteMutation.jsx"
 export default function EditNoteForm({ onClose, activeVideoNote }) {
     const editNote = useEditNoteMutation()
     const [noteTitle, setNoteTitle] = useState(activeVideoNote.note_title)
-    //useRef to store the current value of the note title
+    //useRef to store the current value of the note title in the --> current render
     //useRef keeps the value of the note title in sync with the input field without causing a re-render
     //this fixes the not updating state if the user types fast and sends with enter key
     const noteTitleRef = useRef(noteTitle)
