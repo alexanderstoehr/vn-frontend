@@ -1,6 +1,6 @@
-import { shortkeyFunctions } from "./shortkeys.js"
+import { shortkeyFunctions } from "../utils/shortkeys.js"
 
-export const listenToKey = () => {
+export const useVideoEventListeners = () => {
     window.addEventListener("keydown", (e) => {
         if (e.code === "Space") {
             shortkeyFunctions.playerPlayPause()

@@ -48,7 +48,7 @@ export default function Video() {
     let currentTimeStamp = Math.round(Math.random() * 500)
     const notePayload = {
         note_title: "",
-        note_description: "Add your note description here...",
+        note_description: videoDescription,
         note_timestamp: currentTimeStamp,
         video: videoId,
         video_id: videoId,
@@ -63,6 +63,10 @@ export default function Video() {
     const [activeVideoNoteTitle, setActiveVideoNoteTitle] = useState("")
     const [activeNoteDescription, setActiveNoteDescription] = useState("")
     const [activeNoteTimestamp, setActiveNoteTimestamp] = useState()
+
+    //Description Variables
+    const descriptionStatus = ["inSync", "outOfSync"]
+    const descriptionButtonText = ["Save", "Save Changes", "Saving"]
 
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
@@ -118,7 +122,7 @@ export default function Video() {
 
     const handleDescriptionChange = (e) => {
         console.log("value: ", e.target.value)
-        setActiveNoteDescription(e.target.id)
+        setActiveNoteDescription(e.target.value)
     }
 
     if (isLoading) {
@@ -226,8 +230,14 @@ export default function Video() {
                                 <div className="">
                                     <div className="flex flex-col">
                                         <HelpLabel text="Your current Note:" />
-                                        <div className="mb-4 text-lg font-semibold">
-                                            {activeVideoNoteTitle}
+                                        <div className="flex items-center justify-between">
+                                            <div className="mb-4 text-lg font-semibold">
+                                                {activeVideoNoteTitle}
+                                            </div>
+                                            <Button
+                                                text="Save"
+                                                type="primary"
+                                            />
                                         </div>
                                     </div>
                                     <div className="">
