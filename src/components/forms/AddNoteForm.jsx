@@ -9,11 +9,10 @@ export default function AddNoteForm({ onClose, propObject }) {
     const [noteTitle, setNoteTitle] = useState()
     const notePayload = {
         note_title: noteTitle,
-        project_id: propObject.project_id,
         video_id: propObject.video_id,
         video: propObject.video_id,
         note_timestamp: propObject.note_timestamp,
-        note_description: propObject.note_description,
+        note_description: "Add your note description here...",
     }
 
     console.log("Probject: ", propObject)
