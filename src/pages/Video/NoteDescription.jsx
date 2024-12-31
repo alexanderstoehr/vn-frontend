@@ -1,6 +1,7 @@
 import HelpLabel from "../../components/primitives/HelpLabel.jsx"
 import Button from "../../components/primitives/Button.jsx"
 import { useEffect, useRef, useState } from "react"
+import { useEditNoteMutation } from "../../hooks/useEditNoteMutation.jsx"
 
 export default function NoteDescription({ activeVideoNote }) {
     // when current data differs from server data = false --- check on video or note state changes
@@ -8,38 +9,65 @@ export default function NoteDescription({ activeVideoNote }) {
 
     const noteDescriptionRef = useRef(null)
 
+    const patchNoteDescription = useEditNoteMutation()
+
     const [noteDescription, setNoteDescription] = useState(
         activeVideoNote.note_description
     )
-    console.log("Active Note from note description: ", activeVideoNote)
+    //console.log("Active Note from note description: ", activeVideoNote)
 
     const handleDescriptionChange = (e) => {
-        console.log("value: ", e.target.value)
+        // console.log("value: ", e.target.value)
         setNoteDescription(e.target.value)
     }
 
     const handleSaveClick = () => {
-        console.log("Save clicked")
+        console.log("Save clicked, note description: ", noteDescription)
+        patchNoteDescription.mutate(
+            {
+                id: activeVideoNote.id,
+                note_description: noteDescription,
+            },
+            {
+                onSuccess: () => {
+                    setSaved(true)
+                },
+            }
+        )
     }
 
     useEffect(() => {
         setNoteDescription(activeVideoNote.note_description)
     }, [activeVideoNote])
 
+    useEffect(() => {
+        noteDescription === activeVideoNote.note_description
+            ? setSaved(true)
+            : setSaved(false)
+    }, [noteDescription])
+
     return (
         <>
             <div className="">
                 <div className="flex flex-col">
                     <HelpLabel text="Your current Note:" />
-                    <div className="flex items-center justify-between">
+                    <div className="mb-2 flex items-center justify-between">
                         <div className="mb-4 text-lg font-semibold">
                             {activeVideoNote.note_title}
                         </div>
-                        <Button
-                            text="Save"
-                            type="primary"
-                            onClick={handleSaveClick}
-                        />
+                        <div className="flex items-center gap-4">
+                            <span className="text-gray-500">
+                                {saved ? "Saved" : "Unsaved Changes"}
+                            </span>
+                            <Button
+                                text={
+                                    saved ? "Nothing to save" : "Save Changes"
+                                }
+                                type={saved ? "disabled" : "primary"}
+                                onClick={handleSaveClick}
+                                disabled={saved}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="">
