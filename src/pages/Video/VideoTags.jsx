@@ -1,11 +1,31 @@
 import HelpLabel from "../../components/primitives/HelpLabel.jsx"
 import InputTextLine from "../../components/primitives/InputTextLine.jsx"
 import Tag from "../../components/primitives/Tag.jsx"
+import { useEffect, useState } from "react"
 
 export default function VideoTags({ videoTags }) {
-    const onChange = (e) => {
-        console.log(e)
+    const [newTag, setNewTag] = useState("")
+
+    const handleAddTag = (tag) => {
+        console.log("add tag:", tag)
     }
+
+    const onChange = (e) => {
+        //console.log(e)
+        setNewTag(e.target.value)
+    }
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "Enter") {
+                handleAddTag(newTag)
+            }
+        }
+        document.addEventListener("keydown", handleKeyDown)
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown)
+        }
+    }, [newTag])
 
     return (
         <div className="video-tags">
@@ -16,7 +36,7 @@ export default function VideoTags({ videoTags }) {
                 </div>
                 <InputTextLine
                     onChange={onChange}
-                    value=""
+                    value={newTag}
                     placeholder="Add Tag"
                 />
                 <div className="mt-4 flex flex-wrap">
@@ -25,6 +45,7 @@ export default function VideoTags({ videoTags }) {
                             text={tag.tag_name}
                             key={tag.id}
                             close="true"
+                            tag={tag}
                         />
                     ))}
                 </div>
