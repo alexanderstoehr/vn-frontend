@@ -4,6 +4,7 @@ import Tag from "../../components/primitives/Tag.jsx"
 import { useEffect, useState } from "react"
 import { useAddTagMutation } from "../../hooks/useAddTagMutation.jsx"
 import { useParams } from "react-router-dom"
+import Button from "../../components/primitives/Button.jsx"
 
 export default function VideoTags({ videoTags }) {
     const [newTag, setNewTag] = useState("")
@@ -38,8 +39,9 @@ export default function VideoTags({ videoTags }) {
         }
     }, [newTag])
 
-    console.log("taglength: ", videoTags.length)
-
+    const handleAddTagClick = () => {
+        handleAddTag(newTag)
+    }
     return (
         <div className="video-tags">
             <div className="flex flex-col">
@@ -47,16 +49,24 @@ export default function VideoTags({ videoTags }) {
                     <div className="mr-4 text-lg font-semibold">Video Tags</div>
                     <HelpLabel text="Add up to 3 tags to help categorize your videos" />
                 </div>
-                <InputTextLine
-                    onChange={onChange}
-                    value={
-                        videoTags.length >= 3
-                            ? "Delete a tag to add a new one"
-                            : newTag.toLowerCase()
-                    }
-                    placeholder="Add Tag"
-                    disabled={true}
-                />
+                <div className="flex items-center gap-2">
+                    <InputTextLine
+                        onChange={onChange}
+                        value={
+                            videoTags.length >= 3
+                                ? "Delete a tag to add a new one"
+                                : newTag.toLowerCase()
+                        }
+                        placeholder="Add Tag"
+                        disabled={videoTags.length >= 3}
+                    />
+                    <Button
+                        type="primary"
+                        text="Add"
+                        onClick={handleAddTagClick}
+                        className="my-1"
+                    />
+                </div>
                 <div className="mt-4 flex flex-wrap">
                     {videoTags.map((tag) => (
                         <Tag
