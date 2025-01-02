@@ -115,6 +115,7 @@ export default function Video() {
                                 videoNotes={videoNotes}
                                 activeVideoNote={activeVideoNote}
                                 setActiveVideoNote={setActiveVideoNote}
+                                videoId={videoId}
                             />
 
                             <div>

@@ -13,6 +13,7 @@ export default function NotesSection({
     videoNotes,
     activeVideoNote,
     setActiveVideoNote,
+    videoId,
 }) {
     const [showAddNoteModal, setShowAddNoteModal] = useState()
     const [showEditNoteModal, setShowEditNoteModal] = useState()
@@ -23,12 +24,12 @@ export default function NotesSection({
     //const propObject = notePayload
     //Test Note patching
     let currentTimeStamp = Math.round(Math.random() * 500)
-    const notePayload = {
-        note_timestamp: currentTimeStamp,
-        video: activeVideoNote.video,
-        video_id: activeVideoNote.video,
-    }
 
+    const newNotePayload = {
+        note_timestamp: currentTimeStamp,
+        video: videoId,
+        video_id: videoId,
+    }
     const handleNoteClick = (note) => {
         console.log("clicked note: ", note)
         setActiveVideoNote(note)
@@ -57,7 +58,7 @@ export default function NotesSection({
         <>
             {showAddNoteModal && (
                 <AddNoteModal
-                    propObject={notePayload}
+                    propObject={newNotePayload}
                     setShowAddNoteModal={setShowAddNoteModal}
                 />
             )}
