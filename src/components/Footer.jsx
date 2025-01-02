@@ -49,6 +49,13 @@ export default function Footer() {
                 <span className="text-sm text-gray-500 dark:text-gray-400 sm:text-center">
                     🥳
                 </span>
+                <button
+                    onClick={() => {
+                        throw new Error("This is your first error!")
+                    }}>
+                    Break the world
+                </button>
+                ;
             </div>
         </footer>
     )
