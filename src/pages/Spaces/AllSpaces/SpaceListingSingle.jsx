@@ -10,6 +10,8 @@ export default function SpaceListingSingle({ space }) {
     const [isDragging, setIsDragging] = useState(false)
     const [startX, setStartX] = useState(0)
     const [scrollLeft, setScrollLeft] = useState(0)
+    const [sortNewestFist, setSortNewestFist] = useState(true)
+
     const scrollContainerRef = useRef(null)
 
     const navigate = useNavigate()
@@ -81,6 +83,14 @@ export default function SpaceListingSingle({ space }) {
         navigate(`/space/${space.id}`)
     }
 
+    const sortedVideosByCreationDate = sortNewestFist
+        ? space.videos.sort(
+              (a, b) => new Date(b.created_at) - new Date(a.created_at)
+          )
+        : space.videos.sort(
+              (a, b) => new Date(a.created_at) - new Date(b.created_at)
+          )
+
     return (
         <div className="z-10 mx-auto flex max-w-screen-xl flex-col gap-2 pt-8">
             <div className="flex justify-between">
@@ -111,7 +121,7 @@ export default function SpaceListingSingle({ space }) {
                 <div
                     ref={scrollContainerRef}
                     className="no-scrollbar grid cursor-grab grid-flow-col justify-start gap-8 overflow-x-scroll p-4 active:cursor-grabbing">
-                    {space.videos.map((video, index) => (
+                    {sortedVideosByCreationDate.map((video, index) => (
                         <SpaceListingSingleVideo
                             key={index}
                             video={video}

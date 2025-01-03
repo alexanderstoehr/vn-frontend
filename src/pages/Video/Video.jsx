@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Button from "../../components/primitives/Button.jsx"
-import videoCategories from "../../data/dummyData/videoCategories.json"
 import { useParams } from "react-router-dom"
 import { useGetSingleVideo } from "../../hooks/useGetSingleVideo.jsx"
 import DeleteVideoModal from "../../components/modals/DeleteVideoModal.jsx"
@@ -17,7 +16,7 @@ export default function Video() {
     const [showDeleteVideoModal, setShowDeleteVideoModal] = useState()
 
     const [videoHostId, setVideoHostId] = useState()
-    // const [videoCategory, setVideoCategory] = useState()
+    const [videoCategory, setVideoCategory] = useState()
     const [videoTags, setVideoTags] = useState([])
 
     const [videoNotes, setVideoNotes] = useState([])
@@ -32,7 +31,7 @@ export default function Video() {
     useEffect(() => {
         if (data) {
             setVideoHostId(data.video_host_id)
-            // setVideoCategory(data.category.category_name)
+            setVideoCategory(data.category)
             setVideoTags(data.tags)
             const sortedNotes = data.notes.sort(
                 (a, b) => a.note_timestamp - b.note_timestamp
@@ -115,6 +114,7 @@ export default function Video() {
                                 videoNotes={videoNotes}
                                 activeVideoNote={activeVideoNote}
                                 setActiveVideoNote={setActiveVideoNote}
+                                videoId={videoId}
                             />
 
                             <div>
@@ -123,7 +123,7 @@ export default function Video() {
                                 <div className="flex flex-col gap-8">
                                     <VideoTags videoTags={videoTags} />
                                     <VideoCategory
-                                        videoCategories={videoCategories}
+                                        videoCategory={data.category}
                                     />
                                 </div>
                             </div>
