@@ -97,7 +97,10 @@ export default function Video() {
                         <div className="flex w-2/3 flex-col gap-8">
                             {/*Video*/}
 
-                            <VideoPlayer videoHostId={videoHostId} />
+                            <VideoPlayer
+                                videoHostId={videoHostId}
+                                activeNoteTimestamp={activeNoteTimestamp}
+                            />
 
                             <div>
                                 <NoteDescription

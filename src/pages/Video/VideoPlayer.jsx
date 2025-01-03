@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react"
+import Button from "../../components/primitives/Button.jsx"
+import { secondsToTime } from "../../utils/formatting.js"
 
-export default function VideoPlayer({ videoHostId }) {
+export default function VideoPlayer({ videoHostId, activeNoteTimestamp }) {
     const playerRef = useRef(null)
-    console.log("Video host id: ", videoHostId)
 
     useEffect(() => {
         const scriptId = "youtube-iframe-api"
@@ -36,9 +37,8 @@ export default function VideoPlayer({ videoHostId }) {
         }
     }, [videoHostId])
 
-    const onPlayerReady = (event) => {
+    const onPlayerReady = () => {
         console.log("Player is ready")
-        //event.target.playVideo()
     }
 
     const onPlayerStateChange = (event) => {
@@ -57,11 +57,45 @@ export default function VideoPlayer({ videoHostId }) {
         }
     }
 
+    const seekTo = (seconds) => {
+        if (
+            playerRef.current &&
+            typeof playerRef.current.seekTo === "function"
+        ) {
+            playerRef.current.seekTo(seconds, true)
+        } else {
+            console.error(
+                "Player is not ready or seekTo method is not available"
+            )
+        }
+    }
+
+    useEffect(() => {
+        seekTo(activeNoteTimestamp)
+    }, [activeNoteTimestamp])
+
+    const getCurrentTime = () => {
+        if (playerRef.current) {
+            console.log(
+                "Current timestamp: ",
+                secondsToTime(playerRef.current.getCurrentTime())
+            )
+            return secondsToTime(playerRef.current.getCurrentTime())
+        }
+    }
+
     return (
-        <div className="relative h-0 w-full pb-[56.25%]">
-            <div
-                id="youtube-player"
-                className="absolute left-0 top-0 h-full w-full rounded-xl"></div>
-        </div>
+        <>
+            <div className="relative h-0 w-full pb-[56.25%]">
+                <div
+                    id="youtube-player"
+                    className="absolute left-0 top-0 h-full w-full rounded-xl"></div>
+            </div>
+
+            <Button
+                text="Log current timestamp"
+                onClick={() => getCurrentTime()}
+            />
+        </>
     )
 }
