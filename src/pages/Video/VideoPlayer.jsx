@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Button from "../../components/primitives/Button.jsx"
 import { secondsToTime } from "../../utils/formatting.js"
 
 export default function VideoPlayer({ videoHostId, activeNoteTimestamp }) {
     const playerRef = useRef(null)
+    const [isPlayerReady, setIsPlayerReady] = useState(false)
 
     useEffect(() => {
         const scriptId = "youtube-iframe-api"
@@ -39,6 +40,7 @@ export default function VideoPlayer({ videoHostId, activeNoteTimestamp }) {
 
     const onPlayerReady = () => {
         console.log("Player is ready")
+        setIsPlayerReady(true)
     }
 
     const onPlayerStateChange = (event) => {
@@ -59,9 +61,11 @@ export default function VideoPlayer({ videoHostId, activeNoteTimestamp }) {
 
     const seekTo = (seconds) => {
         if (
+            isPlayerReady &&
             playerRef.current &&
             typeof playerRef.current.seekTo === "function"
         ) {
+            console.log(`Seeking to ${seconds} seconds`)
             playerRef.current.seekTo(seconds, true)
         } else {
             console.error(
@@ -71,16 +75,17 @@ export default function VideoPlayer({ videoHostId, activeNoteTimestamp }) {
     }
 
     useEffect(() => {
-        seekTo(activeNoteTimestamp)
-    }, [activeNoteTimestamp])
+        if (isPlayerReady) {
+            console.log(`Active note timestamp: ${activeNoteTimestamp}`)
+            seekTo(activeNoteTimestamp)
+        }
+    }, [activeNoteTimestamp, isPlayerReady])
 
     const getCurrentTime = () => {
         if (playerRef.current) {
-            console.log(
-                "Current timestamp: ",
-                secondsToTime(playerRef.current.getCurrentTime())
-            )
-            return secondsToTime(playerRef.current.getCurrentTime())
+            const currentTime = playerRef.current.getCurrentTime()
+            console.log("Current timestamp: ", secondsToTime(currentTime))
+            return secondsToTime(currentTime)
         }
     }
 
