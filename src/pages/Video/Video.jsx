@@ -8,7 +8,7 @@ import NoteDescription from "./NoteDescription.jsx"
 import VideoTags from "./VideoTags.jsx"
 import VideoCategory from "./VideoCategory.jsx"
 import NotesSection from "./NotesSection.jsx"
-import VideoEmbed from "./VideoEmbed.jsx"
+import VideoPlayer from "./VideoPlayer.jsx"
 
 export default function Video() {
     const { videoId } = useParams()
@@ -97,7 +97,7 @@ export default function Video() {
                         <div className="flex w-2/3 flex-col gap-8">
                             {/*Video*/}
 
-                            <VideoEmbed />
+                            <VideoPlayer videoHostId={videoHostId} />
 
                             <div>
                                 <NoteDescription
