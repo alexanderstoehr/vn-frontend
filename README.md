@@ -17,7 +17,8 @@ between pages. API calls are managed with **Axios**, allowing for efficient data
 
 - **Framework**: React.js
 - **Development Server**: Vite
-- **UI Components**: Flowbite React, Tailwind CSS
+- **UI Components**: Tailwind CSS
 - **Routing**: React Router
 - **HTTP Client**: Axios
+- **States**: React Query (Server State)
   
