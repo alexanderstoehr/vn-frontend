@@ -2,8 +2,8 @@ import HelpLabel from "../../components/primitives/HelpLabel.jsx"
 import InputSelect from "../../components/primitives/InputSelect.jsx"
 import { useGetAllCategories } from "../../hooks/useGetAllCategories.jsx"
 import { useEffect, useState } from "react"
-import { useEditVideoMutation } from "../../hooks/useEditVideoMutation.jsx"
 import { useParams } from "react-router-dom"
+import { useAddCategoryMutation } from "../../hooks/useAddCategoryMutation.jsx"
 
 export default function VideoCategory({ videoCategory }) {
     const [categoryOptions, setCategoryOptions] = useState([]) // Array of category objects
@@ -12,11 +12,9 @@ export default function VideoCategory({ videoCategory }) {
     const { videoId } = useParams()
 
     const allCategories = useGetAllCategories()
-    const patchVideoCategory = useEditVideoMutation()
+    const patchVideoCategory = useAddCategoryMutation()
 
     useEffect(() => {
-        console.log("All Categories: ", allCategories.data)
-        console.log("Video category: ", videoCategory)
         if (allCategories.data) {
             const catObj = allCategories.data.map((category) => ({
                 id: category.id,
@@ -30,25 +28,34 @@ export default function VideoCategory({ videoCategory }) {
         }
     }, [allCategories.data, videoCategory])
 
-    console.log("video id: ", videoId)
-    console.log("category selected: ", selectedCategory)
-    console.log("video category: ", videoCategory)
-    console.log("categoryOptions", categoryOptions)
-
-    const categoryPayload = {
-        id: videoId,
-        video_id: videoId,
-        category_id: selectedCategory.id,
-    }
-
     const onChange = (e) => {
-        // setSelectedCategory(
-        //     categoryOptions.find((option) => option.id === e.target.value)
-        // )
-        console.log("onchange", selectedCategory, "video id: ", videoId)
-        console.log(e)
-        //patchVideoCategory.mutate(categoryPayload)
+        const selectedValue = Number(e.target.value)
+        const selCat = categoryOptions.find(
+            (option) => option.id === selectedValue
+        )
+
+        if (selCat) {
+            setSelectedCategory(selCat)
+
+            const categoryPayload = {
+                video_id: videoId,
+                category_id: selCat.id,
+            }
+
+            console.log("onchange", selCat, "------video id: ", videoId)
+            console.log("payload", categoryPayload)
+            patchVideoCategory.mutate({
+                categoryData: categoryPayload,
+                videoId,
+            })
+        } else {
+            console.error("Selected category not found")
+        }
     }
+
+    useEffect(() => {
+        console.log(selectedCategory)
+    }, [selectedCategory])
 
     return (
         <div className="flex flex-col">
