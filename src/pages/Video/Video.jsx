@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Button from "../../components/primitives/Button.jsx"
 import { useParams } from "react-router-dom"
 import { useGetSingleVideo } from "../../hooks/useGetSingleVideo.jsx"
@@ -9,6 +9,7 @@ import VideoTags from "./VideoTags.jsx"
 import VideoCategory from "./VideoCategory.jsx"
 import NotesSection from "./NotesSection.jsx"
 import VideoPlayer from "./VideoPlayer.jsx"
+import { secondsToTime } from "../../utils/formatting.js"
 
 export default function Video() {
     const { videoId } = useParams()
@@ -26,6 +27,26 @@ export default function Video() {
 
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
+
+    // Get current video time
+    const playerRef = useRef(null)
+
+    const getCurrentTime = () => {
+        if (playerRef.current) {
+            if (typeof playerRef.current.getCurrentTime === "function") {
+                const currentTime = Math.floor(
+                    playerRef.current.getCurrentTime()
+                )
+                console.log("Current timestamp: ", currentTime)
+                return currentTime
+            } else {
+                console.error("getCurrentTime method is not available")
+            }
+        } else {
+            console.error("Player is not ready")
+        }
+        return 0
+    }
 
     // console.log("outside effect: ", data)
     useEffect(() => {
@@ -63,11 +84,6 @@ export default function Video() {
         return <div>Loading...</div>
     }
 
-    //Video Handlings
-    const startVideoAtTime = (time) => {
-        console.log("Starting video at time: ", time)
-    }
-
     const handleDeleteVideo = () => {
         console.log("Delete video")
         setShowDeleteVideoModal(!showDeleteVideoModal)
@@ -100,6 +116,7 @@ export default function Video() {
                             <VideoPlayer
                                 videoHostId={videoHostId}
                                 activeNoteTimestamp={activeNoteTimestamp}
+                                playerRef={playerRef}
                             />
 
                             <div>
@@ -118,6 +135,7 @@ export default function Video() {
                                 activeVideoNote={activeVideoNote}
                                 setActiveVideoNote={setActiveVideoNote}
                                 videoId={videoId}
+                                getCurrentTime={getCurrentTime}
                             />
 
                             <div>
@@ -132,7 +150,6 @@ export default function Video() {
                             </div>
                             <div className="mt-4 flex justify-end">
                                 {/*Delete video*/}
-
                                 <Button
                                     type="danger-secondary"
                                     text="Delete Video"

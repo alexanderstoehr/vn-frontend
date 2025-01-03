@@ -2,8 +2,11 @@ import { useEffect, useRef, useState } from "react"
 import Button from "../../components/primitives/Button.jsx"
 import { secondsToTime } from "../../utils/formatting.js"
 
-export default function VideoPlayer({ videoHostId, activeNoteTimestamp }) {
-    const playerRef = useRef(null)
+export default function VideoPlayer({
+    videoHostId,
+    activeNoteTimestamp,
+    playerRef,
+}) {
     const [isPlayerReady, setIsPlayerReady] = useState(false)
 
     useEffect(() => {
