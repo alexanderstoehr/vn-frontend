@@ -7,6 +7,12 @@ quick reference. With features like collections, organized topics, and timestamp
 interactive, active learning experience. Ideal for students, professionals, or anyone looking to master new skills, Veenote makes reviewing
 and retaining information easier and more effective.
 
+## Main Repo & Forum
+You can find the main repo with its discussion section here:
+https://github.com/alexanderstoehr/Veenotes
+
+Both repositories (frontend and backend) can be found as submodules there.
+
 ## Stack and Tools
 
 This frontend for Veenote is built with a modern React-based stack, using Vite as the development server for fast build times. The
