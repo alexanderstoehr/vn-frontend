@@ -14,19 +14,21 @@ export default function NotesSection({
     activeVideoNote,
     setActiveVideoNote,
     videoId,
+    getCurrentTime,
 }) {
     const [showAddNoteModal, setShowAddNoteModal] = useState()
     const [showEditNoteModal, setShowEditNoteModal] = useState()
     const [showDeleteNoteModal, setShowDeleteNoteModal] = useState()
+    const [currentTimeStampApi, setCurrentTimeStampApi] = useState()
 
     //Note Variables
     //const [videoNotes, setVideoNotes] = useState([])
     //const propObject = notePayload
     //Test Note patching
-    let currentTimeStamp = Math.round(Math.random() * 500)
+    //let currentTimeStamp = Math.round(Math.random() * 500)
 
     const newNotePayload = {
-        note_timestamp: currentTimeStamp,
+        note_timestamp: currentTimeStampApi,
         video: videoId,
         video_id: videoId,
     }
@@ -52,6 +54,7 @@ export default function NotesSection({
     const handleAddNote = () => {
         console.log("Adding note")
         setShowAddNoteModal(true)
+        setCurrentTimeStampApi(getCurrentTime())
     }
 
     const noteModals = (
