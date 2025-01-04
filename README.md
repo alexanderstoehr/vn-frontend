@@ -8,6 +8,7 @@ interactive, active learning experience. Ideal for students, professionals, or a
 and retaining information easier and more effective.
 
 ## Main Repo & Forum
+Got some questions, want to report a problem or being awesome for sharing some feedback?
 You can find the main repo with its discussion section here:
 https://github.com/alexanderstoehr/Veenotes
 
