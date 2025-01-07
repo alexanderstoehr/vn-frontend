@@ -1,0 +1,17 @@
+{
+  "modalTitle": "Version Information",
+  "version": "alpha 0.1.0",
+  "introText": "This is the first version of the app.",
+  "workingFeatures": [
+    "Registration",
+    "Login",
+    "Create spaces",
+    "Create videos with notes"
+  ],
+  "contactPossibilities": [
+    {
+      "name": "GitHub Discussions",
+      "link": ""
+    }
+  ]
+}
