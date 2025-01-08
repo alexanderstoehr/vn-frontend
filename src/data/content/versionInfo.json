@@ -1,17 +1,8 @@
 {
   "modalTitle": "Version Information",
   "version": "alpha 0.1.0",
-  "introText": "This is the first version of the app.",
-  "workingFeatures": [
-    "Registration",
-    "Login",
-    "Create spaces",
-    "Create videos with notes"
-  ],
-  "contactPossibilities": [
-    {
-      "name": "GitHub Discussions",
-      "link": ""
-    }
-  ]
+  "introText": "This is the first version. You are able to create an account, login, create spaces and create videos with notes.",
+  "featuresInProgress": "Features which are currently in progress are filtering, space and video editing, skeleton loaders and some more.",
+  "feedbackText": "If you have any feedback, join the discussion on GitHub.",
+  "gitHubDiscussions": "https://github.com/alexanderstoehr/Veenotes/discussions"
 }
