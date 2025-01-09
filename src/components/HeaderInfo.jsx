@@ -2,7 +2,7 @@ import { useState } from "react"
 import VersionInfoModal from "./modals/VersionInfoModal.jsx"
 
 export default function HeaderInfo() {
-    const [showVersionInfoModal, setShowVersionInfoModal] = useState(true)
+    const [showVersionInfoModal, setShowVersionInfoModal] = useState(false)
 
     return (
         <div>
