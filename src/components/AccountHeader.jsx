@@ -1,7 +1,15 @@
 import HeaderInfo from "./HeaderInfo.jsx"
 import { showHeaderInfo } from "../utils/options.js"
+import useLogout from "../hooks/useLogout.jsx"
 
 export default function AccountHeader() {
+    const logout = useLogout() // Now this is the logout function
+
+    const handleLogout = (event) => {
+        event.preventDefault() // Prevent default link behavior
+        logout() // Call the logout logic
+    }
+
     return (
         <header>
             <nav className="border-gray-200 bg-white px-4 py-2.5 dark:bg-gray-800 lg:px-6">
@@ -20,7 +28,10 @@ export default function AccountHeader() {
                     </div>
                     <div className="flex items-center lg:order-2">
                         <div className="">
-                            <img src="/assets/images/avatar.png" />
+                            <img
+                                src="/assets/images/avatar.png"
+                                alt="Avatar"
+                            />
                         </div>
                         <button
                             data-collapse-toggle="mobile-menu-2"
@@ -52,7 +63,7 @@ export default function AccountHeader() {
                         </button>
                     </div>
                     <div
-                        className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
+                        className="hidden w-full items-center lg:flex lg:w-auto"
                         id="mobile-menu-2">
                         <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
                             <li>
@@ -60,21 +71,16 @@ export default function AccountHeader() {
                                     href="/spaces"
                                     className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-primary-700 lg:dark:hover:bg-transparent lg:dark:hover:text-white"
                                     aria-current="page">
-                                    Spaces
+                                    Your Spaces
                                 </a>
                             </li>
                             <li>
                                 <a
-                                    href="/#benefits"
-                                    className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-primary-700 lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                                    Add Video
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/#pricing"
-                                    className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-primary-700 lg:dark:hover:bg-transparent lg:dark:hover:text-white">
-                                    Account
+                                    href="/spaces"
+                                    onClick={handleLogout}
+                                    className="block border-b border-gray-100 py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white lg:border-0 lg:p-0 lg:hover:bg-transparent lg:hover:text-primary-700 lg:dark:hover:bg-transparent lg:dark:hover:text-white"
+                                    aria-current="page">
+                                    Logout
                                 </a>
                             </li>
                         </ul>
