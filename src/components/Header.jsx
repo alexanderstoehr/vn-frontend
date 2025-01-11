@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom"
 import HeaderInfo from "./HeaderInfo.jsx"
 import { showHeaderInfo } from "../utils/options.js"
 import { getAccessToken } from "../utils/helpers.js"
+import ResetPasswordModal from "./modals/ResetPasswordModal.jsx"
 
 export default function Header() {
     const [showLoginModal, setShowLoginModal] = useState(false)
     const [showRegisterModal, setShowRegisterModal] = useState(false)
+    const [showPasswordResetModal, setShowPasswordResetModal] = useState(true)
 
     const navigate = useNavigate()
 
@@ -47,6 +49,12 @@ export default function Header() {
             {showRegisterModal && (
                 <RegisterModal setShowRegisterModal={setShowRegisterModal} />
             )}
+            {showPasswordResetModal && (
+                <ResetPasswordModal
+                    setShowPasswordResetModal={setShowPasswordResetModal}
+                />
+            )}
+
             <nav className="border-gray-200 bg-white px-4 py-2.5 dark:bg-gray-800 lg:px-6">
                 <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
                     <div className="flex">
