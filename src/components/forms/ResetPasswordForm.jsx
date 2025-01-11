@@ -2,11 +2,11 @@ import { useEffect, useState } from "react"
 import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
 
-export default function ResetPasswordForm({ onClose }) {
+export default function ResetPasswordForm({ onClose, setShowLoginModal }) {
     const formSteps = ["getCode", "resetPassword", "resetSuccessful"]
     const [formState, setFormState] = useState(formSteps[0])
 
-    const [resetCode, setResetCode] = useState()
+    const [resetCode, setResetCode] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -26,10 +26,24 @@ export default function ResetPasswordForm({ onClose }) {
         onClose()
     }
 
+    const stepThroughForm = () =>
+        setFormState(formSteps[formSteps.indexOf(formState) + 1])
+
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("Form submitted.")
-        setFormState(formSteps[formSteps.indexOf(formState) + 1])
+
+        if (formState === formSteps[0]) {
+            console.log("send code")
+            stepThroughForm()
+        } else if (formState === formSteps[1]) {
+            console.log("update pw")
+            stepThroughForm()
+        } else {
+            console.log("something went outta control")
+            onClose()
+            setShowLoginModal(true)
+        }
     }
 
     if (formState === formSteps[0]) {
@@ -38,10 +52,11 @@ export default function ResetPasswordForm({ onClose }) {
             "Please enter your email to receive your password reset code."
     } else if (formState === formSteps[1]) {
         buttonText = "Reset Password"
-        introText = "Enter your new password."
+        introText =
+            "Please check your email for the reset code and enter it along with your new password."
     } else {
-        buttonText = "Alrightey!"
-        introText = "Awesome, password is reset, you can now log in again."
+        buttonText = "Log in now"
+        introText = "Your password has been reset, you can now log in again."
     }
 
     return (
@@ -77,14 +92,14 @@ export default function ResetPasswordForm({ onClose }) {
                         />
 
                         <InputTextLine
-                            placeholder="Password"
+                            placeholder="New password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </>
                 )}
-                <div className="flex justify-end gap-2">
+                <div className="flex items-center justify-end gap-2">
                     <Button
                         type="button"
                         text="Cancel"
@@ -93,11 +108,6 @@ export default function ResetPasswordForm({ onClose }) {
                     <Button
                         type="primary"
                         text={buttonText}
-                        onClick={
-                            formState === formSteps[2]
-                                ? handleClose
-                                : handleSubmit
-                        }
                     />
                 </div>
             </form>

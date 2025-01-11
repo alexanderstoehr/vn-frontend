@@ -1,7 +1,10 @@
 import Modal from "./Modal.jsx"
 import ResetPasswordForm from "../forms/ResetPasswordForm.jsx"
 
-export default function ResetPasswordModal({ setShowPasswordResetModal }) {
+export default function ResetPasswordModal({
+    setShowPasswordResetModal,
+    setShowLoginModal,
+}) {
     return (
         <>
             <Modal
@@ -9,6 +12,7 @@ export default function ResetPasswordModal({ setShowPasswordResetModal }) {
                 modalContent={
                     <ResetPasswordForm
                         onClose={() => setShowPasswordResetModal(false)}
+                        setShowLoginModal={setShowLoginModal}
                     />
                 }
                 onClose={() => setShowPasswordResetModal(false)}

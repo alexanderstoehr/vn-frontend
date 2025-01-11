@@ -44,7 +44,10 @@ export default function Header() {
     return (
         <header>
             {showLoginModal && (
-                <LoginModal setShowLoginModal={setShowLoginModal} />
+                <LoginModal
+                    setShowLoginModal={setShowLoginModal}
+                    setShowPasswordResetModal={setShowPasswordResetModal}
+                />
             )}
             {showRegisterModal && (
                 <RegisterModal setShowRegisterModal={setShowRegisterModal} />
@@ -52,6 +55,7 @@ export default function Header() {
             {showPasswordResetModal && (
                 <ResetPasswordModal
                     setShowPasswordResetModal={setShowPasswordResetModal}
+                    setShowLoginModal={setShowLoginModal}
                 />
             )}
 
