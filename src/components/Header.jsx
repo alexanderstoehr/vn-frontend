@@ -10,7 +10,7 @@ import ResetPasswordModal from "./modals/ResetPasswordModal.jsx"
 export default function Header() {
     const [showLoginModal, setShowLoginModal] = useState(false)
     const [showRegisterModal, setShowRegisterModal] = useState(false)
-    const [showPasswordResetModal, setShowPasswordResetModal] = useState(true)
+    const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
 
     const navigate = useNavigate()
 
