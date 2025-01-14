@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react"
 import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
+import { useRequestPasswordResetMutation } from "../../hooks/useRequestPasswordResetMutation.jsx"
+import { usePasswordResetMutation } from "../../hooks/usePasswordResetMutation.jsx"
 
 export default function ResetPasswordForm({ onClose, setShowLoginModal }) {
     const formSteps = ["getCode", "resetPassword", "resetSuccessful"]
     const [formState, setFormState] = useState(formSteps[0])
 
+    const [errorMessage, setErrorMessage] = useState("")
     const [resetCode, setResetCode] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const getResetCode = useRequestPasswordResetMutation()
+    const resetPassword = usePasswordResetMutation()
 
     const passwordResetObject = {
         code: resetCode,
@@ -31,16 +37,38 @@ export default function ResetPasswordForm({ onClose, setShowLoginModal }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("Form submitted.")
-
         if (formState === formSteps[0]) {
             console.log("send code")
-            stepThroughForm()
+
+            getResetCode.mutate(email, {
+                onSuccess: () => {
+                    stepThroughForm()
+                    setErrorMessage("")
+                },
+
+                onError: (e) => {
+                    console.error("Could not request reset code: ", e)
+                    setErrorMessage(
+                        `We could not find a user with that email address. Contact us if you need help resetting your password.`
+                    )
+                },
+            })
+
+            // stepThroughForm()
         } else if (formState === formSteps[1]) {
-            console.log("update pw")
-            stepThroughForm()
+            resetPassword.mutate(passwordResetObject, {
+                onSuccess: () => {
+                    stepThroughForm()
+                    setErrorMessage("")
+                },
+
+                onError: () =>
+                    setErrorMessage(
+                        "The code is not valid. Contact us if you need help resetting your password."
+                    ),
+            })
         } else {
-            console.log("something went outta control")
+            console.log("FormState error")
             onClose()
             setShowLoginModal(true)
         }
@@ -110,6 +138,7 @@ export default function ResetPasswordForm({ onClose, setShowLoginModal }) {
                         text={buttonText}
                     />
                 </div>
+                <div className="text-sm text-red-500">{errorMessage}</div>
             </form>
         </>
     )

@@ -3,7 +3,10 @@ import { apiVeenotes } from "../axios.js"
 
 export const passwordResetMutation = async (passwordResetObject) => {
     try {
-        await apiVeenotes.post(passwordResetVerifyEndpoint, passwordResetObject)
+        await apiVeenotes.patch(
+            passwordResetVerifyEndpoint,
+            passwordResetObject
+        )
     } catch (e) {
         throw new Error(e)
     }
