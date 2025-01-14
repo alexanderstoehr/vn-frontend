@@ -13,6 +13,6 @@ export const getAllCategoriesQuery = async () => {
         })
         return res.data
     } catch (e) {
-        throw new Error("Error while fetching all Spaces: " + e.message)
+        throw new Error("Error while fetching all categories: " + e.message)
     }
 }

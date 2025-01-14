@@ -17,6 +17,12 @@ export default function SingleSpace() {
     const [showDeleteSpaceModal, setShowDeleteSpaceModal] = useState(false)
     const [showAddVideoModal, setShowAddVideoModal] = useState(false)
 
+    const [spaceTaxonomies, setSpaceTaxonomies] = useState()
+    const [filterObject, setFilterObject] = useState({})
+
+    // create filterable options users tags and cats or space object
+    // space videos for each append category to category list, remove duplicates
+
     const { data, isSuccess, isLoading, isError, error } = useQuery({
         queryKey: ["singleSpace", spaceId],
         queryFn: () => getSingleSpaceQuery(spaceId),
@@ -24,8 +30,9 @@ export default function SingleSpace() {
 
     useEffect(() => {
         if (isSuccess) {
-            // console.log("Query was successful UE:", data)
+            console.log("Query was successful UE:", data)
             setSpace(data)
+            setSpaceTaxonomies(data)
             // console.log("space", space)
         }
     }, [isSuccess, data])
@@ -73,7 +80,7 @@ export default function SingleSpace() {
                 />
             )}
             <div className="mx-auto flex max-w-screen-xl flex-row gap-8 pt-8">
-                <SpacesSidebar />
+                <SpacesSidebar setFilterObject={setFilterObject} />
                 <div className="flex w-full flex-col gap-8 pt-2">
                     <div className="">
                         <div className="flex justify-between">
