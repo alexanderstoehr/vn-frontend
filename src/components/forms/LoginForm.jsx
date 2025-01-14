@@ -9,7 +9,7 @@ import InputTextLine from "../primitives/InputTextLine.jsx"
 import Button from "../primitives/Button.jsx"
 import { useLoginMutation } from "../../hooks/useLoginMutation.jsx"
 
-export default function LoginForm({ onClose }) {
+export default function LoginForm({ onClose, setShowPasswordResetModal }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -23,6 +23,11 @@ export default function LoginForm({ onClose }) {
 
     const handleClose = () => {
         onClose()
+    }
+
+    const handleLostPassword = () => {
+        onClose()
+        setShowPasswordResetModal(true)
     }
 
     return (
@@ -46,17 +51,24 @@ export default function LoginForm({ onClose }) {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="flex items-center justify-end gap-2">
-                    <Button
-                        type="button"
-                        text="Cancel"
-                        onClick={handleClose}
-                    />
-                    <Button
-                        type="primary"
-                        text="Log in"
-                        onClick={handleSubmit}
-                    />
+                <div className="flex items-center justify-between gap-2">
+                    <div
+                        className="ml-2 cursor-pointer text-xs text-primary-600"
+                        onClick={handleLostPassword}>
+                        Forgot Password?
+                    </div>
+                    <div className="flex items-center justify-end gap-2">
+                        <Button
+                            type="button"
+                            text="Cancel"
+                            onClick={handleClose}
+                        />
+                        <Button
+                            type="primary"
+                            text="Log in"
+                            onClick={handleSubmit}
+                        />
+                    </div>
                 </div>
             </form>
             {loginGetToken.isLoading && <div>Loading...</div>}
