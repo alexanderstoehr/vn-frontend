@@ -13,15 +13,15 @@ import AddVideoModal from "../../../components/modals/AddVideoModal.jsx"
 export default function SingleSpace() {
     const { spaceId } = useParams()
     const navigate = useNavigate()
+
     const [space, setSpace] = useState()
+    const [videos, setVideos] = useState()
+    const [filteredVideos, setFilteredVideos] = useState([])
+
     const [showDeleteSpaceModal, setShowDeleteSpaceModal] = useState(false)
     const [showAddVideoModal, setShowAddVideoModal] = useState(false)
 
-    const [spaceTaxonomies, setSpaceTaxonomies] = useState()
     const [filterObject, setFilterObject] = useState({})
-
-    // create filterable options users tags and cats or space object
-    // space videos for each append category to category list, remove duplicates
 
     const { data, isSuccess, isLoading, isError, error } = useQuery({
         queryKey: ["singleSpace", spaceId],
@@ -30,12 +30,26 @@ export default function SingleSpace() {
 
     useEffect(() => {
         if (isSuccess) {
-            console.log("Query was successful UE:", data)
+            // console.log("Query was successful UE:", data)
             setSpace(data)
-            setSpaceTaxonomies(data)
+            setVideos(data.videos)
             // console.log("space", space)
         }
     }, [isSuccess, data])
+
+    useEffect(() => {
+        if (space && filterObject) {
+            const selectedCategoryIds = Object.keys(
+                filterObject.categories || {}
+            ).filter((key) => filterObject.categories[key])
+
+            const filtered = videos.filter((video) =>
+                selectedCategoryIds.includes(video.category.id.toString())
+            )
+
+            setFilteredVideos(filtered.length > 0 ? filtered : videos)
+        }
+    }, [filterObject, space, videos])
 
     if (isSuccess) {
         // console.log("Query was successful:", data)
@@ -99,7 +113,7 @@ export default function SingleSpace() {
                             />
                         </div>
                     </div>
-                    {space.videos.map((video, index) => (
+                    {filteredVideos.map((video, index) => (
                         <div
                             key={index}
                             onClick={() => handleVideoClick(video.id)}

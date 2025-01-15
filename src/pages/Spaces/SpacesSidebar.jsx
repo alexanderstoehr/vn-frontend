@@ -4,16 +4,14 @@ import { useEffect, useState } from "react"
 import { useGetUsersTaxonomiesQuery } from "../../hooks/useGetUsersTaxonomiesQuery.jsx"
 
 export default function SpacesSidebar({ setFilterObject }) {
-    console.log("setFilterObject:", setFilterObject)
-
     const [showAllCategories, setShowAllCategories] = useState(false)
     const [showAllTags, setShowAllTags] = useState(false)
     const [isCategoryOpen, setIsCategoryOpen] = useState(true)
     const [isTagOpen, setIsTagOpen] = useState(true)
 
     const [currentFilter, setCurrentFilter] = useState()
-    const [selectedTags, setSelectedTags] = useState([])
-    const [selectedCategories, setSelectedCategories] = useState([])
+    const [selectedTags, setSelectedTags] = useState()
+    const [selectedCategories, setSelectedCategories] = useState()
 
     const [userTags, setUserTags] = useState()
     const [userCategories, setUserCategories] = useState()
@@ -61,9 +59,9 @@ export default function SpacesSidebar({ setFilterObject }) {
     }
 
     useEffect(() => {
-        console.log("new current filer: ", currentFilter)
-        // setFilterObject(currentFilter)
-    }, [currentFilter])
+        // console.log("Updating filter object in parent:", currentFilter)
+        if (setFilterObject) setFilterObject(currentFilter)
+    }, [currentFilter, setFilterObject])
 
     useEffect(() => {
         setUserTags(tagsQuery.data)
