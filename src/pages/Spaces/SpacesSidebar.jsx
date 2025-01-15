@@ -10,20 +10,40 @@ export default function SpacesSidebar({ setFilterObject }) {
     const [isTagOpen, setIsTagOpen] = useState(true)
 
     const [currentFilter, setCurrentFilter] = useState()
+    const [selectedTags, setSelectedTags] = useState([])
+    const [selectedCategories, setSelectedCategories] = useState([])
 
     const [userTags, setUserTags] = useState()
     const [userCategories, setUserCategories] = useState()
-
-    const handleClearAll = () => {
-        console.log("clear all filters")
-    }
 
     const { categoriesQuery, tagsQuery } = useGetUsersTaxonomiesQuery()
     const isLoading = categoriesQuery.isLoading || tagsQuery.isLoading
     const isError = categoriesQuery.isError || tagsQuery.isError
 
+    const handleClearAll = () => {
+        console.log("clear all filters")
+    }
+
+    const handleCategoryFilter = (e) => {
+        const { id, checked } = e.target
+        setSelectedCategories((prevFilter) => {
+            const newFilter = { ...prevFilter }
+            if (checked) {
+                newFilter[id] = true
+            } else {
+                delete newFilter[id]
+            }
+            return newFilter
+        })
+        setCurrentFilter({ categories: selectedCategories })
+    }
+
     useEffect(() => {
-        console.log("Users taxonomies: ", categoriesQuery.data, tagsQuery.data)
+        console.log("new current filer: ", currentFilter)
+    }, [currentFilter])
+
+    useEffect(() => {
+        // console.log("Users taxonomies: ", categoriesQuery.data, tagsQuery.data)
         setUserTags(tagsQuery.data)
         setUserCategories(categoriesQuery.data)
     }, [categoriesQuery, tagsQuery])
@@ -69,20 +89,23 @@ export default function SpacesSidebar({ setFilterObject }) {
                                             className="align-center gap-2 pl-3">
                                             <Checkbox
                                                 key={index}
-                                                id={category.category_name}
+                                                id={category.id}
                                                 className="text-primary-800"
-                                                onClick={() =>
-                                                    console.log(
-                                                        "clicked",
-                                                        category
+                                                onChange={(e) =>
+                                                    handleCategoryFilter(e)
+                                                }
+                                                checked={
+                                                    !!(
+                                                        selectedCategories &&
+                                                        selectedCategories[
+                                                            category.id
+                                                        ]
                                                     )
                                                 }
                                             />
                                             <Label
                                                 className="text-md pl-2"
-                                                htmlFor={
-                                                    category.category_name
-                                                }>
+                                                htmlFor={category.id}>
                                                 {category.category_name}
                                             </Label>
                                         </div>
