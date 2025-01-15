@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { useGetUsersTaxonomiesQuery } from "../../hooks/useGetUsersTaxonomiesQuery.jsx"
 
 export default function SpacesSidebar({ setFilterObject }) {
+    console.log("setFilterObject:", setFilterObject)
+
     const [showAllCategories, setShowAllCategories] = useState(false)
     const [showAllTags, setShowAllTags] = useState(false)
     const [isCategoryOpen, setIsCategoryOpen] = useState(true)
@@ -33,17 +35,37 @@ export default function SpacesSidebar({ setFilterObject }) {
             } else {
                 delete newFilter[id]
             }
+            setCurrentFilter((prevFilter) => ({
+                ...prevFilter,
+                categories: newFilter,
+            }))
             return newFilter
         })
-        setCurrentFilter({ categories: selectedCategories })
+    }
+
+    const handleTagFilter = (e) => {
+        const { id, checked } = e.target
+        setSelectedTags((prevTags) => {
+            const newFilter = { ...prevTags }
+            if (checked) {
+                newFilter[id] = true
+            } else {
+                delete newFilter[id]
+            }
+            setCurrentFilter((prevFilter) => ({
+                ...prevFilter,
+                tags: newFilter,
+            }))
+            return newFilter
+        })
     }
 
     useEffect(() => {
         console.log("new current filer: ", currentFilter)
+        // setFilterObject(currentFilter)
     }, [currentFilter])
 
     useEffect(() => {
-        // console.log("Users taxonomies: ", categoriesQuery.data, tagsQuery.data)
         setUserTags(tagsQuery.data)
         setUserCategories(categoriesQuery.data)
     }, [categoriesQuery, tagsQuery])
@@ -137,12 +159,21 @@ export default function SpacesSidebar({ setFilterObject }) {
                                             className="align-center gap-2 pl-3">
                                             <Checkbox
                                                 key={index}
-                                                id={tag.tag_name}
+                                                id={tag.id}
                                                 className="text-primary-800"
+                                                onChange={(e) =>
+                                                    handleTagFilter(e)
+                                                }
+                                                checked={
+                                                    !!(
+                                                        selectedTags &&
+                                                        selectedTags[tag.id]
+                                                    )
+                                                }
                                             />
                                             <Label
                                                 className="text-md pl-2"
-                                                htmlFor={tag.tag_name}>
+                                                htmlFor={tag.id}>
                                                 {tag.tag_name}
                                             </Label>
                                         </div>
