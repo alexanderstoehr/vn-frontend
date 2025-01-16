@@ -59,7 +59,7 @@ export default function SpacesSidebar({ setFilterObject }) {
     }
 
     useEffect(() => {
-        // console.log("Updating filter object in parent:", currentFilter)
+        console.log("Updating filter object in parent:", currentFilter)
         if (setFilterObject) setFilterObject(currentFilter)
     }, [currentFilter, setFilterObject])
 

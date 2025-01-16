@@ -38,18 +38,37 @@ export default function SingleSpace() {
     }, [isSuccess, data])
 
     useEffect(() => {
-        if (space && filterObject) {
-            const selectedCategoryIds = Object.keys(
-                filterObject.categories || {}
-            ).filter((key) => filterObject.categories[key])
+        if (space) {
+            if (Object.keys(filterObject).length === 0)
+                setFilteredVideos(videos)
+        } else {
+            const filtered = videos.filter((video) => {
+                const isCategoryMatch =
+                    filterObject.categories?.[video.category.id]
+                const isTagMatch = filterObject.tags?.some(
+                    (tag) => filterObject.tags?.[tag.id]
+                )
 
-            const filtered = videos.filter((video) =>
-                selectedCategoryIds.includes(video.category.id.toString())
-            )
-
-            setFilteredVideos(filtered.length > 0 ? filtered : videos)
+                return isCategoryMatch || isTagMatch
+            })
+            setFilteredVideos(filtered)
         }
     }, [filterObject, space, videos])
+
+    // ------ First version of filtering
+    // useEffect(() => {
+    //     if (space && filterObject) {
+    //         const selectedCategoryIds = Object.keys(
+    //             filterObject.categories || {}
+    //         ).filter((key) => filterObject.categories[key])
+    //
+    //         const filtered = videos.filter((video) =>
+    //             selectedCategoryIds.includes(video.category.id.toString())
+    //         )
+    //
+    //         setFilteredVideos(filtered.length > 0 ? filtered : videos)
+    //     }
+    // }, [filterObject, space, videos])
 
     if (isSuccess) {
         // console.log("Query was successful:", data)
