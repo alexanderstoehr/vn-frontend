@@ -100,10 +100,10 @@ export default function VideoPlayer({
                     className="absolute left-0 top-0 h-full w-full rounded-xl"></div>
             </div>
 
-            <Button
-                text="Log current timestamp"
-                onClick={() => getCurrentTime()}
-            />
+            {/*<Button*/}
+            {/*    text="Log current timestamp"*/}
+            {/*    onClick={() => getCurrentTime()}*/}
+            {/*/>*/}
         </>
     )
 }

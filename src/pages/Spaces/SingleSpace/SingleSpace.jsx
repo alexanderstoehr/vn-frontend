@@ -13,9 +13,15 @@ import AddVideoModal from "../../../components/modals/AddVideoModal.jsx"
 export default function SingleSpace() {
     const { spaceId } = useParams()
     const navigate = useNavigate()
+
     const [space, setSpace] = useState()
+    const [videos, setVideos] = useState()
+    const [filteredVideos, setFilteredVideos] = useState([])
+
     const [showDeleteSpaceModal, setShowDeleteSpaceModal] = useState(false)
     const [showAddVideoModal, setShowAddVideoModal] = useState(false)
+
+    const [filterObject, setFilterObject] = useState({})
 
     const { data, isSuccess, isLoading, isError, error } = useQuery({
         queryKey: ["singleSpace", spaceId],
@@ -26,9 +32,57 @@ export default function SingleSpace() {
         if (isSuccess) {
             // console.log("Query was successful UE:", data)
             setSpace(data)
+            setVideos(data.videos)
             // console.log("space", space)
         }
     }, [isSuccess, data])
+
+    const isFilterObjectEmpty = (filterObj) => {
+        return (
+            !filterObj || // Undefined or null
+            (Object.keys(filterObj.categories || {}).length === 0 &&
+                Object.keys(filterObj.tags || {}).length === 0)
+        )
+    }
+
+    const filterVideos = isFilterObjectEmpty(filterObject)
+        ? videos // If filterObject is empty or undefined, return all videos
+        : videos.filter((video) => {
+              // Check category match
+              const isCategoryMatch =
+                  filterObject.categories?.[video.category.id]
+
+              // Check tags match
+              const isTagMatch = video.tags.some(
+                  (tag) => filterObject.tags?.[tag.id]
+              )
+
+              // Return true if either category or tags match
+              return isCategoryMatch || isTagMatch
+          })
+
+    useEffect(() => {
+        console.log("Filterobject: ", filterObject)
+        console.log("Videos: ", videos)
+        console.log("filter empty?: ", isFilterObjectEmpty(filterObject))
+        console.log("filtered videos: ", filterVideos)
+        setFilteredVideos(filterVideos)
+    }, [filterObject, space, videos])
+
+    // ------ First version of filtering
+    // useEffect(() => {
+    //     if (space && filterObject) {
+    //         const selectedCategoryIds = Object.keys(
+    //             filterObject.categories || {}
+    //         ).filter((key) => filterObject.categories[key])
+    //
+    //         const filtered = videos.filter((video) =>
+    //             selectedCategoryIds.includes(video.category.id.toString())
+    //         )
+    //
+    //         setFilteredVideos(filtered.length > 0 ? filtered : videos)
+    //     }
+    // }, [filterObject, space, videos])
 
     if (isSuccess) {
         // console.log("Query was successful:", data)
@@ -73,7 +127,7 @@ export default function SingleSpace() {
                 />
             )}
             <div className="mx-auto flex max-w-screen-xl flex-row gap-8 pt-8">
-                <SpacesSidebar />
+                <SpacesSidebar setFilterObject={setFilterObject} />
                 <div className="flex w-full flex-col gap-8 pt-2">
                     <div className="">
                         <div className="flex justify-between">
@@ -92,7 +146,7 @@ export default function SingleSpace() {
                             />
                         </div>
                     </div>
-                    {space.videos.map((video, index) => (
+                    {filteredVideos.map((video, index) => (
                         <div
                             key={index}
                             onClick={() => handleVideoClick(video.id)}
