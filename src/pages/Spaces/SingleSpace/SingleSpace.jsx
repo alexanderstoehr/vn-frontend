@@ -37,22 +37,36 @@ export default function SingleSpace() {
         }
     }, [isSuccess, data])
 
-    useEffect(() => {
-        if (space) {
-            if (Object.keys(filterObject).length === 0)
-                setFilteredVideos(videos)
-        } else {
-            const filtered = videos.filter((video) => {
-                const isCategoryMatch =
-                    filterObject.categories?.[video.category.id]
-                const isTagMatch = filterObject.tags?.some(
-                    (tag) => filterObject.tags?.[tag.id]
-                )
+    const isFilterObjectEmpty = (filterObj) => {
+        return (
+            !filterObj || // Undefined or null
+            (Object.keys(filterObj.categories || {}).length === 0 &&
+                Object.keys(filterObj.tags || {}).length === 0)
+        )
+    }
 
-                return isCategoryMatch || isTagMatch
-            })
-            setFilteredVideos(filtered)
-        }
+    const filterVideos = isFilterObjectEmpty(filterObject)
+        ? videos // If filterObject is empty or undefined, return all videos
+        : videos.filter((video) => {
+              // Check category match
+              const isCategoryMatch =
+                  filterObject.categories?.[video.category.id]
+
+              // Check tags match
+              const isTagMatch = video.tags.some(
+                  (tag) => filterObject.tags?.[tag.id]
+              )
+
+              // Return true if either category or tags match
+              return isCategoryMatch || isTagMatch
+          })
+
+    useEffect(() => {
+        console.log("Filterobject: ", filterObject)
+        console.log("Videos: ", videos)
+        console.log("filter empty?: ", isFilterObjectEmpty(filterObject))
+        console.log("filtered videos: ", filterVideos)
+        setFilteredVideos(filterVideos)
     }, [filterObject, space, videos])
 
     // ------ First version of filtering
