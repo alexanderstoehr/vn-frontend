@@ -14,8 +14,8 @@ export default function SingleSpace() {
     const { spaceId } = useParams()
     const navigate = useNavigate()
 
-    const [space, setSpace] = useState()
-    const [videos, setVideos] = useState()
+    const [space, setSpace] = useState(null)
+    const [videos, setVideos] = useState([])
     const [filteredVideos, setFilteredVideos] = useState([])
 
     const [showDeleteSpaceModal, setShowDeleteSpaceModal] = useState(false)
@@ -29,12 +29,10 @@ export default function SingleSpace() {
     })
 
     useEffect(() => {
-        if (isSuccess) {
-            // console.log("Query was successful UE:", data)
+        if (isSuccess && data) {
             setSpace(data)
-            setVideos(data.videos)
-            setFilteredVideos(data.videos)
-            // console.log("space", space)
+            setVideos(data.videos || [])
+            setFilteredVideos(data.videos || [])
         }
     }, [isSuccess, data])
 
@@ -46,70 +44,43 @@ export default function SingleSpace() {
         )
     }
 
-    const filterVideos = isFilterObjectEmpty(filterObject)
-        ? videos // If filterObject is empty or undefined, return all videos
-        : videos.filter((video) => {
-              // Check category match
-              const isCategoryMatch =
-                  filterObject.categories?.[video.category.id]
-
-              // Check tags match
-              const isTagMatch = video.tags.some(
-                  (tag) => filterObject.tags?.[tag.id]
-              )
-
-              // Return true if either category or tags match
-              return isCategoryMatch || isTagMatch
-          })
-
     useEffect(() => {
-        console.log("Filterobject: ", filterObject)
-        console.log("Videos: ", videos)
-        console.log("filter empty?: ", isFilterObjectEmpty(filterObject))
-        console.log("filtered videos: ", filterVideos)
+        const filterVideos = isFilterObjectEmpty(filterObject)
+            ? videos // If filterObject is empty or undefined, return all videos
+            : videos.filter((video) => {
+                  // Check category match
+                  const isCategoryMatch =
+                      filterObject.categories?.[video.category.id]
+
+                  // Check tags match
+                  const isTagMatch = video.tags.some(
+                      (tag) => filterObject.tags?.[tag.id]
+                  )
+
+                  // Return true if either category or tags match
+                  return isCategoryMatch || isTagMatch
+              })
+
         setFilteredVideos(filterVideos)
-    }, [filterObject, space, videos])
+    }, [filterObject, videos])
 
-    // ------ First version of filtering
-    // useEffect(() => {
-    //     if (space && filterObject) {
-    //         const selectedCategoryIds = Object.keys(
-    //             filterObject.categories || {}
-    //         ).filter((key) => filterObject.categories[key])
-    //
-    //         const filtered = videos.filter((video) =>
-    //             selectedCategoryIds.includes(video.category.id.toString())
-    //         )
-    //
-    //         setFilteredVideos(filtered.length > 0 ? filtered : videos)
-    //     }
-    // }, [filterObject, space, videos])
-
-    if (isSuccess) {
-        // console.log("Query was successful:", data)
-    }
     if (isLoading) {
         return <div>Loading...</div> // Show loading indicator
     }
 
-    // Handling error
     if (isError) {
         console.error("An error occurred while fetching Spaces: ", error)
+        return <div>An error occurred while fetching data.</div>
     }
 
-    if (!space || !space.videos) {
+    if (!space) {
         return <div>No space data available</div>
     }
 
-    // console.log("User in spaces:", user)
-    // console.log("in SingleSpace: ", spaceId)
-
     const handleDeleteSpace = () => {
-        console.log("Pls delete this Space")
         setShowDeleteSpaceModal(!showDeleteSpaceModal)
     }
     const handleAddVideo = () => {
-        console.log("Add a Video")
         setShowAddVideoModal(!showAddVideoModal)
     }
 
@@ -147,49 +118,55 @@ export default function SingleSpace() {
                             />
                         </div>
                     </div>
-                    {filteredVideos.map((video, index) => (
-                        <div
-                            key={index}
-                            onClick={() => handleVideoClick(video.id)}
-                            className="flex cursor-pointer gap-8 rounded-md border border-gray-300 bg-gray-100 p-8 transition-transform duration-300 hover:scale-[1.01] hover:ease-in-out">
-                            <div className="h-44 min-w-72 rounded-xl object-cover">
-                                <img
-                                    src={video.video_host_thumbnail_url}
-                                    className="h-full w-full rounded-xl object-cover"
-                                />
-                            </div>
-
-                            <div>
-                                <div>
-                                    <div className="mb-2">
-                                        {video.tags.map((tag, index) => (
-                                            <Tag
-                                                key={index}
-                                                text={tag.name}
-                                                close=""
-                                            />
-                                        ))}
-                                    </div>
-                                    <div className="flex flex-row gap-4">
-                                        <div className="flex flex-row items-center gap-1 text-xs font-semibold text-gray-700 dark:text-gray-400">
-                                            <HiOutlineCalendar className="h-4 w-4 text-primary-800" />
-                                            {formatDate(video.created_at)}
-                                        </div>
-                                        <div className="flex flex-row items-center gap-1 text-sm text-gray-700 dark:text-gray-400">
-                                            <HiOutlineBookmark className="h-4 w-4 text-primary-800" />
-                                            {video.notes_count} Notes
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mb-2 text-lg font-semibold leading-tight text-gray-900 dark:text-white">
-                                    {video.video_title}
-                                </div>
-                                <p className="font-normal text-gray-500 dark:text-gray-400">
-                                    {video.video_description}
-                                </p>
-                            </div>
+                    {filteredVideos.length === 0 ? (
+                        <div className="text-center text-gray-500 dark:text-gray-400">
+                            No videos available.
                         </div>
-                    ))}
+                    ) : (
+                        filteredVideos.map((video, index) => (
+                            <div
+                                key={index}
+                                onClick={() => handleVideoClick(video.id)}
+                                className="flex cursor-pointer gap-8 rounded-md border border-gray-300 bg-gray-100 p-8 transition-transform duration-300 hover:scale-[1.01] hover:ease-in-out">
+                                <div className="h-44 min-w-72 rounded-xl object-cover">
+                                    <img
+                                        src={video.video_host_thumbnail_url}
+                                        className="h-full w-full rounded-xl object-cover"
+                                    />
+                                </div>
+
+                                <div>
+                                    <div>
+                                        <div className="mb-2">
+                                            {video.tags.map((tag, index) => (
+                                                <Tag
+                                                    key={index}
+                                                    text={tag.name}
+                                                    close=""
+                                                />
+                                            ))}
+                                        </div>
+                                        <div className="flex flex-row gap-4">
+                                            <div className="flex flex-row items-center gap-1 text-xs font-semibold text-gray-700 dark:text-gray-400">
+                                                <HiOutlineCalendar className="h-4 w-4 text-primary-800" />
+                                                {formatDate(video.created_at)}
+                                            </div>
+                                            <div className="flex flex-row items-center gap-1 text-sm text-gray-700 dark:text-gray-400">
+                                                <HiOutlineBookmark className="h-4 w-4 text-primary-800" />
+                                                {video.notes_count} Notes
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mb-2 text-lg font-semibold leading-tight text-gray-900 dark:text-white">
+                                        {video.video_title}
+                                    </div>
+                                    <p className="font-normal text-gray-500 dark:text-gray-400">
+                                        {video.video_description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    )}
                     <div className="mt-4 flex justify-end">
                         <Button
                             type="danger-secondary"
