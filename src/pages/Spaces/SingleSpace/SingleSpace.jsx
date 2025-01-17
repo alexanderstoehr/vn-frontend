@@ -33,6 +33,7 @@ export default function SingleSpace() {
             // console.log("Query was successful UE:", data)
             setSpace(data)
             setVideos(data.videos)
+            setFilteredVideos(data.videos)
             // console.log("space", space)
         }
     }, [isSuccess, data])
