@@ -22,11 +22,18 @@ export default function SingleSpace() {
     const [showAddVideoModal, setShowAddVideoModal] = useState(false)
 
     const [filterObject, setFilterObject] = useState({})
+    const [filterOptions, setFilterOptions] = useState({
+        categories: {},
+        tags: {},
+    })
 
     const { data, isSuccess, isLoading, isError, error } = useQuery({
         queryKey: ["singleSpace", spaceId],
         queryFn: () => getSingleSpaceQuery(spaceId),
     })
+
+    const getSpaceTags = (space) => {}
+    const getSpaceCategories = (space) => {}
 
     useEffect(() => {
         if (isSuccess && data) {
