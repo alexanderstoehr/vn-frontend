@@ -43,7 +43,7 @@ export default function AllSpaces() {
                 <AddSpaceModal setShowAddSpaceModal={setShowAddSpaceModal} />
             )}
             <div className="mx-auto flex max-w-screen-xl flex-row gap-8 pt-8">
-                <SpacesSidebar />
+                {/*<SpacesSidebar />*/}
                 <div className="flex w-3/4 flex-col gap-8 pt-2">
                     <div className="">
                         <div className="mb-8 flex items-center justify-between">
