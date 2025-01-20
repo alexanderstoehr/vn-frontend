@@ -3,7 +3,7 @@ import { HiOutlineFolder, HiOutlineTag } from "react-icons/hi"
 import { useEffect, useState } from "react"
 import { useGetUsersTaxonomiesQuery } from "../../hooks/useGetUsersTaxonomiesQuery.jsx"
 
-export default function SpacesSidebar({ setFilterObject }) {
+export default function SpacesSidebar({ filterOptions, setFilterObject }) {
     const [showAllCategories, setShowAllCategories] = useState(false)
     const [showAllTags, setShowAllTags] = useState(false)
     const [isCategoryOpen, setIsCategoryOpen] = useState(true)
@@ -63,10 +63,15 @@ export default function SpacesSidebar({ setFilterObject }) {
         if (setFilterObject) setFilterObject(currentFilter)
     }, [currentFilter, setFilterObject])
 
+    // useEffect(() => {
+    //     setUserTags(tagsQuery.data)
+    //     setUserCategories(categoriesQuery.data)
+    // }, [categoriesQuery, tagsQuery])
+
     useEffect(() => {
-        setUserTags(tagsQuery.data)
-        setUserCategories(categoriesQuery.data)
-    }, [categoriesQuery, tagsQuery])
+        setUserTags(Object.values(filterOptions.tags))
+        setUserCategories(Object.values(filterOptions.categories))
+    }, [])
 
     if (isLoading) {
         return <div>Loading...</div>
