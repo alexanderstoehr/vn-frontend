@@ -32,14 +32,32 @@ export default function SingleSpace() {
         queryFn: () => getSingleSpaceQuery(spaceId),
     })
 
-    const getSpaceTags = (space) => {}
-    const getSpaceCategories = (space) => {}
+    const getSpaceTags = (space) => {
+        for (const video of space.videos) {
+            for (const tag of video.tags) {
+                if (!filterOptions.tags[tag.id]) {
+                    filterOptions.tags[tag.id] = tag
+                }
+            }
+        }
+        console.log("Tags: ", filterOptions.tags)
+    }
+    const getSpaceCategories = (space) => {
+        for (const video of space.videos) {
+            if (!filterOptions.categories[video.category.id]) {
+                filterOptions.categories[video.category.id] = video.category
+            }
+        }
+        console.log("Categories: ", filterOptions.categories)
+    }
 
     useEffect(() => {
         if (isSuccess && data) {
             setSpace(data)
             setVideos(data.videos || [])
             setFilteredVideos(data.videos || [])
+            getSpaceTags(data)
+            getSpaceCategories(data)
         }
     }, [isSuccess, data])
 
@@ -106,7 +124,10 @@ export default function SingleSpace() {
                 />
             )}
             <div className="mx-auto flex max-w-screen-xl flex-row gap-8 pt-8">
-                <SpacesSidebar setFilterObject={setFilterObject} />
+                <SpacesSidebar
+                    filterOptions={filterOptions}
+                    setFilterObject={setFilterObject}
+                />
                 <div className="flex w-full flex-col gap-8 pt-2">
                     <div className="">
                         <div className="flex justify-between">
