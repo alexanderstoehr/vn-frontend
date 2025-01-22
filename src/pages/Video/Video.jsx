@@ -9,7 +9,6 @@ import VideoTags from "./VideoTags.jsx"
 import VideoCategory from "./VideoCategory.jsx"
 import NotesSection from "./NotesSection.jsx"
 import VideoPlayer from "./VideoPlayer.jsx"
-import { secondsToTime } from "../../utils/formatting.js"
 
 export default function Video() {
     const { videoId } = useParams()
@@ -30,6 +29,11 @@ export default function Video() {
 
     // Get current video time
     const playerRef = useRef(null)
+
+    // -- #74 -- //
+    // Do not reload video component when a new note is added (at post request)
+    // Do not reload video component when a note is updated (at patch request)
+    // Do not reload video component when a note description is saved (at patch request)
 
     const getCurrentTime = () => {
         if (playerRef.current) {
