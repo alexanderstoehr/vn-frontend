@@ -10,6 +10,8 @@ export default function Note({
     onClick,
     setShowEditNoteModal,
     setShowDeleteNoteModal,
+    nearestNoteActiveBool,
+    nearestNoteActive,
 }) {
     const handleEditClick = () => {
         console.log("Edit Note Click")
