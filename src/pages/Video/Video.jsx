@@ -9,7 +9,6 @@ import VideoTags from "./VideoTags.jsx"
 import VideoCategory from "./VideoCategory.jsx"
 import NotesSection from "./NotesSection.jsx"
 import VideoPlayer from "./VideoPlayer.jsx"
-import { secondsToTime } from "../../utils/formatting.js"
 
 export default function Video() {
     const { videoId } = useParams()
@@ -24,6 +23,7 @@ export default function Video() {
 
     const [activeVideoNote, setActiveVideoNote] = useState({})
     const [activeNoteTimestamp, setActiveNoteTimestamp] = useState()
+    const [nearestNoteActive, setNearestNoteActive] = useState({})
 
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
@@ -37,7 +37,7 @@ export default function Video() {
                 const currentTime = Math.floor(
                     playerRef.current.getCurrentTime()
                 )
-                console.log("Current timestamp: ", currentTime)
+                // console.log("Current timestamp: ", currentTime)
                 return currentTime
             } else {
                 console.error("getCurrentTime method is not available")
@@ -46,6 +46,38 @@ export default function Video() {
             console.error("Player is not ready")
         }
         return 0
+    }
+
+    // src/pages/Video/Video.jsx
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const currentTime = getCurrentTime()
+            const nearestNote = findNearestNoteBeforeNext(currentTime)
+            if (nearestNote && nearestNote.id !== activeVideoNote.id) {
+                //console.log("nearest note: ", nearestNote)
+                setActiveVideoNote(nearestNote)
+            }
+        }, 1000)
+
+        return () => {
+            console.log("cleared interval")
+            clearInterval(interval)
+        }
+    }, [videoNotes, activeVideoNote, activeNoteTimestamp, getCurrentTime, []])
+
+    const findNearestNoteBeforeNext = (currentTime) => {
+        for (let i = videoNotes.length - 1; i >= 0; i--) {
+            if (videoNotes[i].note_timestamp <= currentTime) {
+                if (
+                    i === videoNotes.length - 1 ||
+                    videoNotes[i + 1].note_timestamp > currentTime
+                ) {
+                    return videoNotes[i]
+                }
+            }
+        }
+        return null
     }
 
     // console.log("outside effect: ", data)
@@ -64,13 +96,13 @@ export default function Video() {
         }
     }, [data])
 
-    useEffect(() => {
-        if (videoNotes.length > 0) {
-            setActiveVideoNote(videoNotes[0])
-            // console.log("active note: ", videoNotes[0])
-            // console.log("active note title: ", videoNotes[0].note_title)
-        }
-    }, [videoNotes])
+    // useEffect(() => {
+    //     if (videoNotes.length > 0 && !activeVideoNote.id) {
+    //         setActiveVideoNote(videoNotes[0])
+    //         // console.log("active note: ", videoNotes[0])
+    //         // console.log("active note title: ", videoNotes[0].note_title)
+    //     }
+    // }, [videoNotes])
 
     useEffect(() => {
         console.log("activeNote: ", activeVideoNote)
@@ -136,6 +168,7 @@ export default function Video() {
                                 setActiveVideoNote={setActiveVideoNote}
                                 videoId={videoId}
                                 getCurrentTime={getCurrentTime}
+                                nearestNoteActive={nearestNoteActive}
                             />
 
                             <div>

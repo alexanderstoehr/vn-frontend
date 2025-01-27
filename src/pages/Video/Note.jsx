@@ -10,6 +10,8 @@ export default function Note({
     onClick,
     setShowEditNoteModal,
     setShowDeleteNoteModal,
+    nearestNoteActiveBool,
+    nearestNoteActive,
 }) {
     const handleEditClick = () => {
         console.log("Edit Note Click")
@@ -32,7 +34,7 @@ export default function Note({
             onClick={() => onClick(note)}>
             <div className="flex items-center justify-between">
                 <div
-                    className={classNames("flex items-center gap-2", {
+                    className={classNames("flex w-full items-center gap-2", {
                         "font-bold": active,
                     })}>
                     {active ? (

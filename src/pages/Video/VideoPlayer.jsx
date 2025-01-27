@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react"
-import Button from "../../components/primitives/Button.jsx"
+import { useEffect, useState } from "react"
 import { secondsToTime } from "../../utils/formatting.js"
 
 export default function VideoPlayer({
