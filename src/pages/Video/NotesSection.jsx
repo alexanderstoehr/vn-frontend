@@ -15,6 +15,7 @@ export default function NotesSection({
     setActiveVideoNote,
     videoId,
     getCurrentTime,
+    nearestNoteActive,
 }) {
     const [showAddNoteModal, setShowAddNoteModal] = useState()
     const [showEditNoteModal, setShowEditNoteModal] = useState()
@@ -109,6 +110,10 @@ export default function NotesSection({
                             editNoteTitle={editNoteTitle}
                             setShowEditNoteModal={setShowEditNoteModal}
                             setShowDeleteNoteModal={setShowDeleteNoteModal}
+                            nearestNoteActiveBool={
+                                note.id === nearestNoteActive.id
+                            }
+                            nearestNoteActive={nearestNoteActive}
                         />
                     ))}
                 </div>
