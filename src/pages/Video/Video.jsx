@@ -31,12 +31,6 @@ export default function Video() {
     // Get current video time
     const playerRef = useRef(null)
 
-    // -- #74 -- //
-    // [X] Do not reload video component when a new note is added (at post request)
-    // [] Do not reload video component when a note is updated (at patch request)
-    // [X] Do not reload video component when a note description is saved (at patch request)
-    // [] If video is playing - check current timestamp and set the appropriate note as active
-
     const getCurrentTime = () => {
         if (playerRef.current) {
             if (typeof playerRef.current.getCurrentTime === "function") {
@@ -102,13 +96,13 @@ export default function Video() {
         }
     }, [data])
 
-    useEffect(() => {
-        if (videoNotes.length > 0 && !activeVideoNote.id) {
-            setActiveVideoNote(videoNotes[0])
-            // console.log("active note: ", videoNotes[0])
-            // console.log("active note title: ", videoNotes[0].note_title)
-        }
-    }, [videoNotes])
+    // useEffect(() => {
+    //     if (videoNotes.length > 0 && !activeVideoNote.id) {
+    //         setActiveVideoNote(videoNotes[0])
+    //         // console.log("active note: ", videoNotes[0])
+    //         // console.log("active note title: ", videoNotes[0].note_title)
+    //     }
+    // }, [videoNotes])
 
     useEffect(() => {
         console.log("activeNote: ", activeVideoNote)
