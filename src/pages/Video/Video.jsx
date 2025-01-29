@@ -28,6 +28,9 @@ export default function Video() {
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
 
+    // 54 - edit video
+    // patch title and description in modal
+
     // Get current video time
     const playerRef = useRef(null)
 
