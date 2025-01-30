@@ -25,11 +25,16 @@ export default function Video() {
     const [activeNoteTimestamp, setActiveNoteTimestamp] = useState()
     const [nearestNoteActive, setNearestNoteActive] = useState({})
 
+    const [videoTitle, setVideoTitle] = useState()
+    const [videoDescription, setVideoDescription] = useState()
+
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
 
     // 54 - edit video
-    // patch title and description in modal
+    // [X] Add states for title and description
+    // [ ] Add edit video modal
+    // [ ] patch video_title and/or video_description from videoId in modal
 
     // Get current video time
     const playerRef = useRef(null)
@@ -89,6 +94,10 @@ export default function Video() {
             setVideoHostId(data.video_host_id)
             setVideoCategory(data.category)
             setVideoTags(data.tags)
+
+            setVideoTitle(data.video_title)
+            setVideoDescription(data.video_description)
+
             const sortedNotes = data.notes.sort(
                 (a, b) => a.note_timestamp - b.note_timestamp
             )
