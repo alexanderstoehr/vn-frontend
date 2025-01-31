@@ -9,11 +9,13 @@ import VideoTags from "./VideoTags.jsx"
 import VideoCategory from "./VideoCategory.jsx"
 import NotesSection from "./NotesSection.jsx"
 import VideoPlayer from "./VideoPlayer.jsx"
+import EditVideoModal from "../../components/modals/EditVideoModal.jsx"
 
 export default function Video() {
     const { videoId } = useParams()
 
     const [showDeleteVideoModal, setShowDeleteVideoModal] = useState()
+    const [showEditVideoModal, setShowEditVideoModal] = useState()
 
     const [videoHostId, setVideoHostId] = useState()
     const [videoCategory, setVideoCategory] = useState()
@@ -30,11 +32,6 @@ export default function Video() {
 
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
-
-    // 54 - edit video
-    // [X] Add states for title and description
-    // [ ] Add edit video modal
-    // [ ] patch video_title and/or video_description from videoId in modal
 
     // Get current video time
     const playerRef = useRef(null)
@@ -132,12 +129,22 @@ export default function Video() {
         console.log("Delete video")
         setShowDeleteVideoModal(!showDeleteVideoModal)
     }
+    const handleEditVideo = () => {
+        console.log("Edit video")
+        setShowEditVideoModal(!showEditVideoModal)
+    }
 
     const modals = (
         <>
             {showDeleteVideoModal && (
                 <DeleteVideoModal
                     setShowDeleteVideoModal={setShowDeleteVideoModal}
+                />
+            )}
+            {showEditVideoModal && (
+                <EditVideoModal
+                    setShowEditVideoModal={setShowEditVideoModal}
+                    currentVideo={data}
                 />
             )}
         </>
@@ -193,7 +200,14 @@ export default function Video() {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-4 flex justify-end">
+                            <div className="mt-4 flex justify-between">
+                                {/*Edit Video*/}
+                                <Button
+                                    type="secondary"
+                                    text="Edit Video"
+                                    onClick={handleEditVideo}
+                                />
+
                                 {/*Delete video*/}
                                 <Button
                                     type="danger-secondary"
