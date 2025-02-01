@@ -9,11 +9,13 @@ import VideoTags from "./VideoTags.jsx"
 import VideoCategory from "./VideoCategory.jsx"
 import NotesSection from "./NotesSection.jsx"
 import VideoPlayer from "./VideoPlayer.jsx"
+import EditVideoModal from "../../components/modals/EditVideoModal.jsx"
 
 export default function Video() {
     const { videoId } = useParams()
 
     const [showDeleteVideoModal, setShowDeleteVideoModal] = useState()
+    const [showEditVideoModal, setShowEditVideoModal] = useState()
 
     const [videoHostId, setVideoHostId] = useState()
     const [videoCategory, setVideoCategory] = useState()
@@ -24,6 +26,9 @@ export default function Video() {
     const [activeVideoNote, setActiveVideoNote] = useState({})
     const [activeNoteTimestamp, setActiveNoteTimestamp] = useState()
     const [nearestNoteActive, setNearestNoteActive] = useState({})
+
+    const [videoTitle, setVideoTitle] = useState()
+    const [videoDescription, setVideoDescription] = useState()
 
     const { data, isSuccess, isLoading, isError, error } =
         useGetSingleVideo(videoId)
@@ -86,6 +91,10 @@ export default function Video() {
             setVideoHostId(data.video_host_id)
             setVideoCategory(data.category)
             setVideoTags(data.tags)
+
+            setVideoTitle(data.video_title)
+            setVideoDescription(data.video_description)
+
             const sortedNotes = data.notes.sort(
                 (a, b) => a.note_timestamp - b.note_timestamp
             )
@@ -120,12 +129,22 @@ export default function Video() {
         console.log("Delete video")
         setShowDeleteVideoModal(!showDeleteVideoModal)
     }
+    const handleEditVideo = () => {
+        console.log("Edit video")
+        setShowEditVideoModal(!showEditVideoModal)
+    }
 
     const modals = (
         <>
             {showDeleteVideoModal && (
                 <DeleteVideoModal
                     setShowDeleteVideoModal={setShowDeleteVideoModal}
+                />
+            )}
+            {showEditVideoModal && (
+                <EditVideoModal
+                    setShowEditVideoModal={setShowEditVideoModal}
+                    currentVideo={data}
                 />
             )}
         </>
@@ -181,7 +200,14 @@ export default function Video() {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-4 flex justify-end">
+                            <div className="mt-4 flex justify-between">
+                                {/*Edit Video*/}
+                                <Button
+                                    type="secondary"
+                                    text="Edit Video"
+                                    onClick={handleEditVideo}
+                                />
+
                                 {/*Delete video*/}
                                 <Button
                                     type="danger-secondary"
