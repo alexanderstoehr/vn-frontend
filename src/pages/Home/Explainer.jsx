@@ -1,7 +1,7 @@
-import demoContent from "../../data/content/homepage/demoData.json"
+import explainerContent from "../../data/content/homepage/explainerData.json"
 
 export default function Explainer() {
-    // console.log(demoContent.demoSection.paragraphs)
+    // console.log(explainerContent.explainerSection.paragraphs)
 
     return (
         <section
@@ -10,9 +10,9 @@ export default function Explainer() {
             <div className="mx-auto max-w-screen-xl items-center gap-16 px-4 py-8 lg:grid lg:grid-cols-2 lg:px-6 lg:py-16">
                 <div className="font-light text-gray-500 dark:text-gray-400 sm:text-lg">
                     <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-                        {demoContent.demoSection.title}
+                        {explainerContent.explainerSection.title}
                     </h2>
-                    {demoContent.demoSection.paragraphs.map(
+                    {explainerContent.explainerSection.paragraphs.map(
                         (paragraph, index) => (
                             <p
                                 key={index}
@@ -24,7 +24,7 @@ export default function Explainer() {
                     <a
                         href="#demo"
                         className="mt-6 inline-flex items-center justify-center rounded-lg border border-primary-400 px-5 py-3 text-center text-base font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                        {demoContent.demoSection.ctaButton.text}
+                        {explainerContent.explainerSection.ctaButton.text}
                         <svg
                             className="ml-2 mr-2 h-5 w-5"
                             fill="currentColor"
@@ -43,7 +43,7 @@ export default function Explainer() {
                 <div className="mt-8 gap-4">
                     <img
                         className="w-full rounded-lg"
-                        src={demoContent.demoSection.image}
+                        src={explainerContent.explainerSection.image}
                         alt="office content 1"
                     />
                 </div>
