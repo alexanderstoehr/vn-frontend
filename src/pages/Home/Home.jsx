@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getAllSpacesQuery } from "../../api/queries/getAllSpacesQuery.js"
 import { useEffect } from "react"
 import { getAccessToken } from "../../utils/helpers.js"
+import Explainer from "./Explainer.jsx"
 
 export default function Home() {
     const sessionStorageObj = getAccessToken
@@ -37,6 +38,7 @@ export default function Home() {
     return (
         <div>
             <Hero />
+            <Explainer />
             <Demo />
             <Benefits />
             <Pricing />
