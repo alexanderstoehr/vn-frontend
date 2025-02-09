@@ -1,4 +1,5 @@
 import demoData from "../../data/content/homepage/demoData.json"
+import SingleDemoVideo from "../../components/SingleDemoVideo.jsx"
 
 export default function Demo() {
     // console.log(demoContent.demoSection.paragraphs)
@@ -16,8 +17,8 @@ export default function Demo() {
                         {demoData.demoSection.subtitle}
                     </p>
                 </div>
-                <div className="space-y-8 md:grid md:grid-cols-2 md:gap-8 md:space-y-0 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
-                    Demo
+                <div className="flex justify-center">
+                    <SingleDemoVideo />
                 </div>
             </div>
         </section>
